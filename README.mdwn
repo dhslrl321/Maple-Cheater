@@ -1,0 +1,39 @@
+### 목차
+
+- 개요
+- 기술 스택
+
+# Maple Cheater
+
+본 프로젝트는 사용자 참여형**커뮤니티 프로젝트**로, 사용자들의 제보로 사기 캐릭터를 확인할 수 있는 프로젝트입니다.
+
+# 기술 스택
+
+## Front-End
+
+- Library : React.js
+- Framework : Next.js
+- Styling : styled-components
+- API Communication : Axios
+- Global State Managing : Redux, Redux-Thunk
+
+## Back-End
+
+- Framework : Spring Boot
+- Data : Spring Data JPA
+- Query : Querydsl
+- Auth : Spring Security
+- Testing : JUnit5, BDDMockito
+
+## Infrastructure
+
+- Serialization Format : JSON
+- Container Runtime : Docker
+- Computing Engine : AWS ECS
+- Database Engine : AWS RDS
+- Reverse Proxy : Nginx
+
+## Etc,,
+
+- Git Branch Strategy : Gitflow
+- Issue Tracking : Github Issue
