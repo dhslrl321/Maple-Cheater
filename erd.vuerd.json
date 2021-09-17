@@ -783,6 +783,29 @@
             "id": "b6e3b0e6-6836-951f-ade2-122dcbfa9ae0"
           },
           {
+            "name": "file_path",
+            "comment": "",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "21abb7b9-e8d6-09a9-fccf-713dac07cf9d"
+          },
+          {
             "name": "file_name",
             "comment": "",
             "dataType": "VARCHAR",
@@ -830,10 +853,10 @@
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 842.0000153064731,
           "top": 663.4000134706499,
-          "zIndex": 203,
+          "zIndex": 272,
           "widthName": 100,
           "widthComment": 60
         },
@@ -1169,7 +1192,7 @@
             "f7ff1195-6273-78c0-b0c4-44f816a93c30"
           ],
           "x": 842.0000153064731,
-          "y": 728.6500134706499,
+          "y": 738.9000134706499,
           "direction": "left"
         },
         "id": "e0cea78f-a118-4ad5-2008-b0a1a2a801f8",

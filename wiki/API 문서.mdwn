@@ -1,0 +1,41 @@
+# API 요약
+
+### 회원
+
+- POST `/api/v1/users` : 회원을 추가한다.
+  - `EMAIL_VERIFICATION` 테이블에서 이메일 인증이 되었는지 double checking
+- PATCH `/api/v1/users/password` : 비밀번호를 수정한다.
+- PATCH `/api/v1/users/nickname` : 닉네임을 수정한다.
+- DELETE `/api/v1/users` : 회원을 탈퇴시킨다.
+
+### 로그인 & 회원가입
+
+- POST `/api/v1/authenticate` : 로그인을 수행한다.
+- POST `/api/v1/authenticate/password` : 임의 비밀번호를 생성해 메일로 보낸다.
+- POST `/api/v1/authenticate/email` : 인증 메일을 보낸다.
+- POST `/api/v1/authenticate/email/codes` : 이메일 인증 번호를 비교한다.
+
+### 트래픽 요약
+
+- GET `/api/v1/traffics/summaries : 트래픽 요약에 대해서 보여준다.
+
+### 치터
+
+- GET `/api/v1/cheaters/nicknames` : 캐릭터 이름으로 치터를 검색한다.
+- GET `/api/v1/cheaters/account` : 계좌 번호로 치터를 검색한다.
+- POST `/api/v1/cheaters` : 치터를 추가한다. 만약 기존에 치터가 존재한다면 횟수를 증가시킨다.
+
+### 신고서
+
+- GET `/api/v1/complaints` : 나의 모든 피해 신고서 확인하기
+- GET `/api/v1/complaints/{id}` : 특정 피해 신고서 확인하기
+- POST `/api/v1/complaints` : 피해 신고서 등록하기
+
+---
+
+# 회원
+
+### 회원 추가하기
+
+> **이메일, 비밀번호, 닉네임**을 받아서 회원을 추가한다.  
+> 회원을 추가할 때는
