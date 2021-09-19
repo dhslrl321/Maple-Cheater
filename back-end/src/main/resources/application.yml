@@ -1,1 +1,22 @@
+spring:
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+      settings:
+        web-allow-others: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:maple-cheater
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        # show_sql: true
+        # format_sql: true
 
+jwt:
+  secret: 12345678901234567890123456789012

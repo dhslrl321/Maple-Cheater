@@ -2,8 +2,8 @@
   "canvas": {
     "width": 3000,
     "height": 3000,
-    "scrollTop": 0,
-    "scrollLeft": 2.880000114440918,
+    "scrollTop": 561,
+    "scrollLeft": 787,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -37,7 +37,7 @@
   "table": {
     "tables": [
       {
-        "name": "USERS",
+        "name": "USER",
         "comment": "",
         "columns": [
           {
@@ -156,29 +156,6 @@
             "id": "72401a8f-f615-cf98-0bd6-118f8c6f25ab"
           },
           {
-            "name": "last_login_datetime",
-            "comment": "",
-            "dataType": "DATETIME",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 105,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "ac4de58e-0387-5918-8813-3c120355cf85"
-          },
-          {
             "name": "unregistered_at",
             "comment": "",
             "dataType": "DATETIME",
@@ -206,7 +183,7 @@
           "active": false,
           "left": 132.5,
           "top": 101,
-          "zIndex": 113,
+          "zIndex": 277,
           "widthName": 60,
           "widthComment": 60
         },
@@ -853,7 +830,7 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 842.0000153064731,
           "top": 663.4000134706499,
           "zIndex": 272,
@@ -1113,8 +1090,8 @@
           "columnIds": [
             "680de0ac-32c9-bf45-83ce-907bd468d4c3"
           ],
-          "x": 352,
-          "y": 313.5,
+          "x": 342.5,
+          "y": 293,
           "direction": "bottom"
         },
         "end": {
