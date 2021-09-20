@@ -1,15 +1,16 @@
 package com.maplecheater.controller;
 
+import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
+import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
+import com.maplecheater.security.UserAuthentication;
 import com.maplecheater.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,4 +22,23 @@ public class UserController {
     public ResponseEntity<RegisterResponseData> register(@RequestBody RegisterRequestData registerRequestData) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(registerRequestData));
     }
+
+    @GetMapping("/exists/{email}")
+    public ResponseEntity<EmailCheckResponseData> checkEmail(@PathVariable("email") String email) {
+        return ResponseEntity.ok(userService.isExistEmail(email));
+    }
+
+    @PatchMapping("/{id}/password")
+    @PreAuthorize("isAuthenticated() and hasAuthority('USER')")
+    public ResponseEntity changePassword(@PathVariable("id") Long targetId,
+            @RequestBody ChangePasswordRequestData changePasswordRequestData,
+            UserAuthentication authentication) {
+
+        Long tokenUserId = authentication.getUserid();
+
+        userService.changePassword(targetId, changePasswordRequestData, tokenUserId);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

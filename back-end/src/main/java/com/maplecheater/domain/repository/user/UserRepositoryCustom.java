@@ -2,6 +2,10 @@ package com.maplecheater.domain.repository.user;
 
 import com.maplecheater.domain.entity.User;
 
+import java.util.Optional;
+
 public interface UserRepositoryCustom {
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

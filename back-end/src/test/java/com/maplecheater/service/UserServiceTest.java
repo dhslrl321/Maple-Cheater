@@ -1,20 +1,27 @@
 package com.maplecheater.service;
 
+import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
+import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
 import com.maplecheater.domain.entity.EmailVerification;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.emailverification.EmailVerificationRepository;
+import com.maplecheater.domain.repository.role.RoleRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.VerificationType;
+import com.maplecheater.exception.AuthenticationFailedException;
 import com.maplecheater.exception.EmailNotFoundException;
 import com.maplecheater.exception.InvalidVerificationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,15 +37,24 @@ class UserServiceTest {
     private static final String PASSWORD = "password";
     private static final String NICKNAME = "nickname";
 
+    private static final String NEW_PASSWORD = "passWord";
+
     private UserRepository userRepository = mock(UserRepository.class);
     private EmailVerificationRepository emailVerificationRepository = mock(EmailVerificationRepository.class);
+    private RoleRepository roleRepository = mock(RoleRepository.class);
+
     private UserService userService;
 
     @BeforeEach
     void setUp() {
         ModelMapper modelMapper = new ModelMapper();
-
-        userService = new UserService(modelMapper, userRepository, emailVerificationRepository);
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        userService = new UserService(
+                userRepository,
+                emailVerificationRepository,
+                roleRepository,
+                modelMapper,
+                passwordEncoder);
 
         User user = User.builder()
                 .id(1L)
@@ -57,14 +73,31 @@ class UserServiceTest {
 
         given(userRepository.save(any(User.class))).willReturn(user);
 
-        given(userRepository.findByEmail(EMAIL)).willReturn(user);
-        given(userRepository.findByEmail(EMAIL_NOT_VERIFIED)).willReturn(user);
+        given(userRepository.findByEmail(EMAIL)).willReturn(Optional.of(user));
+        given(userRepository.findByEmail(EMAIL_NOT_VERIFIED)).willReturn(Optional.of(user));
 
-        given(emailVerificationRepository.findByEmail(EMAIL)).willReturn(emailVerification);
-        given(emailVerificationRepository.findByEmail(EMAIL_NOT_VERIFIED)).willReturn(emailVerification);
+        given(emailVerificationRepository.findByEmail(EMAIL))
+                .willReturn(emailVerification);
+        given(emailVerificationRepository.findByEmail(EMAIL_NOT_VERIFIED))
+                .willReturn(emailVerification);
 
-        given(emailVerificationRepository.findVerifiedByEmail(EMAIL)).willReturn(VerificationType.VERIFIED);
-        given(emailVerificationRepository.findVerifiedByEmail(EMAIL_NOT_VERIFIED)).willReturn(VerificationType.UNVERIFIED);
+        given(emailVerificationRepository.findVerifiedByEmail(EMAIL))
+                .willReturn(VerificationType.VERIFIED);
+        given(emailVerificationRepository.findVerifiedByEmail(EMAIL_NOT_VERIFIED))
+                .willReturn(VerificationType.UNVERIFIED);
+
+        given(userRepository.findById(1L)).willReturn(Optional.of(user));
+
+        given(userRepository.existsByEmail(EMAIL))
+                .willReturn(true);
+
+    }
+
+    @Test
+    @DisplayName("중복된 이메일이 존재하는지 확인하는 테스트")
+    void isExistEmail() {
+        EmailCheckResponseData existEmail = userService.isExistEmail(EMAIL);
+        assertEquals(true, existEmail.getIsExist());
     }
 
     @Test
@@ -112,5 +145,44 @@ class UserServiceTest {
                 () -> userService.registerUser(request));
 
         assertNotNull(invalidVerificationException.getMessage());
+    }
+
+    @Test
+    @DisplayName("비밀번호 변경 - 성공")
+    void changePassword_success() {
+        ChangePasswordRequestData request = ChangePasswordRequestData.builder()
+                .oldPassword(PASSWORD)
+                .newPassword(NEW_PASSWORD)
+                .build();
+
+        userService.changePassword(1L, request, 1L);
+    }
+
+    @Test
+    @DisplayName("비밀번호 변경 - 실패 - targetId 와 tokenId 가 다를 경우")
+    void changePassword_fail_different_id() {
+        ChangePasswordRequestData request = ChangePasswordRequestData.builder()
+                .oldPassword(PASSWORD)
+                .newPassword(NEW_PASSWORD)
+                .build();
+
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+                () -> userService.changePassword(1L, request, 2L));
+
+        assertNotNull(exception);
+    }
+
+    @Test
+    @DisplayName("비밀번호 변경 - 실패 기존 비밀번호 인증 불가")
+    void changePassword_fail_different_password() {
+        ChangePasswordRequestData request = ChangePasswordRequestData.builder()
+                .oldPassword("different_password")
+                .newPassword(NEW_PASSWORD)
+                .build();
+
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+                () -> userService.changePassword(1L, request, 1L));
+
+        assertNotNull(exception);
     }
 }

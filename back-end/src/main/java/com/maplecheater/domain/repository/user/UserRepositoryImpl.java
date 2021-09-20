@@ -5,6 +5,9 @@ import com.maplecheater.domain.entity.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
+
+import static com.maplecheater.domain.entity.QUser.user;
 
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
@@ -15,11 +18,22 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return queryFactory
-                .select(QUser.user)
-                .from(QUser.user)
-                .where(QUser.user.email.eq(email))
+    public Optional<User> findByEmail(String email) {
+        return Optional.ofNullable(queryFactory
+                .select(user)
+                .from(user)
+                .where(user.email.eq(email))
+                .fetchOne());
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        Integer fetchOne = queryFactory
+                .selectOne()
+                .from(user)
+                .where(user.email.eq(email))
                 .fetchOne();
+
+        return fetchOne != null;
     }
 }

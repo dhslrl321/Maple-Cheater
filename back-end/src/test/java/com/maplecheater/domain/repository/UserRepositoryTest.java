@@ -53,9 +53,23 @@ class UserRepositoryTest {
 
         String email = "test_0@test.com";
 
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email).get();
 
         assertEquals(email, user.getEmail());
+    }
+
+    @Test
+    @DisplayName("Email 중복 검색")
+    void existByEmail() {
+        generateUser(5, userRepository);
+
+        String exist = "test_4@test.com";
+        String notExist = "test_5@test.com";
+
+        assertAll(
+                () -> assertTrue(userRepository.existsByEmail(exist)),
+                () -> assertFalse(userRepository.existsByEmail(notExist))
+        );
     }
 
 

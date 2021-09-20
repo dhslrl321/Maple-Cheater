@@ -2,8 +2,10 @@ package com.maplecheater.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
+import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
 import com.maplecheater.exception.InvalidVerificationException;
+import com.maplecheater.service.AuthenticationService;
 import com.maplecheater.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -36,12 +39,17 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private AuthenticationService authenticationService;
+
     @BeforeEach
     void setUp() {
         RegisterResponseData registerResponseData = RegisterResponseData.builder()
                 .email(VALID_EMAIL)
                 .nickname("nickname")
                 .build();
+
+        EmailCheckResponseData emailCheckResponseData = new EmailCheckResponseData(true);
 
         given(userService.registerUser(any())).will(invocation -> {
             RegisterRequestData request = invocation.getArgument(0);
@@ -51,6 +59,8 @@ class UserControllerTest {
             }
             return registerResponseData;
         });
+
+        given(userService.isExistEmail(any(String.class))).willReturn(emailCheckResponseData);
     }
 
     @Test
@@ -72,6 +82,12 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("회원가입 - 실패 - 중복된 이메일")
+    void register_fail_duplicated_email() {
+
+    }
+
+    @Test
     @DisplayName("회원가입 - 실패 - 인증되지 않은 이메일")
     void register_fail_not_verified_email() throws Exception {
         RegisterRequestData invalidRequest = RegisterRequestData.builder()
@@ -86,6 +102,15 @@ class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("message").exists());
+    }
+
+    @Test
+    @DisplayName("이메일 중복 확인")
+    void isExistEmail_success() throws Exception {
+        mockMvc.perform(get("/api/v1/users/exists/{email}", VALID_EMAIL))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("isExist").exists());
     }
 
 }
