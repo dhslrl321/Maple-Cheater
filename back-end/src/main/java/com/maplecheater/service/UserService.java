@@ -1,5 +1,6 @@
 package com.maplecheater.service;
 
+import com.maplecheater.domain.dto.request.ChangeNicknameRequestData;
 import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
@@ -110,5 +111,23 @@ public class UserService {
                 () -> new UserNotFoundException());
 
         selectedUser.changePassword(oldPassword, newPassword, passwordEncoder);
+    }
+
+    /**
+     * 닉네임을 변경한다.
+     *
+     * @param targetId
+     * @param changeNicknameRequestData 변경하려는 닉네임 dto
+     * @param tokenUserId
+     */
+    public void changeNickname(Long targetId, ChangeNicknameRequestData changeNicknameRequestData, Long tokenUserId) {
+        if(!tokenUserId.equals(targetId)) {
+            throw new AuthenticationFailedException();
+        }
+
+        User selectedUser = userRepository.findById(tokenUserId).orElseThrow(
+                () -> new UserNotFoundException());
+
+        selectedUser.changeNickname(changeNicknameRequestData.getNewNickname());
     }
 }

@@ -1,5 +1,6 @@
 package com.maplecheater.domain.entity;
 
+import com.maplecheater.exception.AuthenticationFailedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,5 +70,55 @@ class UserTest {
         boolean auth = user.authenticate(PASSWORD, passwordEncoder);
 
         assertTrue(auth);
+    }
+
+    @Test
+    @DisplayName("비밀번호 변경")
+    void changePassword_success() {
+        User user = User.builder()
+                .id(1L)
+                .email("test@test.com")
+                .password(ENCODED_PASSWORD)
+                .registeredAt(LocalDateTime.now())
+                .nickname("nickname")
+                .build();
+
+        user.changePassword(PASSWORD, "newPass", passwordEncoder);
+
+        assertNotEquals(PASSWORD, user.getPassword());
+    }
+
+    @Test
+    @DisplayName("비밀번호 변경 - 인증 실패")
+    void changePassword_fail() {
+        User user = User.builder()
+                .id(1L)
+                .email("test@test.com")
+                .password(ENCODED_PASSWORD)
+                .registeredAt(LocalDateTime.now())
+                .nickname("nickname")
+                .build();
+
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+                () -> user.changePassword("differentPassword", "newPassword", passwordEncoder));
+
+        assertNotNull(exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("닉네임 변경")
+    void changeNickname() {
+        String nickname = "nickname";
+        User user = User.builder()
+                .id(1L)
+                .email("test@test.com")
+                .password(ENCODED_PASSWORD)
+                .registeredAt(LocalDateTime.now())
+                .nickname(nickname)
+                .build();
+
+        user.changeNickname("newNickname");
+
+        assertNotEquals(nickname, user.getNickname());
     }
 }

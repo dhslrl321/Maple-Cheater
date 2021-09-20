@@ -1,5 +1,6 @@
 package com.maplecheater.controller;
 
+import com.maplecheater.domain.dto.request.ChangeNicknameRequestData;
 import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
@@ -37,6 +38,19 @@ public class UserController {
         Long tokenUserId = authentication.getUserid();
 
         userService.changePassword(targetId, changePasswordRequestData, tokenUserId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/nickname")
+    @PreAuthorize("isAuthenticated() and hasAuthority('USER')")
+    public ResponseEntity changeNickname(@PathVariable("id") Long targetId,
+                                         @RequestBody ChangeNicknameRequestData changeNicknameRequestData,
+                                         UserAuthentication authentication) {
+
+        Long tokenUserId = authentication.getUserid();
+
+        userService.changeNickname(targetId, changeNicknameRequestData, tokenUserId);
 
         return ResponseEntity.noContent().build();
     }

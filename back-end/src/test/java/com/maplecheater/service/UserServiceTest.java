@@ -1,5 +1,6 @@
 package com.maplecheater.service;
 
+import com.maplecheater.domain.dto.request.ChangeNicknameRequestData;
 import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
@@ -13,6 +14,7 @@ import com.maplecheater.domain.type.VerificationType;
 import com.maplecheater.exception.AuthenticationFailedException;
 import com.maplecheater.exception.EmailNotFoundException;
 import com.maplecheater.exception.InvalidVerificationException;
+import com.maplecheater.exception.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,8 @@ import static org.mockito.Mockito.mock;
 
 class UserServiceTest {
 
+    private static final Long NOT_EXIST_USER = 102L;
+
     private static final String EMAIL = "test@test.com";
     private static final String EMAIL_DOES_NOT_EXIST = "no@no.no";
     private static final String EMAIL_NOT_VERIFIED = "verify@verify.no";
@@ -38,6 +42,8 @@ class UserServiceTest {
     private static final String NICKNAME = "nickname";
 
     private static final String NEW_PASSWORD = "passWord";
+
+    private static final String ENCODED_PASSWORD = "$2a$10$zSnzZDu5Jpyqch0zez9soekcecOTmgT8MFFzG.Sd7vClwexE.syd2";
 
     private UserRepository userRepository = mock(UserRepository.class);
     private EmailVerificationRepository emailVerificationRepository = mock(EmailVerificationRepository.class);
@@ -64,6 +70,14 @@ class UserServiceTest {
                 .registeredAt(LocalDateTime.now())
                 .build();
 
+        User userWithEncodedPassword = User.builder()
+                .id(1L)
+                .email(EMAIL)
+                .password(ENCODED_PASSWORD)
+                .nickname(NICKNAME)
+                .registeredAt(LocalDateTime.now())
+                .build();
+
         EmailVerification emailVerification = EmailVerification.builder()
                 .id(1L)
                 .email(EMAIL)
@@ -86,7 +100,7 @@ class UserServiceTest {
         given(emailVerificationRepository.findVerifiedByEmail(EMAIL_NOT_VERIFIED))
                 .willReturn(VerificationType.UNVERIFIED);
 
-        given(userRepository.findById(1L)).willReturn(Optional.of(user));
+        given(userRepository.findById(1L)).willReturn(Optional.of(userWithEncodedPassword));
 
         given(userRepository.existsByEmail(EMAIL))
                 .willReturn(true);
@@ -155,7 +169,7 @@ class UserServiceTest {
                 .newPassword(NEW_PASSWORD)
                 .build();
 
-        userService.changePassword(1L, request, 1L);
+        assertDoesNotThrow(() -> userService.changePassword(1L, request, 1L));
     }
 
     @Test
@@ -182,6 +196,38 @@ class UserServiceTest {
 
         AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
                 () -> userService.changePassword(1L, request, 1L));
+
+        assertNotNull(exception);
+    }
+
+    @Test
+    @DisplayName("비빌번호 변경 - 실패 - 존재하지 않는 사용자")
+    void changePassword_fail_user_not_found() {
+        ChangePasswordRequestData request = ChangePasswordRequestData.builder()
+                .oldPassword("different_password")
+                .newPassword(NEW_PASSWORD)
+                .build();
+
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+                () -> userService.changePassword(NOT_EXIST_USER, request, NOT_EXIST_USER));
+
+        assertNotNull(exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("닉네임 변경 테스트 - 성공")
+    void changeNickname_success() {
+        ChangeNicknameRequestData request = new ChangeNicknameRequestData("newNickname");
+
+        assertDoesNotThrow(() -> userService.changeNickname(1L, request, 1L));
+    }
+
+    @Test
+    @DisplayName("닉네임 변경 테스트 - 실패 - 존재하지 않는 사용자")
+    void changeNickname_fail() {
+        ChangeNicknameRequestData request = new ChangeNicknameRequestData("newNickname");
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+                () -> userService.changeNickname(102L, request, NOT_EXIST_USER));
 
         assertNotNull(exception);
     }

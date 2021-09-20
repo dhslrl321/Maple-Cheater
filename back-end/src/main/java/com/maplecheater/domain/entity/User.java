@@ -47,4 +47,13 @@ public class User {
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(password, this.password);
     }
+
+    /**
+     * 닉네임을 변경한다.
+     *
+     * @param newNickname 변경할 닉네임
+     */
+    public void changeNickname(String newNickname) {
+        this.nickname = newNickname;
+    }
 }

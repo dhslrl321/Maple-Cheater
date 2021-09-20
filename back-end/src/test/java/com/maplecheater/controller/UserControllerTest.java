@@ -1,9 +1,14 @@
 package com.maplecheater.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.net.HttpHeaders;
+import com.maplecheater.domain.dto.request.ChangeNicknameRequestData;
+import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
+import com.maplecheater.domain.entity.Role;
+import com.maplecheater.domain.type.RoleType;
 import com.maplecheater.exception.InvalidVerificationException;
 import com.maplecheater.service.AuthenticationService;
 import com.maplecheater.service.UserService;
@@ -16,10 +21,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,6 +35,13 @@ class UserControllerTest {
 
     private static final String VALID_EMAIL = "test@test.com";
     private static final String NOT_VERIFIED_EMAIL = "verified@not.com";
+
+    // 2021-10-04 에 만료되는 토큰
+    private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ" +
+            "9.eyJ1c2VySWQiOjEsImV4cCI6MTYzMzMxNzI5NH0" +
+            ".ZKq5d0v8F4n0Er1XhTuTfFQ6pzUHPnOi3D79YaCV83k";
+
+    private static final String ENCODED_PASSWORD = "$2a$10$zSnzZDu5Jpyqch0zez9soekcecOTmgT8MFFzG.Sd7vClwexE.syd2";
 
     @Autowired
     private MockMvc mockMvc;
@@ -59,8 +72,9 @@ class UserControllerTest {
             }
             return registerResponseData;
         });
-
         given(userService.isExistEmail(any(String.class))).willReturn(emailCheckResponseData);
+        given(authenticationService.getRoles(1L)).willReturn(Arrays.asList(new Role(1L, RoleType.USER)));
+        given(authenticationService.parseToken(VALID_TOKEN)).willReturn(1L);
     }
 
     @Test
@@ -111,6 +125,30 @@ class UserControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("isExist").exists());
+    }
+
+    @Test
+    @DisplayName("비밀번호 변경 - 성공")
+    void changePassword_success() throws Exception{
+        ChangePasswordRequestData request = new ChangePasswordRequestData("password", "newPassword");
+        mockMvc.perform(patch("/api/v1/users/{id}/password", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + VALID_TOKEN))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("닉네임 변경 - 성공")
+    void changeNickname_success() throws Exception{
+        ChangeNicknameRequestData request = new ChangeNicknameRequestData("newNickname");
+        mockMvc.perform(patch("/api/v1/users/{id}/nickname", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + VALID_TOKEN))
+                .andDo(print())
+                .andExpect(status().isNoContent());
     }
 
 }
