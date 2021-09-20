@@ -16,7 +16,7 @@ class UserTest {
                 .id(1L)
                 .email("test@test.com")
                 .password("test123")
-                .created_at(LocalDateTime.now())
+                .registeredAt(LocalDateTime.now())
                 .nickname("nickname")
                 .build();
 

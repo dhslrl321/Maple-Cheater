@@ -32,7 +32,7 @@ class UserRepositoryTest {
                 .email(email)
                 .password(password)
                 .nickname(nickname)
-                .created_at(now)
+                .registeredAt(now)
                 .build();
 
         User savedUser = userRepository.save(user);
@@ -42,7 +42,7 @@ class UserRepositoryTest {
                 () -> assertEquals(email, savedUser.getEmail()),
                 () -> assertEquals(password, savedUser.getPassword()),
                 () -> assertEquals(nickname, savedUser.getNickname()),
-                () -> assertEquals(now, savedUser.getCreated_at())
+                () -> assertEquals(now, savedUser.getRegisteredAt())
         );
     }
 
@@ -65,7 +65,7 @@ class UserRepositoryTest {
                     .email("test_" + i + "@test.com")
                     .password("test931" + i)
                     .nickname("사용자_" + i)
-                    .created_at(LocalDateTime.now())
+                    .registeredAt(LocalDateTime.now())
                     .build();
 
             userRepository.save(user);

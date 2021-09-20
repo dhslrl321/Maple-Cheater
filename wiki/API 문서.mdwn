@@ -2,7 +2,7 @@
 
 ### 회원
 
-- **POST** `/api/v1/users` : 회원을 추가한다.
+- **POST** `/api/v1/users` : 회원을 추가한다. [x]
 - **PATCH** `/api/v1/users/password` : 비밀번호를 수정한다.
 - **PATCH** `/api/v1/users/nickname` : 닉네임을 수정한다.
 - **DELETE** `/api/v1/users` : 회원을 탈퇴시킨다.
@@ -42,7 +42,7 @@
 #### Request
 
 ```json
-HTTP/1.1 200 OK
+HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 {
   "email": "maplecheater0@gmail.com",

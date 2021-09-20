@@ -17,6 +17,13 @@ public class User {
     private String email;
     private String password;
     private String nickname;
-    private LocalDateTime created_at;
-    private LocalDateTime unregistered_at;
+    private LocalDateTime registeredAt;
+    private LocalDateTime unregisteredAt;
+
+    /**
+     * 회원가입 시에 호출이 되는데, 현재 시간을 기준으로 registeredAt 의 시간을 채운다.
+     */
+    public void register() {
+        this.registeredAt = LocalDateTime.now();
+    }
 }
