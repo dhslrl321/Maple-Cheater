@@ -56,4 +56,11 @@ public class User {
     public void changeNickname(String newNickname) {
         this.nickname = newNickname;
     }
+
+    /**
+     * 회원을 탈퇴한다.
+     */
+    public void unregister() {
+        this.unregisteredAt = LocalDateTime.now();
+    }
 }

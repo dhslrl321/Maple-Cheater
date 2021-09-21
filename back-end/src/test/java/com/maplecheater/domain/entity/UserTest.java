@@ -121,4 +121,22 @@ class UserTest {
 
         assertNotEquals(nickname, user.getNickname());
     }
+
+    @Test
+    @DisplayName("회원 탈퇴")
+    void unregister() {
+        User user = User.builder()
+                .id(1L)
+                .email("test@test.com")
+                .password("password")
+                .nickname("nickname")
+                .registeredAt(LocalDateTime.now())
+                .build();
+
+        assertNull(user.getUnregisteredAt());
+
+        user.unregister();
+
+        assertNotNull(user.getUnregisteredAt());
+    }
 }

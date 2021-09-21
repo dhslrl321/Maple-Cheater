@@ -231,4 +231,25 @@ class UserServiceTest {
 
         assertNotNull(exception);
     }
+
+    @Test
+    @DisplayName("회원 탈퇴")
+    void unregister() {
+        Long targetId = 1L;
+        Long tokenUserId = 1L;
+
+        assertDoesNotThrow(() -> userService.unregister(targetId, tokenUserId));
+    }
+
+    @Test
+    @DisplayName("회원 탈퇴 - 실패 - targetId 와 tokenUserId 가 다름")
+    void unregister_fail_different_id() {
+        Long targetId = 1L;
+        Long tokenUserId = 2L;
+
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+                () -> userService.unregister(targetId, tokenUserId));
+
+        assertNotNull(exception.getMessage());
+    }
 }

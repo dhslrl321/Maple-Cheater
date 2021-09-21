@@ -116,9 +116,9 @@ public class UserService {
     /**
      * 닉네임을 변경한다.
      *
-     * @param targetId
+     * @param targetId : PathVariable 로 받은 user 의 Id
      * @param changeNicknameRequestData 변경하려는 닉네임 dto
-     * @param tokenUserId
+     * @param tokenUserId : jwt 토큰에 포함된 user 의 id
      */
     public void changeNickname(Long targetId, ChangeNicknameRequestData changeNicknameRequestData, Long tokenUserId) {
         if(!tokenUserId.equals(targetId)) {
@@ -129,5 +129,20 @@ public class UserService {
                 () -> new UserNotFoundException());
 
         selectedUser.changeNickname(changeNicknameRequestData.getNewNickname());
+    }
+
+    /**
+     * @param targetId : PathVariable 로 받은 user 의 Id
+     * @param tokenUserId : jwt 토큰에 포함된 user 의 id
+     */
+    public void unregister(Long targetId, Long tokenUserId) {
+        if(!tokenUserId.equals(targetId)) {
+            throw new AuthenticationFailedException();
+        }
+
+        User selectedUser = userRepository.findById(tokenUserId).orElseThrow(
+                () -> new UserNotFoundException());
+
+        selectedUser.unregister();
     }
 }

@@ -3,8 +3,8 @@
 ### 회원
 
 - [x] **POST** `/api/v1/users` : 회원을 추가한다.
-- [ ] **PATCH** `/api/v1/users/password` : 비밀번호를 수정한다.
-- [ ] **PATCH** `/api/v1/users/nickname` : 닉네임을 수정한다.
+- [x] **PATCH** `/api/v1/users/password` : 비밀번호를 수정한다.
+- [x] **PATCH** `/api/v1/users/nickname` : 닉네임을 수정한다.
 - [ ] **DELETE** `/api/v1/users` : 회원을 탈퇴시킨다.
 - [x] **GET** `/api/v1/users/exists/{email}` : 이메일이 존재하는지 검색한다.
 
