@@ -3,10 +3,8 @@ package com.maplecheater.domain.entity;
 import com.maplecheater.domain.type.VerificationType;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter @Builder
@@ -19,9 +17,17 @@ public class EmailVerification {
     private Long id;
     private String email;
     private String code;
+    private LocalDateTime authDate;
+
+    @Enumerated(EnumType.STRING)
     private VerificationType verified;
 
     public void verify() {
         verified = VerificationType.VERIFIED;
+    }
+
+    public void refreshCode(String newCode) {
+        this.authDate = LocalDateTime.now();
+        this.code = newCode;
     }
 }

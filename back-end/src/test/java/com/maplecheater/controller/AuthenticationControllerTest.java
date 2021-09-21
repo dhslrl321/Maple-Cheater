@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maplecheater.domain.dto.request.LoginRequestData;
 import com.maplecheater.exception.AuthenticationFailedException;
 import com.maplecheater.service.AuthenticationService;
+import com.maplecheater.service.MailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,9 @@ class AuthenticationControllerTest {
 
     @MockBean
     private AuthenticationService authenticationService;
+
+    @MockBean
+    private MailService mailService;
 
     @BeforeEach
     void setUp() {

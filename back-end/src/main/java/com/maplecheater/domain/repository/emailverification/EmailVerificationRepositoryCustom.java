@@ -3,8 +3,12 @@ package com.maplecheater.domain.repository.emailverification;
 import com.maplecheater.domain.entity.EmailVerification;
 import com.maplecheater.domain.type.VerificationType;
 
-public interface EmailVerificationRepositoryCustom {
-    EmailVerification findByEmail(String email);
+import java.util.Optional;
 
-    VerificationType findVerifiedByEmail(String email);
+public interface EmailVerificationRepositoryCustom {
+    Optional<EmailVerification> findByEmail(String email);
+
+    Optional<VerificationType> findVerifiedByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

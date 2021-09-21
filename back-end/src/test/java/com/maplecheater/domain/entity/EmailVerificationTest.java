@@ -4,6 +4,8 @@ import com.maplecheater.domain.type.VerificationType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmailVerificationTest {
@@ -26,6 +28,7 @@ class EmailVerificationTest {
         EmailVerification verification = EmailVerification.builder()
                 .email("test@test.com")
                 .code("q31n34")
+                .authDate(LocalDateTime.now())
                 .verified(VerificationType.UNVERIFIED)
                 .build();
 
@@ -34,6 +37,23 @@ class EmailVerificationTest {
         verification.verify();
 
         assertEquals(VerificationType.VERIFIED, verification.getVerified());
+    }
+
+    @Test
+    @DisplayName("인증 코드 갱신")
+    void refreshCode() {
+        String beforeCode = "q31n34";
+        String newCode = "239771";
+
+        EmailVerification verification = EmailVerification.builder()
+                .email("test@test.com")
+                .code(beforeCode)
+                .verified(VerificationType.UNVERIFIED)
+                .build();
+
+        verification.refreshCode(newCode);
+
+        assertNotEquals(beforeCode, verification.getCode());
     }
 
 }

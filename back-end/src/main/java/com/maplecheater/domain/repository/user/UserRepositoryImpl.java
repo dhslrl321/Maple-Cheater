@@ -36,4 +36,16 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         return fetchOne != null;
     }
+
+    @Override
+    public boolean existsAndNotUnregisteredByEmail(String email) {
+        Integer fetchOne = queryFactory
+                .selectOne()
+                .from(user)
+                .where(user.email.eq(email),
+                        user.unregisteredAt.isNull())
+                .fetchOne();
+
+        return fetchOne != null;
+    }
 }

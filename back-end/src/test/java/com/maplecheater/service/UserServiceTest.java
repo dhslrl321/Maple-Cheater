@@ -88,17 +88,17 @@ class UserServiceTest {
         given(userRepository.save(any(User.class))).willReturn(user);
 
         given(userRepository.findByEmail(EMAIL)).willReturn(Optional.of(user));
-        given(userRepository.findByEmail(EMAIL_NOT_VERIFIED)).willReturn(Optional.of(user));
+        given(userRepository.findByEmail(EMAIL_NOT_VERIFIED)).willReturn(Optional.empty());
 
         given(emailVerificationRepository.findByEmail(EMAIL))
-                .willReturn(emailVerification);
+                .willReturn(Optional.of(emailVerification));
         given(emailVerificationRepository.findByEmail(EMAIL_NOT_VERIFIED))
-                .willReturn(emailVerification);
+                .willReturn(Optional.of(emailVerification));
 
         given(emailVerificationRepository.findVerifiedByEmail(EMAIL))
-                .willReturn(VerificationType.VERIFIED);
+                .willReturn(Optional.of(VerificationType.VERIFIED));
         given(emailVerificationRepository.findVerifiedByEmail(EMAIL_NOT_VERIFIED))
-                .willReturn(VerificationType.UNVERIFIED);
+                .willReturn(Optional.of(VerificationType.UNVERIFIED));
 
         given(userRepository.findById(1L)).willReturn(Optional.of(userWithEncodedPassword));
 

@@ -72,6 +72,18 @@ class UserRepositoryTest {
         );
     }
 
+    @Test
+    @DisplayName("존재하면서 탈퇴하지 않은 회원인 경우")
+    void existsAndNotUnregisteredByEmail() {
+        generateUser(1, userRepository);
+
+        String email = "test_0@test.com";
+
+        boolean existsAndNotUnregistered = userRepository.existsAndNotUnregisteredByEmail(email);
+
+        assertTrue(existsAndNotUnregistered);
+    }
+
 
     private static void generateUser(int count, UserRepository userRepository) {
         for (int i = 0; i < count; i++) {

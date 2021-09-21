@@ -7,6 +7,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.EntityManager;
 
+import java.util.Optional;
+
 import static com.maplecheater.domain.entity.QEmailVerification.emailVerification;
 
 public class EmailVerificationRepositoryImpl implements EmailVerificationRepositoryCustom {
@@ -18,19 +20,30 @@ public class EmailVerificationRepositoryImpl implements EmailVerificationReposit
     }
 
     @Override
-    public EmailVerification findByEmail(String email) {
-        return queryFactory
+    public Optional<EmailVerification> findByEmail(String email) {
+        return Optional.ofNullable(queryFactory
                 .selectFrom(emailVerification)
                 .where(emailVerification.email.eq(email))
-                .fetchOne();
+                .fetchOne());
     }
 
     @Override
-    public VerificationType findVerifiedByEmail(String email) {
-        return queryFactory
+    public Optional<VerificationType> findVerifiedByEmail(String email) {
+        return Optional.ofNullable(queryFactory
                 .select(emailVerification.verified)
                 .from(emailVerification)
                 .where(emailVerification.email.eq(email))
+                .fetchOne());
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        Integer fetchOne = queryFactory
+                .selectOne()
+                .from(emailVerification)
+                .where(emailVerification.email.eq(email))
                 .fetchOne();
+
+        return fetchOne != null;
     }
 }

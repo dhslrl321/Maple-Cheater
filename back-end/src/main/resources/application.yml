@@ -1,4 +1,19 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: maplecheater0@gmail.com
+    password: ifwgbojsxelirgcy
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
   h2:
     console:
       path: /h2-console

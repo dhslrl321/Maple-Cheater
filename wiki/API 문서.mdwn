@@ -5,14 +5,14 @@
 - [x] **POST** `/api/v1/users` : 회원을 추가한다.
 - [x] **PATCH** `/api/v1/users/password` : 비밀번호를 수정한다.
 - [x] **PATCH** `/api/v1/users/nickname` : 닉네임을 수정한다.
-- [ ] **DELETE** `/api/v1/users` : 회원을 탈퇴시킨다.
+- [x] **DELETE** `/api/v1/users` : 회원을 탈퇴시킨다.
 - [x] **GET** `/api/v1/users/exists/{email}` : 이메일이 존재하는지 검색한다.
 
 ### 로그인 & 회원가입
 
 - [x] **POST** `/api/v1/authenticate` : 로그인을 수행한다.
 - [ ] **POST** `/api/v1/authenticate/email` : 인증 메일을 보낸다.
-- **POST** `/api/v1/authenticate/email/codes` : 이메일 인증 번호를 비교한다.
+- **POST** `/api/v1/authenticate/email/authenticate` : 이메일 인증 번호를 비교한다.
 - [ ] **POST** `/api/v1/authenticate/password` : 임의 비밀번호를 생성해 메일로 보낸다.
 
 ### 트래픽 요약

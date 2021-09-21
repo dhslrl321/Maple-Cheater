@@ -29,6 +29,9 @@ dependencies {
     /** Spring Boot */
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    /** Spring Mail */
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
     /** model mapper */
     implementation 'org.modelmapper:modelmapper:2.4.0'
 

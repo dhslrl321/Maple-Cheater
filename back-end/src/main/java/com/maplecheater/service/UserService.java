@@ -43,11 +43,9 @@ public class UserService {
      * @throws EmailNotFoundException
      */
     public boolean checkVerifiedEmail(String email) {
-        VerificationType verified = emailVerificationRepository.findVerifiedByEmail(email);
+        VerificationType verified = emailVerificationRepository.findVerifiedByEmail(email)
+                .orElseThrow(() -> new EmailNotFoundException());
 
-        if(verified == null) { // 이메일 정보가 인증 관련 테이블에 없다면
-            throw new EmailNotFoundException();
-        }
         return verified.equals(VerificationType.VERIFIED);
     }
 
