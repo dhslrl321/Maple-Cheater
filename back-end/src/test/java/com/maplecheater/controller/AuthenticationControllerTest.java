@@ -92,5 +92,15 @@ class AuthenticationControllerTest {
                 .andExpect(jsonPath("message").exists());
     }
 
+    @Test
+    @DisplayName("이메일 전송 - 성공")
+    void () {
 
+    }
+
+    @Test
+    @DisplayName("이메일 전송 - 실패 - 존재하는 회원")
+    void () {
+
+    }
 }

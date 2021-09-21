@@ -97,9 +97,11 @@ class MailServiceTest {
     }
 
     @Test
-    @DisplayName("이메일 인증")
+    @DisplayName("이메일 인증 번호 비교")
     void authenticate() {
-        // 인증 코드를 받고 
+        String code = "123456";
+
+        // mailService.authenticate(code);
     }
 
 }

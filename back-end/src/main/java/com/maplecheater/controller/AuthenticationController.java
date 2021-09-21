@@ -26,19 +26,9 @@ public class AuthenticationController {
                 .body(new LoginResponseData(accessToken));
     }
 
-    @GetMapping("/hello")
-    public String simple() {
-        return "hello";
-    }
-
     @GetMapping("/{email}")
-    public String mail(@PathVariable String email) {
-        System.out.println(email);
-        try {
-            mailService.sendMail(email);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "success";
+    public ResponseEntity mail(@PathVariable String email) {
+        mailService.sendMail(email);
+        return ResponseEntity.noContent().build();
     }
 }
