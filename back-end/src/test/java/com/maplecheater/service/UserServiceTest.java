@@ -11,10 +11,7 @@ import com.maplecheater.domain.repository.emailverification.EmailVerificationRep
 import com.maplecheater.domain.repository.role.RoleRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.VerificationType;
-import com.maplecheater.exception.AuthenticationFailedException;
-import com.maplecheater.exception.VerificationNotFoundException;
-import com.maplecheater.exception.InvalidVerificationException;
-import com.maplecheater.exception.UserNotFoundException;
+import com.maplecheater.exception.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,6 +32,7 @@ class UserServiceTest {
     private static final Long NOT_EXIST_USER = 102L;
 
     private static final String EMAIL = "test@test.com";
+    private static final String EXIST_USER_EMAIL = "exists@t.c";
     private static final String EMAIL_DOES_NOT_EXIST = "no@no.no";
     private static final String EMAIL_NOT_VERIFIED = "verify@verify.no";
 
@@ -87,7 +85,12 @@ class UserServiceTest {
 
         given(userRepository.save(any(User.class))).willReturn(user);
 
+        given(userRepository.existsByEmail(EMAIL)).willReturn(false);
+
+        given(userRepository.existsByEmail(EXIST_USER_EMAIL)).willReturn(true);
+
         given(userRepository.findByEmail(EMAIL)).willReturn(Optional.of(user));
+
         given(userRepository.findByEmail(EMAIL_NOT_VERIFIED)).willReturn(Optional.empty());
 
         given(emailVerificationRepository.findByEmail(EMAIL))
@@ -97,13 +100,17 @@ class UserServiceTest {
 
         given(emailVerificationRepository.findVerifiedByEmail(EMAIL))
                 .willReturn(Optional.of(VerificationType.VERIFIED));
+
+        given(emailVerificationRepository.findVerifiedByEmail(EXIST_USER_EMAIL))
+                .willReturn(Optional.of(VerificationType.VERIFIED));
+
         given(emailVerificationRepository.findVerifiedByEmail(EMAIL_NOT_VERIFIED))
                 .willReturn(Optional.of(VerificationType.UNVERIFIED));
 
         given(userRepository.findById(1L)).willReturn(Optional.of(userWithEncodedPassword));
 
         given(userRepository.existsByEmail(EMAIL))
-                .willReturn(true);
+                .willReturn(false);
 
     }
 
@@ -111,7 +118,7 @@ class UserServiceTest {
     @DisplayName("중복된 이메일이 존재하는지 확인하는 테스트")
     void isExistEmail() {
         EmailCheckResponseData existEmail = userService.isExistEmail(EMAIL);
-        assertEquals(true, existEmail.getIsExist());
+        assertEquals(false, existEmail.getIsExist());
     }
 
     @Test
@@ -142,8 +149,23 @@ class UserServiceTest {
 
         RegisterResponseData response = userService.registerUser(request);
 
-        assertEquals(response.getEmail(), EMAIL);
-        assertEquals(response.getNickname(), NICKNAME);
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(NICKNAME, response.getNickname());
+    }
+
+    @Test
+    @DisplayName("회원 가입 - 실패 - 이미 존재하는 사용자")
+    void registerUser_fail_exists_user() {
+        RegisterRequestData request = RegisterRequestData.builder()
+                .email(EXIST_USER_EMAIL)
+                .password(PASSWORD)
+                .nickname(NICKNAME)
+                .build();
+
+        UserExistsException exception = assertThrows(UserExistsException.class,
+                () -> userService.registerUser(request));
+
+        assertNotNull(exception.getMessage());
     }
 
     @Test

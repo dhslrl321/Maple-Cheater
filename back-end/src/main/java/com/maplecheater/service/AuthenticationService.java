@@ -51,6 +51,7 @@ public class AuthenticationService {
                 .userId(user.getId())
                 .email(user.getEmail())
                 .accessToken(accessToken)
+                .nickname(user.getNickname())
                 .build();
     }
 

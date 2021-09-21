@@ -8,5 +8,6 @@ import lombok.*;
 public class LoginResponseData {
     private Long userId;
     private String email;
+    private String nickname;
     private String accessToken;
 }

@@ -12,10 +12,7 @@ import com.maplecheater.domain.repository.role.RoleRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.RoleType;
 import com.maplecheater.domain.type.VerificationType;
-import com.maplecheater.exception.AuthenticationFailedException;
-import com.maplecheater.exception.VerificationNotFoundException;
-import com.maplecheater.exception.InvalidVerificationException;
-import com.maplecheater.exception.UserNotFoundException;
+import com.maplecheater.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -69,9 +66,14 @@ public class UserService {
     public RegisterResponseData registerUser(RegisterRequestData registerRequestData) {
         String email = registerRequestData.getEmail();
         boolean verified = checkVerifiedEmail(email);
+        boolean isExist = userRepository.existsByEmail(email);
 
         if(!verified) { // 인증받지 않았다면
             throw new InvalidVerificationException();
+        }
+
+        if(isExist) { // 존재하는 사용자라면 ?
+            throw new UserExistsException();
         }
 
         User user = modelMapper.map(registerRequestData, User.class);
@@ -107,6 +109,7 @@ public class UserService {
                 () -> new UserNotFoundException());
 
         selectedUser.changePassword(oldPassword, newPassword, passwordEncoder);
+        userRepository.save(selectedUser);
     }
 
     /**
@@ -125,9 +128,12 @@ public class UserService {
                 () -> new UserNotFoundException());
 
         selectedUser.changeNickname(changeNicknameRequestData.getNewNickname());
+        userRepository.save(selectedUser);
     }
 
     /**
+     * 회원을 탈퇴한다. 내부적으로는 unregistered 의 값을 추가한다.
+     *
      * @param targetId : PathVariable 로 받은 user 의 Id
      * @param tokenUserId : jwt 토큰에 포함된 user 의 id
      */
