@@ -5,7 +5,9 @@ import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.emailverification.EmailVerificationRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.VerificationType;
+import com.maplecheater.exception.AuthenticationFailedException;
 import com.maplecheater.exception.UserExistsException;
+import com.maplecheater.exception.UserNotFoundException;
 import com.maplecheater.util.MailUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +25,10 @@ class MailServiceTest {
     private static final String NEW_USER_EMAIL = "new@new.com";
     private static final String VERIFIED_USER_EMAIL = "verified@verified.com";
     private static final String VERIFIED_AND_SERVICE_USER_EMAIL = "service@service.com";
+
+    private static final String AUTH_SUCCESS_USER_EMAIL = "success@com.com";
+    private static final String AUTH_FAIL_USER_EMAIL = "auth@fail.com";
+    private static final String NOT_EXIST_USER_EMAIL = "no@noex.com";
 
     private final JavaMailSender javaMailSender = mock(JavaMailSender.class);
     private final MailUtil mailUtil = mock(MailUtil.class);
@@ -59,6 +65,11 @@ class MailServiceTest {
                 .verified(VerificationType.UNVERIFIED)
                 .build();
 
+        EmailVerification verification = EmailVerification.builder()
+                .email(AUTH_SUCCESS_USER_EMAIL)
+                .code("123456")
+                .build();
+
         given(emailVerificationRepository.findByEmail(NEW_USER_EMAIL))
                 .willReturn(Optional.empty());
 
@@ -73,6 +84,16 @@ class MailServiceTest {
 
         given(userRepository.existsAndNotUnregisteredByEmail(VERIFIED_AND_SERVICE_USER_EMAIL))
                 .willReturn(true);
+
+        given(emailVerificationRepository.findByEmail(AUTH_SUCCESS_USER_EMAIL))
+                .willReturn(Optional.of(verification));
+
+        given(emailVerificationRepository.findByEmail(AUTH_FAIL_USER_EMAIL))
+                .willReturn(Optional.of(verification));
+
+        given(emailVerificationRepository.findByEmail(NOT_EXIST_USER_EMAIL))
+                .willReturn(Optional.empty());
+
     }
 
     @Test
@@ -97,11 +118,33 @@ class MailServiceTest {
     }
 
     @Test
-    @DisplayName("이메일 인증 번호 비교")
-    void authenticate() {
+    @DisplayName("이메일 인증 번호 비교 - 같은 코드")
+    void authenticate_success() {
         String code = "123456";
 
-        // mailService.authenticate(code);
+        assertDoesNotThrow(() -> mailService.authenticate(AUTH_SUCCESS_USER_EMAIL, code));
+    }
+
+    @Test
+    @DisplayName("이메일 인증 번호 비교 - 존재하지 않는 사용자")
+    void authenticate_fail_not_exists_user() {
+        String code = "123456";
+
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+                () -> mailService.authenticate(NOT_EXIST_USER_EMAIL, code));
+
+        assertNotNull(exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("이메일 인증 번호 비교 - 다른 코드")
+    void authenticate_fail_different_code() {
+        String code = "456123";
+
+        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+                () -> mailService.authenticate(AUTH_FAIL_USER_EMAIL, code));
+
+        assertNotNull(exception.getMessage());
     }
 
 }

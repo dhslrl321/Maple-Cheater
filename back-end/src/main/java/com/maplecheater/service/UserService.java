@@ -13,7 +13,7 @@ import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.RoleType;
 import com.maplecheater.domain.type.VerificationType;
 import com.maplecheater.exception.AuthenticationFailedException;
-import com.maplecheater.exception.EmailNotFoundException;
+import com.maplecheater.exception.VerificationNotFoundException;
 import com.maplecheater.exception.InvalidVerificationException;
 import com.maplecheater.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -40,11 +38,11 @@ public class UserService {
      *
      * @param email : 회원가입하려는 이메일
      * @return 이메일이 인증된 사용자라면 true 반환
-     * @throws EmailNotFoundException
+     * @throws VerificationNotFoundException
      */
     public boolean checkVerifiedEmail(String email) {
         VerificationType verified = emailVerificationRepository.findVerifiedByEmail(email)
-                .orElseThrow(() -> new EmailNotFoundException());
+                .orElseThrow(() -> new VerificationNotFoundException());
 
         return verified.equals(VerificationType.VERIFIED);
     }

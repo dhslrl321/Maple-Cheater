@@ -2,7 +2,9 @@ package com.maplecheater.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maplecheater.domain.dto.request.LoginRequestData;
+import com.maplecheater.domain.dto.response.LoginResponseData;
 import com.maplecheater.exception.AuthenticationFailedException;
+import com.maplecheater.exception.UserExistsException;
 import com.maplecheater.service.AuthenticationService;
 import com.maplecheater.service.MailService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,9 +16,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -32,6 +35,10 @@ class AuthenticationControllerTest {
 
     private static final String EMAIL = "test@test.com";
     private static final String INVALID_PASSWORD = "pass";
+
+    private static final String NEW_USER_EMAIL = "new@new.com";
+    private static final String INVALID_CODE = "432123";
+    private static final String VERIFIED_AND_SERVICE_USER_EMAIL = "service@service.com";
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,9 +62,18 @@ class AuthenticationControllerTest {
             if(password.equals(INVALID_PASSWORD)) {
                 throw new AuthenticationFailedException();
             }
-
-            return VALID_TOKEN;
+            return LoginResponseData.builder()
+                    .userId(1L)
+                    .email(EMAIL)
+                    .accessToken(VALID_TOKEN)
+                    .build();
         });
+
+        doThrow(UserExistsException.class).when(mailService)
+                .sendMail(VERIFIED_AND_SERVICE_USER_EMAIL);
+
+        doThrow(AuthenticationFailedException.class).when(mailService)
+                .authenticate(NEW_USER_EMAIL, INVALID_CODE);
     }
 
     @Test
@@ -73,6 +89,8 @@ class AuthenticationControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("userId").exists())
+                .andExpect(jsonPath("email").exists())
                 .andExpect(jsonPath("accessToken").exists());
     }
 
@@ -94,13 +112,33 @@ class AuthenticationControllerTest {
 
     @Test
     @DisplayName("이메일 전송 - 성공")
-    void () {
-
+    void mailAuthenticate_success() throws Exception {
+        mockMvc.perform(get("/api/v1/authenticate/{email}", NEW_USER_EMAIL))
+                .andDo(print())
+                .andExpect(status().isNoContent());
     }
 
     @Test
     @DisplayName("이메일 전송 - 실패 - 존재하는 회원")
-    void () {
+    void mailAuthenticate_fail() throws Exception {
+        mockMvc.perform(get("/api/v1/authenticate/{email}", VERIFIED_AND_SERVICE_USER_EMAIL))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 
+    @Test
+    @DisplayName("인증 코드 비교")
+    void authCode_success() throws Exception {
+        mockMvc.perform(get("/api/v1/authenticate/{email}/{code}", NEW_USER_EMAIL, "123456"))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("인증 코드 비교 - 실패")
+    void authCode_fail() throws Exception {
+        mockMvc.perform(get("/api/v1/authenticate/{email}/{code}", NEW_USER_EMAIL, INVALID_CODE))
+                .andDo(print())
+                .andExpect(status().isForbidden());
     }
 }

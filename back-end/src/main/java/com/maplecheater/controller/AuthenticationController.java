@@ -20,15 +20,21 @@ public class AuthenticationController {
 
     @PostMapping
     public ResponseEntity<LoginResponseData> login(@RequestBody LoginRequestData loginRequestData) {
-        String accessToken = authenticationService.login(loginRequestData);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new LoginResponseData(accessToken));
+                .body(authenticationService.login(loginRequestData));
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity mail(@PathVariable String email) {
+    public ResponseEntity sendAuthenticationCodeToMail(@PathVariable String email) {
         mailService.sendMail(email);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{email}/{code}")
+    public ResponseEntity authenticate(@PathVariable String email,
+                                       @PathVariable String code) {
+        mailService.authenticate(email, code);
         return ResponseEntity.noContent().build();
     }
 }

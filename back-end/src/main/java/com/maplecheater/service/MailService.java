@@ -1,25 +1,21 @@
 package com.maplecheater.service;
 
 import com.maplecheater.domain.entity.EmailVerification;
-import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.emailverification.EmailVerificationRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.VerificationType;
+import com.maplecheater.exception.AuthenticationFailedException;
 import com.maplecheater.exception.UserExistsException;
+import com.maplecheater.exception.UserNotFoundException;
 import com.maplecheater.util.MailUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -46,7 +42,7 @@ public class MailService {
         validateEmail(email, code, emailVerificationRepository, userRepository);
 
         try {
-            message = mailUtil.createMailTemplate(null);
+            message = mailUtil.createMailTemplate(code);
             message.addRecipients(Message.RecipientType.TO, email);
             message.setSubject("Maple-Cheater 회원가입 인증 메일");
         } catch (Exception e) {
@@ -54,6 +50,26 @@ public class MailService {
         }
 
         javaMailSender.send(message);
+    }
+
+    /**
+     * 이메일로 전송된 code 와 사용자가 입력한 code 가 일치하는지 확인한다.
+     *
+     * @param email : 사용자의 email
+     * @param code : 사용자가 입력한 code
+     */
+    public void authenticate(String email, String code) {
+        EmailVerification userVerification = emailVerificationRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        String realCode = userVerification.getCode();
+
+        if (!realCode.equals(code)) {
+            throw new AuthenticationFailedException();
+        }
+
+        userVerification.verify();
+        emailVerificationRepository.save(userVerification);
     }
 
     /**

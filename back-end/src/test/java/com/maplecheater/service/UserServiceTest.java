@@ -12,7 +12,7 @@ import com.maplecheater.domain.repository.role.RoleRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.VerificationType;
 import com.maplecheater.exception.AuthenticationFailedException;
-import com.maplecheater.exception.EmailNotFoundException;
+import com.maplecheater.exception.VerificationNotFoundException;
 import com.maplecheater.exception.InvalidVerificationException;
 import com.maplecheater.exception.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -125,10 +125,10 @@ class UserServiceTest {
     @Test
     @DisplayName("이메일 인증을 확인하는 테스트 - 실패 - 존재하지 않는 이메일")
     void checkVerifiedEmail_fail_doesnt_exist_email() {
-        EmailNotFoundException emailNotFoundException = assertThrows(EmailNotFoundException.class, () ->
+        VerificationNotFoundException verificationNotFoundException = assertThrows(VerificationNotFoundException.class, () ->
                 userService.checkVerifiedEmail(EMAIL_DOES_NOT_EXIST));
 
-        assertNotNull(emailNotFoundException.getMessage());
+        assertNotNull(verificationNotFoundException.getMessage());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.LoginRequestData;
+import com.maplecheater.domain.dto.response.LoginResponseData;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.role.RoleRepository;
@@ -61,8 +62,13 @@ class AuthenticationServiceTest {
                 .password("password")
                 .build();
 
-        String accessToken = authenticationService.login(request);
-        assertNotNull(accessToken);
+        LoginResponseData response = authenticationService.login(request);
+        assertAll(
+                () -> assertEquals(EMAIL, response.getEmail()),
+                () -> assertNotNull(response.getUserId()),
+                () -> assertNotNull(response.getAccessToken())
+        );
+
     }
 
     @Test

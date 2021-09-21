@@ -1,6 +1,7 @@
 package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.LoginRequestData;
+import com.maplecheater.domain.dto.response.LoginResponseData;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.role.RoleRepository;
@@ -31,7 +32,7 @@ public class AuthenticationService {
      * @param request : email, password dto
      * @return JwtUtil 이 반환하는 새로운 jwt token
      */
-    public String login(LoginRequestData request) {
+    public LoginResponseData login(LoginRequestData request) {
 
         String email = request.getEmail();
         String password = request.getPassword();
@@ -44,8 +45,13 @@ public class AuthenticationService {
         if(!authenticate) { // 비밀번호가 다르면?
             throw new AuthenticationFailedException();
         }
+        String accessToken = jwtUtil.generateToken(user.getId());
 
-        return jwtUtil.generateToken(user.getId());
+        return LoginResponseData.builder()
+                .userId(user.getId())
+                .email(user.getEmail())
+                .accessToken(accessToken)
+                .build();
     }
 
     /**

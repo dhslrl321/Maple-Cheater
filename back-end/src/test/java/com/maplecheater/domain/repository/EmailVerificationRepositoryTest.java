@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmailVerificationRepositoryTest {
 
     private static final String EMAIL = "test@test.com";
-
+    private static final String CODE = "123456";
     @Autowired
     private EmailVerificationRepository emailVerificationRepository;
 
@@ -27,7 +27,7 @@ class EmailVerificationRepositoryTest {
     void setUp() {
         emailVerificationRepository.save(EmailVerification.builder()
                 .email(EMAIL)
-                .code("Q12S23")
+                .code(CODE)
                 .verified(VerificationType.UNVERIFIED)
                 .build());
     }
@@ -53,5 +53,6 @@ class EmailVerificationRepositoryTest {
     void existsByEmail() {
         assertTrue(emailVerificationRepository.existsByEmail(EMAIL));
     }
+
 
 }

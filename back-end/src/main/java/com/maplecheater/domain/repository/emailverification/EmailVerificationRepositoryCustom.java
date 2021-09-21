@@ -11,4 +11,5 @@ public interface EmailVerificationRepositoryCustom {
     Optional<VerificationType> findVerifiedByEmail(String email);
 
     boolean existsByEmail(String email);
+
 }
