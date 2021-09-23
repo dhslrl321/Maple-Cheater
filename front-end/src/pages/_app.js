@@ -2,7 +2,8 @@ import { ThemeProvider } from "styled-components";
 
 import GlobalStyles from "../../styles/global-styles";
 import theme from "../../styles/theme";
-import Navigation from "../component/navigation";
+import Navigation from "../component/section/navigation";
+import Footer from "../component/section/footer";
 
 const MyApp = ({ Component, pageProps }) => {
   return (
@@ -11,6 +12,7 @@ const MyApp = ({ Component, pageProps }) => {
       <ThemeProvider theme={theme}>
         <Navigation />
         <Component {...pageProps} />
+        <Footer />
       </ThemeProvider>
     </>
   );

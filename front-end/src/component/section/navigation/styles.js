@@ -1,18 +1,24 @@
 import styled from 'styled-components';
 
+export const Back = styled.div`
+  height: 60px;
+  margin-bottom: 60px;
+`;
+
 export const Container = styled.nav`
   width: 100%;
   height: 60px;
   background: ${props => props.theme.color.white};
   box-shadow: 0px 3px 22px rgba(0, 0, 0, 0.16);
-  font-size: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
 
   font-weight: bold;
-
+  font-size: 1rem;
   color: ${props => props.theme.color.gray};
+  z-index: 999;
 `;
 
 export const NavColumn = styled.div`
@@ -55,4 +61,8 @@ export const RegisterButton = styled.button`
   font-size: 1rem;
 
   cursor: pointer;
+
+  @media screen and (max-width: 900px) {
+    font-size: 0.9rem;
+  }
 `;

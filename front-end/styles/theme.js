@@ -2,6 +2,8 @@ import { css } from "styled-components";
 
 const color = {
   primary: "#5F56EF",
+  hoverPrimary: "#4D43ED",
+  activePrimary: "#372BFF",
   white: "#ffffff",
   deepBlue: "#122F4C",
   lightBlue: "#5094FA",

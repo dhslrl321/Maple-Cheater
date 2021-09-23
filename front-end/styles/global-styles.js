@@ -47,7 +47,6 @@ const GlobalStyle = createGlobalStyle`
     line-height: 100%;
   } 
   
-
   /* @media only screen and (max-width: 768px) {
     body {
       font-size: 12px;
