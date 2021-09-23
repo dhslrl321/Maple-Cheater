@@ -5,7 +5,6 @@ import com.maplecheater.domain.dto.response.LoginResponseData;
 import com.maplecheater.service.AuthenticationService;
 import com.maplecheater.service.MailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ public class AuthenticationController {
 
     @GetMapping("/{email}")
     public ResponseEntity sendAuthenticationCodeToMail(@PathVariable String email) {
-        mailService.sendMail(email);
+        mailService.sendAuthMail(email);
         return ResponseEntity.noContent().build();
     }
 
@@ -35,6 +34,12 @@ public class AuthenticationController {
     public ResponseEntity authenticate(@PathVariable String email,
                                        @PathVariable String code) {
         mailService.authenticate(email, code);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/password/{email}")
+    public ResponseEntity sendTempPasswordToEmail(@PathVariable String email) {
+        mailService.sendTempPasswordMail(email);
         return ResponseEntity.noContent().build();
     }
 }

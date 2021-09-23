@@ -139,4 +139,20 @@ class UserTest {
 
         assertNotNull(user.getUnregisteredAt());
     }
+
+    @Test
+    @DisplayName("임시 비밀번호 발급을 위한 비밀번호 변경")
+    void changePasswordForTempPassword() {
+        User user = User.builder()
+                .id(1L)
+                .email("test@test.com")
+                .password("password")
+                .nickname("nickname")
+                .registeredAt(LocalDateTime.now())
+                .build();
+
+        user.changePasswordForTempPassword(NEW_PASSWORD, passwordEncoder);
+
+        assertNotEquals("password", user.getPassword());
+    }
 }

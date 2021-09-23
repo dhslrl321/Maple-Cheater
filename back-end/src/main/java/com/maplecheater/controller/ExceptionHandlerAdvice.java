@@ -18,6 +18,12 @@ public class ExceptionHandlerAdvice {
         return new ErrorResponseData(e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UnauthorizedException.class)
+    public ErrorResponseData handleUnauthorizedException(UnauthorizedException e) {
+        return new ErrorResponseData(e.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AuthenticationFailedException.class)
     public ErrorResponseData handleAuthenticationFailedException(AuthenticationFailedException e) {

@@ -5,6 +5,8 @@ import com.maplecheater.domain.dto.request.LoginRequestData;
 import com.maplecheater.domain.dto.response.LoginResponseData;
 import com.maplecheater.exception.AuthenticationFailedException;
 import com.maplecheater.exception.UserExistsException;
+import com.maplecheater.exception.UserNotFoundException;
+import com.maplecheater.exception.VerificationNotFoundException;
 import com.maplecheater.service.AuthenticationService;
 import com.maplecheater.service.MailService;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,11 +37,13 @@ class AuthenticationControllerTest {
             ".ZKq5d0v8F4n0Er1XhTuTfFQ6pzUHPnOi3D79YaCV83k";
 
     private static final String EMAIL = "test@test.com";
+    private static final String NOT_EXIST_EMAIL = "not@exist.com";
     private static final String INVALID_PASSWORD = "pass";
 
     private static final String NEW_USER_EMAIL = "new@new.com";
     private static final String INVALID_CODE = "432123";
     private static final String VERIFIED_AND_SERVICE_USER_EMAIL = "service@service.com";
+    private static final String USER_WITH_NOT_EXIST_VERIFICATION = "not@exists.verification";
 
     @Autowired
     private MockMvc mockMvc;
@@ -69,11 +74,23 @@ class AuthenticationControllerTest {
                     .build();
         });
 
-        doThrow(UserExistsException.class).when(mailService)
-                .sendMail(VERIFIED_AND_SERVICE_USER_EMAIL);
+        willThrow(new VerificationNotFoundException())
+                .given(mailService)
+                .authenticate(USER_WITH_NOT_EXIST_VERIFICATION, INVALID_CODE);
 
-        doThrow(AuthenticationFailedException.class).when(mailService)
+        willThrow(new UserNotFoundException())
+                .given(mailService)
+                .sendAuthMail(VERIFIED_AND_SERVICE_USER_EMAIL);
+
+        willThrow(new UserNotFoundException())
+                .given(mailService)
+                .sendTempPasswordMail(NOT_EXIST_EMAIL);
+
+        willThrow(new AuthenticationFailedException())
+                .given(mailService)
                 .authenticate(NEW_USER_EMAIL, INVALID_CODE);
+
+
     }
 
     @Test
@@ -135,10 +152,34 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("인증 코드 비교 - 실패")
-    void authCode_fail() throws Exception {
+    @DisplayName("인증 코드 비교 - 실패 - 인증 정보가 없음")
+    void authCode_fail_not_exist_verification() throws Exception {
+        mockMvc.perform(get("/api/v1/authenticate/{email}/{code}", USER_WITH_NOT_EXIST_VERIFICATION, INVALID_CODE))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("인증 코드 비교 - 실패 - 올바르지 않은 인증 코드")
+    void authCode_fail_invalid_code() throws Exception {
         mockMvc.perform(get("/api/v1/authenticate/{email}/{code}", NEW_USER_EMAIL, INVALID_CODE))
                 .andDo(print())
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("임시 비밀번호 발급")
+    void tempPassword_success() throws Exception {
+        mockMvc.perform(get("/api/v1/authenticate/password/{email}", EMAIL))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("임시 비밀번호 발급")
+    void tempPassword_fail() throws Exception {
+        mockMvc.perform(get("/api/v1/authenticate/password/{email}", NOT_EXIST_EMAIL))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 }

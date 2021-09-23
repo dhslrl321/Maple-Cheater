@@ -1,37 +1,41 @@
 package com.maplecheater.util;
 
+import com.maplecheater.domain.type.EmailTemplateType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MailUtilTest {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private MailUtil mailUtil;
+
+    @BeforeEach
+    void setUp() {
+        mailUtil = new MailUtil(new JavaMailSenderImpl());
+    }
+
+    @Test
+    @DisplayName("인증 코드 생성")
+    void generateVerifyCode() {
+        String code = mailUtil.generateVerifyCode();
+
+        assertEquals(6, code.length());
+    }
 
     @Test
     @DisplayName("메일 전송 테스트")
     void sendMail() {
-        List<String> users = new ArrayList<>();
+        assertDoesNotThrow(() -> mailUtil.createMailTemplate("123456", EmailTemplateType.AUTHENTICATION));
+    }
 
-        users.add("dhslrl321@gmail.com");
-        users.add("1684031@pcu.ac.kr");
+    @Test
+    @DisplayName("임시 비밀번호 생성 테스트")
+    void generateTempPassword() {
+        String tempPassword = mailUtil.generateTempPassword();
 
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo((String[]) users.toArray(new String[users.size()]));
-
-        message.setSubject("Spring boot 메일 테스트");
-        message.setText("메일이 잘 가는지 확인하기 위한 테스트 입니다");
-
-        javaMailSender.send(message);
+        assertEquals(10, tempPassword.length());
     }
 }

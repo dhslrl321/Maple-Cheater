@@ -99,7 +99,7 @@ public class UserService {
                                Long tokenUserId) {
 
         if(!tokenUserId.equals(targetId)) {
-            throw new AuthenticationFailedException();
+            throw new UnauthorizedException();
         }
 
         String oldPassword = request.getOldPassword();
@@ -121,7 +121,7 @@ public class UserService {
      */
     public void changeNickname(Long targetId, ChangeNicknameRequestData changeNicknameRequestData, Long tokenUserId) {
         if(!tokenUserId.equals(targetId)) {
-            throw new AuthenticationFailedException();
+            throw new UnauthorizedException();
         }
 
         User selectedUser = userRepository.findById(tokenUserId).orElseThrow(
@@ -139,12 +139,13 @@ public class UserService {
      */
     public void unregister(Long targetId, Long tokenUserId) {
         if(!tokenUserId.equals(targetId)) {
-            throw new AuthenticationFailedException();
+            throw new UnauthorizedException();
         }
 
         User selectedUser = userRepository.findById(tokenUserId).orElseThrow(
                 () -> new UserNotFoundException());
 
         selectedUser.unregister();
+        userRepository.save(selectedUser);
     }
 }

@@ -42,6 +42,14 @@ public class User {
     }
 
     /**
+     * 기존 비밀번호 인증을 생략하고 비밀번호를 변경한다.
+     * 이메일 임시 비밀번호 발급에만 사용할 것
+     */
+    public void changePasswordForTempPassword(String newPassword, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(newPassword);
+    }
+
+    /**
      * request 로 들어온 비빌번호와 비교한다.
      */
     public boolean authenticate(String password, PasswordEncoder passwordEncoder) {

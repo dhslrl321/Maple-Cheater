@@ -1,8 +1,10 @@
 package com.maplecheater.service;
 
 import com.maplecheater.domain.entity.EmailVerification;
+import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.emailverification.EmailVerificationRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
+import com.maplecheater.domain.type.EmailTemplateType;
 import com.maplecheater.domain.type.VerificationType;
 import com.maplecheater.exception.AuthenticationFailedException;
 import com.maplecheater.exception.UserExistsException;
@@ -10,6 +12,7 @@ import com.maplecheater.exception.UserNotFoundException;
 import com.maplecheater.util.MailUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,7 @@ public class MailService {
     private final UserRepository userRepository;
     private final JavaMailSender javaMailSender;
     private final MailUtil mailUtil;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 이메일을 받아 메일 인증 코드를 생성하고 인증 메일을 보낸다.
@@ -34,7 +38,7 @@ public class MailService {
      * @param email : 인증을 수행할 메일
      * @throws UserExistsException : 이미 존재하는 회원일 경우
      */
-    public void sendMail(String email) {
+    public void sendAuthMail(String email) {
 
         String code = mailUtil.generateVerifyCode();
         MimeMessage message = null;
@@ -42,9 +46,37 @@ public class MailService {
         validateEmail(email, code, emailVerificationRepository, userRepository);
 
         try {
-            message = mailUtil.createMailTemplate(code);
+            message = mailUtil.createMailTemplate(code, EmailTemplateType.AUTHENTICATION);
             message.addRecipients(Message.RecipientType.TO, email);
             message.setSubject("Maple-Cheater 회원가입 인증 메일");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        javaMailSender.send(message);
+    }
+
+    /**
+     * 임시 비밀번호를 메일로 전송한다.
+     *
+     * @param email : 임시 비밀번호를 발급할 메일
+     * @throws UserNotFoundException : 임시 비밀번호를 발급할 사용자가 존재하지 않는 경우
+     */
+    public void sendTempPasswordMail(String email) {
+
+        String tempPassword = mailUtil.generateTempPassword();
+        MimeMessage message = null;
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException());
+
+        user.changePasswordForTempPassword(tempPassword, passwordEncoder);
+
+        userRepository.save(user);
+
+        try {
+            message = mailUtil.createMailTemplate(tempPassword, EmailTemplateType.TEMP_PASSWORD);
+            message.addRecipients(Message.RecipientType.TO, email);
+            message.setSubject("Maple-Cheater 임시 비밀번호 전송 메일");
         } catch (Exception e) {
             e.printStackTrace();
         }

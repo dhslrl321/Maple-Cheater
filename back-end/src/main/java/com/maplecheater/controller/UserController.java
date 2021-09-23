@@ -47,11 +47,19 @@ public class UserController {
     public ResponseEntity changeNickname(@PathVariable("id") Long targetId,
                                          @RequestBody ChangeNicknameRequestData changeNicknameRequestData,
                                          UserAuthentication authentication) {
-
         Long tokenUserId = authentication.getUserid();
 
         userService.changeNickname(targetId, changeNicknameRequestData, tokenUserId);
+        return ResponseEntity.noContent().build();
+    }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated() and hasAuthority('USER')")
+    public ResponseEntity unregister(@PathVariable("id") Long targetId,
+                                     UserAuthentication authentication) {
+        Long tokenUserId = authentication.getUserid();
+
+        userService.unregister(targetId, tokenUserId);
         return ResponseEntity.noContent().build();
     }
 

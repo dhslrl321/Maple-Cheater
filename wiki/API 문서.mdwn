@@ -13,7 +13,7 @@
 - [x] **POST** `/api/v1/authenticate` : 로그인을 수행한다.
 - [x] **GET** `/api/v1/authenticate/{email}` : 인증 메일을 보낸다.
 - [x] **GET** `/api/v1/authenticate/{email}/{code}` : 이메일 인증 번호를 비교한다.
-- [ ] **POST** `/api/v1/authenticate/password` : 임시 비밀번호를 생성해 메일로 보낸다.
+- [x] **POST** `/api/v1/authenticate/password/{email}` : 임시 비밀번호를 생성해 메일로 보낸다.
 
 ### 트래픽 요약
 
@@ -75,7 +75,7 @@ Content-Type: application/json;charset=UTF-8
 HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
 {
-  "prevPassword": "@fhoi1239!23a",
+  "oldPassword": "@fhoi1239!23a",
   "newPassword": "newP123"
 }
 ```

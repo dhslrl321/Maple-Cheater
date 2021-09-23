@@ -29,6 +29,10 @@ import static org.mockito.Mockito.mock;
 
 class UserServiceTest {
 
+
+    private static final Long VALID_USER_ID = 1L;
+    private static final Long INVALID_USER_ID = 2L;
+    private static final Long NOT_EXIST_USER_ID = 20L;
     private static final Long NOT_EXIST_USER = 102L;
 
     private static final String EMAIL = "test@test.com";
@@ -83,15 +87,20 @@ class UserServiceTest {
                 .verified(VerificationType.UNVERIFIED)
                 .build();
 
-        given(userRepository.save(any(User.class))).willReturn(user);
+        given(userRepository.save(any(User.class)))
+                .willReturn(user);
 
-        given(userRepository.existsByEmail(EMAIL)).willReturn(false);
+        given(userRepository.existsByEmail(EMAIL))
+                .willReturn(false);
 
-        given(userRepository.existsByEmail(EXIST_USER_EMAIL)).willReturn(true);
+        given(userRepository.existsByEmail(EXIST_USER_EMAIL))
+                .willReturn(true);
 
-        given(userRepository.findByEmail(EMAIL)).willReturn(Optional.of(user));
+        given(userRepository.findByEmail(EMAIL))
+                .willReturn(Optional.of(user));
 
-        given(userRepository.findByEmail(EMAIL_NOT_VERIFIED)).willReturn(Optional.empty());
+        given(userRepository.findByEmail(EMAIL_NOT_VERIFIED))
+                .willReturn(Optional.empty());
 
         given(emailVerificationRepository.findByEmail(EMAIL))
                 .willReturn(Optional.of(emailVerification));
@@ -107,7 +116,11 @@ class UserServiceTest {
         given(emailVerificationRepository.findVerifiedByEmail(EMAIL_NOT_VERIFIED))
                 .willReturn(Optional.of(VerificationType.UNVERIFIED));
 
-        given(userRepository.findById(1L)).willReturn(Optional.of(userWithEncodedPassword));
+        given(userRepository.findById(1L))
+                .willReturn(Optional.of(userWithEncodedPassword));
+
+        given(userRepository.findById(20L))
+                .willReturn(Optional.empty());
 
         given(userRepository.existsByEmail(EMAIL))
                 .willReturn(false);
@@ -202,7 +215,7 @@ class UserServiceTest {
                 .newPassword(NEW_PASSWORD)
                 .build();
 
-        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
+        UnauthorizedException exception = assertThrows(UnauthorizedException.class,
                 () -> userService.changePassword(1L, request, 2L));
 
         assertNotNull(exception);
@@ -260,17 +273,24 @@ class UserServiceTest {
         Long targetId = 1L;
         Long tokenUserId = 1L;
 
-        assertDoesNotThrow(() -> userService.unregister(targetId, tokenUserId));
+        assertDoesNotThrow(() -> userService.unregister(VALID_USER_ID, VALID_USER_ID));
     }
 
     @Test
     @DisplayName("회원 탈퇴 - 실패 - targetId 와 tokenUserId 가 다름")
     void unregister_fail_different_id() {
-        Long targetId = 1L;
-        Long tokenUserId = 2L;
 
-        AuthenticationFailedException exception = assertThrows(AuthenticationFailedException.class,
-                () -> userService.unregister(targetId, tokenUserId));
+        UnauthorizedException exception = assertThrows(UnauthorizedException.class,
+                () -> userService.unregister(VALID_USER_ID, INVALID_USER_ID));
+
+        assertNotNull(exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("회원 탈퇴 - 실패 - User 가 존재하지 않음")
+    void unregister_fail_not_exists_user() {
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+                () -> userService.unregister(NOT_EXIST_USER_ID, NOT_EXIST_USER_ID));
 
         assertNotNull(exception.getMessage());
     }

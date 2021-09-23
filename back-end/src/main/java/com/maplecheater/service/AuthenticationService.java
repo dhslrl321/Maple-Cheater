@@ -7,6 +7,8 @@ import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.role.RoleRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.exception.AuthenticationFailedException;
+import com.maplecheater.exception.UserDeletedException;
+import com.maplecheater.exception.UserNotFoundException;
 import com.maplecheater.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -38,11 +40,15 @@ public class AuthenticationService {
         String password = request.getPassword();
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new AuthenticationFailedException());
+                .orElseThrow(() -> new UserNotFoundException());
+
+        if (user.getUnregisteredAt() != null) { // 해당 사용자가 삭제된 경우
+            throw new UserDeletedException();
+        }
 
         boolean authenticate = user.authenticate(password, passwordEncoder);
 
-        if(!authenticate) { // 비밀번호가 다르면?
+        if(!authenticate) { // 비밀번호가 다른 경우
             throw new AuthenticationFailedException();
         }
         String accessToken = jwtUtil.generateToken(user.getId());
