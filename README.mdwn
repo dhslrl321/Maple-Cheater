@@ -14,17 +14,18 @@
 
 - Library : React.js
 - Framework : Next.js
-- Styling : styled-components
-- API Communication : Axios
+- Styling : styled-components, material-ui, react-icons, styled-reset
+- Communication Module : Axios
 - Global State Managing : Redux, Redux-Thunk
 
 ## Back-End
 
 - Framework : Spring Boot
 - Data : Spring Data JPA
+- Mail : Spring Boot Starter Mail
 - Query : Querydsl
-- Auth : Spring Security
-- Testing : JUnit5, BDDMockito
+- Auth : Spring Security + JWT
+- Testing : JUnit5, BDDMockito, Mockito
 
 ## Infrastructure
 
