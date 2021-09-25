@@ -22,7 +22,7 @@ const index = () => {
           </S.MenuWrapper>
         </S.NavColumn>
         <S.ButtonWrapper>
-          <li><Link href="#">로그인</Link></li>
+          <li><Link href="/login">로그인</Link></li>
           <li>
             <Link href="/register">
               <S.RegisterButton>회원가입</S.RegisterButton>

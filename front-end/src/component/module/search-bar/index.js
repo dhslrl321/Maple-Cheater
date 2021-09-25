@@ -3,6 +3,8 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core'
 import TextField, { TextFieldClasses } from '@mui/material/TextField';
 
+import Button from "../button";
+
 import * as S from "./styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +35,7 @@ const index = () => {
           label="거래를 진행중인 상대방의 캐릭터 닉네임을 입력해주세요"
           variant="outlined"
           className={classes.textField} />
-        <S.Button>조회</S.Button>
+        <Button label="조회" width={100} height={55} />
       </S.SearchBarWrapper>
     </S.Container>
   )
