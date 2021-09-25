@@ -1,5 +1,5 @@
 import { ThemeProvider } from "styled-components";
-import { createMuiTheme, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import GlobalStyles from "../../styles/global-styles";
 import theme from "../../styles/theme";
 import Navigation from "../component/module/navigation";

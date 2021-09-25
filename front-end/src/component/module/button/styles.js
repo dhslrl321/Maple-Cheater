@@ -4,7 +4,7 @@ export const Button = styled.button`
   width: ${props => props.width + "px"};
   height: ${props => props.height + "px"};
   background: ${props => props.theme.color.primary};
-  margin: 0 0 0 20px;
+  margin: ${({ withoutMargin }) => withoutMargin ? "" : "0 0 0 20px"};
   color: ${props => props.theme.color.white};
   
   font-size: 1rem;
