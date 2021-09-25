@@ -8,17 +8,28 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   color: red;
-  label {
-    font-size: 0.8rem;
-  }
+
 `;
 
 export const SearchBarWrapper = styled.div`
   width: 70%;
   display: flex;
   max-width: 1100px;
+
   @media screen and (max-width: 576px) {
     font-size: 0.7rem;
+  }
+
+  label {
+    @media screen and (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+  }
+
+  input {
+    @media screen and (max-width: 768px) {
+      height: 10px;
+    }
   }
 `;
 
@@ -42,6 +53,10 @@ export const Button = styled.button`
   }
 
   cursor: pointer;
+
+  @media screen and (max-width: 768px) {
+    height: 43px;
+  }
 
   @media screen and (max-width: 576px) {
     font-size: 0.8rem;

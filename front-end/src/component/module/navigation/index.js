@@ -24,7 +24,9 @@ const index = () => {
         <S.ButtonWrapper>
           <li><Link href="#">로그인</Link></li>
           <li>
-            <S.RegisterButton>회원가입</S.RegisterButton>
+            <Link href="/register">
+              <S.RegisterButton>회원가입</S.RegisterButton>
+            </Link>
           </li>
         </S.ButtonWrapper>
       </S.Container>

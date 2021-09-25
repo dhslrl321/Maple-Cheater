@@ -1,8 +1,10 @@
+import Register from "../component/section/register";
+
 const register = () => {
   return (
-    <div>
-      register
-    </div>
+    <>
+      <Register />
+    </>
   )
 }
 
