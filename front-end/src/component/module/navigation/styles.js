@@ -38,6 +38,13 @@ export const MenuWrapper = styled.div`
   li {
     margin: 0 18px;
   }
+
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 `;
 
 export const ButtonWrapper = styled.div`

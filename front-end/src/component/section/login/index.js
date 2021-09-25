@@ -21,7 +21,7 @@ const index = () => {
   };
   return (
     <S.Container>
-      <PageHeader title="로그인" />
+      <PageHeader title="로그인" subtitle="신고 접수나 캐릭터 검색을 위해 로그인을 해주세요! 🙂" />
       <S.InputWrapper>
         <S.Label><span>📫 이메일</span></S.Label>
         <InputBox styleType="Simple" label="이메일을 입력하세요" />

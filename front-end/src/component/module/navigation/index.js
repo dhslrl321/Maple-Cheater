@@ -1,6 +1,8 @@
 import * as S from "./styles";
 import Link from "next/link";
 
+import Avatar from "../avatar";
+
 const index = () => {
   return (
     <S.Back>
@@ -22,12 +24,13 @@ const index = () => {
           </S.MenuWrapper>
         </S.NavColumn>
         <S.ButtonWrapper>
-          <li><Link href="/login">로그인</Link></li>
+          {/* <li><Link href="/login">로그인</Link></li>
           <li>
             <Link href="/register">
               <S.RegisterButton>회원가입</S.RegisterButton>
             </Link>
-          </li>
+          </li> */}
+          <Avatar />
         </S.ButtonWrapper>
       </S.Container>
     </S.Back>

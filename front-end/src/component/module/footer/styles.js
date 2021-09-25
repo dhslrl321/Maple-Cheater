@@ -17,7 +17,7 @@ export const TextWrapper = styled.div`
 export const Text = styled.span`
   font-size: 0.8rem;
   color: ${props => props.theme.color.white};
-  margin: 5px 40px;
+  margin: 6px 40px;
 
   @media screen and (max-width: 768px) {
     font-size: 0.6rem;
