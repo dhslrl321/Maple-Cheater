@@ -26,11 +26,12 @@ export const CardWrapper = styled.div`
   max-width: 1100px;
 
   @media screen and (max-width: 900px) {
+    width: 80%;
     height: 180px;
   }
 
   @media screen and (max-width: 576px) {
-    height: 200px;
+    height: 230px;
   }
 `;
 

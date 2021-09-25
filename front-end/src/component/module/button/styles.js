@@ -12,6 +12,10 @@ export const Button = styled.button`
 
   font-weight: ${({ bold }) => bold ? "bold" : ""};
 
+  opacity: ${({ disabled }) => disabled ? 0.65 : 1};
+  cursor: ${({ disabled }) => disabled ? "not-allowed" : "pointer"};
+  pointer-events: ${({ disabled }) => disabled ? "none" : "auto"};
+
   :hover {
     background: ${props => props.theme.color.hoverPrimary};
   }
@@ -20,8 +24,6 @@ export const Button = styled.button`
     background: ${props => props.theme.color.activePrimary};
     color: ${props => props.theme.color.white};
   }
-
-  cursor: pointer;
 
   @media screen and (max-width: 768px) {
     height: 43px;

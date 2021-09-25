@@ -8,7 +8,7 @@ const index = () => {
     <S.Container>
       <CharacterCard
         title="유저대 유저의 신뢰 기반 거래에서 정보 기반 거래로"
-        paragraph="Maple Cheater 는 사용자 참여형 커뮤니티 프로젝트로, 시청자의 제보로 사기 캐릭터를 검색하여 미리 사기를 방지할 수 있도록 도와주는 서비스 입니다."
+        paragraph="Maple Cheater 는 사용자 참여형 커뮤니티 프로젝트로, 사용자의 제보로 사기유저를 검색하여 사기를 방지할 수 있도록 돕는 서비스 입니다."
         source="/lala.png"
         isLeft={true} />
 

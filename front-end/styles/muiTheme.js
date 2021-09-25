@@ -8,13 +8,16 @@ const muiTheme = createTheme({
     secondary: {
       main: '#5F56EF'
     },
+    white: {
+      main: "#fff"
+    },
     error: {
       main: '#009688'
     },
     text: {
       primary: '#525463',
       secondary: '#9E9E9E',
-      disabled: '#4caf50',
+      disabled: '#808080',
       hint: '#000',
       myTextColor: '#000'
     }
