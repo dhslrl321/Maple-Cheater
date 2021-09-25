@@ -33,7 +33,7 @@ export const FindPasswordWrapper = styled.div`
   margin-top: 12px;
 `;
 
-export const FindPasswordLabel = styled.span`
+export const FindPasswordLabel = styled.button`
   color: ${props => props.theme.color.primary};
   cursor: pointer;
   user-select: none;

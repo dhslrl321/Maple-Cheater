@@ -30,3 +30,9 @@ export const SendButtonWrapper = styled.div`
 
   margin-top: 35px;
 `;
+
+export const SendResultLabel = styled.span`
+  display: ${({ showLabel }) => showLabel ? "inline" : "none"};
+  color: ${({ success, theme }) => success ? theme.color.green : theme.color.red};
+  margin: 10px 0;
+`;

@@ -11,14 +11,14 @@ import * as S from "./styles";
 
 const index = () => {
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+
   const handleOnModalOpen = () => {
-    setOpen(true)
+    setOpen(true);
   };
   const handleOnModalClose = () => {
     setOpen(false);
   };
-  console.log(open);
   return (
     <S.Container>
       <PageHeader title="로그인" />
@@ -32,12 +32,12 @@ const index = () => {
         <S.FindPasswordWrapper>
           <S.FindPasswordLabel onClick={handleOnModalOpen}>
             비밀번호 찾기
-            <Modal
-              open={open}
-              handleOnModalClose={handleOnModalClose}>
-              <FindPassword />
-            </Modal>
           </S.FindPasswordLabel>
+          <Modal
+            open={open}
+            handleOnModalClose={handleOnModalClose}>
+            <FindPassword />
+          </Modal>
         </S.FindPasswordWrapper>
       </S.InputWrapper>
 
