@@ -4,7 +4,14 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
-const index = ({ isOpen, severity, handleAlertClose, title, message }) => {
+const index = ({ severity, title, message }) => {
+
+  const [open, setOpen] = useState(true);
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
   return (
     <>
       <Snackbar
@@ -12,15 +19,15 @@ const index = ({ isOpen, severity, handleAlertClose, title, message }) => {
           vertical: "top",
           horizontal: "right"
         }}
-        open={isOpen}
+        open={open}
         autoHideDuration={2000}
-        onClose={handleAlertClose}
+        onClose={handleClose}
       >
         <Alert
           variant="filled"
           severity={severity}
-          open={isOpen}
-          onClose={handleAlertClose}>
+          open={open}
+          onClose={handleClose}>
           <AlertTitle>{title}</AlertTitle>
           <strong>{message}</strong>
         </Alert>

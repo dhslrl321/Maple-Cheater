@@ -19,7 +19,7 @@ const index = ({
       width={width}
       height={height}
       bold={bold}
-      disabled
+      disabled={disabled}
       withoutMargin={withoutMargin}
     >
       <CircularProgress color="white" size={20} />
@@ -30,7 +30,7 @@ const index = ({
         width={width}
         height={height}
         bold={bold}
-        disabled={loading && true}
+        disabled={disabled}
         withoutMargin={withoutMargin}
       >
         {label}

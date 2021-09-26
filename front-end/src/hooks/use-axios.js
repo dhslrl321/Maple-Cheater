@@ -16,16 +16,16 @@ const reducer = (state, action) => {
     case SUCCESS:
       return {
         loading: false,
-        data: action.data,
+        data: action.payload.data,
         error: null,
-        status: action.status
+        status: action.payload.status
       };
     case FAILURE:
       return {
         loading: false,
-        data: null,
-        error: action.error,
-        status: action.status
+        data: action.payload.data,
+        error: action.payload.error,
+        status: action.payload.status
       };
     default:
       throw new Error(`Unhandled action type: ${action.type}`)
@@ -43,11 +43,19 @@ const useAxios = (callback, deps = [], skip = false) => {
 
   const fetchData = async () => {
     dispatch({ type: LOADING });
-    try {
-      const { data, status } = await callback();
-      dispatch({ type: SUCCESS, data, status });
-    } catch (e) {
-      dispatch({ type: FAILURE, error: e, status: e.response.status });
+
+    const { data, status, error } = await callback();
+
+    if (error === null) { // 통신에 성공한 경우
+      dispatch({
+        type: SUCCESS,
+        payload: { data, status }
+      });
+    } else { // 통신에 실패한 경우
+      dispatch({
+        type: FAILURE,
+        payload: { data, status, error }
+      });
     }
   }
 

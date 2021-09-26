@@ -31,8 +31,8 @@ export const SendButtonWrapper = styled.div`
   margin-top: 35px;
 `;
 
-export const SendResultLabel = styled.span`
-  display: ${({ showLabel }) => showLabel ? "inline" : "none"};
-  color: ${({ success, theme }) => success ? theme.color.green : theme.color.red};
-  margin: 10px 0;
+export const ResultAlertWrapper = styled.div`
+  width: 100%;
+  margin-top: 24px;
+  display: ${({ show }) => show ? "inline" : "none"};
 `;

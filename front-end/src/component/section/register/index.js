@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import InputBox from "../../module/input-box";
 import PageHeader from "../../module/page-header";
 import Button from "../../module/button";
+import Alert from "@mui/material/Alert";
 
 import * as S from './styles';
 
@@ -10,8 +11,11 @@ const index = ({
   handleOnChange,
   values,
   inputLock,
-  handleSendMail,
-  handleAuthenticateAuthCode,
+  handleSendMailClick,
+  handleAuthenticateAuthCodeClick,
+  handleRegisterClick,
+  isSamePassword,
+  isRegisterOpen,
   loading, }) => {
 
   const { email, authCode, password, passwordCheck, nickname } = values;
@@ -37,7 +41,7 @@ const index = ({
             label="인증 번호 전송"
             disabled={emailLock}
             loading={sendEmailLoading}
-            handleOnClick={handleSendMail} />
+            handleOnClick={handleSendMailClick} />
         </S.Column>
       </S.InputWrapper>
       <S.InputWrapper>
@@ -54,9 +58,18 @@ const index = ({
             width="80"
             height="55"
             label="인증"
+            disabled={authCodeLock}
             loading={authenticateAuthCodeLoading}
-            handleOnClick={handleAuthenticateAuthCode} />
+            handleOnClick={handleAuthenticateAuthCodeClick} />
         </S.Column>
+        {authCodeLock ? (
+          <S.AlertWrapper>
+            <Alert severity="success">인증에 성공하였습니다.</Alert>
+          </S.AlertWrapper>
+        ) : (
+            <S.AlertWrapper>
+              <Alert severity="warning">이메일 인증을 완료해야 회원가입 버튼이 활성화 됩니다.</Alert>
+            </S.AlertWrapper>)}
       </S.InputWrapper>
 
       <S.InputWrapper>
@@ -75,8 +88,9 @@ const index = ({
           styleType="Password"
           name="passwordCheck"
           value={passwordCheck}
+          error={isSamePassword}
           handleOnChange={handleOnChange}
-          label="비밀번호를 재입력해주세요" />
+          label="비밀번호(확인)를 입력하세요" />
       </S.InputWrapper>
 
       <S.InputWrapper>
@@ -90,7 +104,7 @@ const index = ({
       </S.InputWrapper>
 
       <S.ButtonWrapper>
-        <Button width="100" height="40" label="회원가입" />
+        <Button disabled={isRegisterOpen} width="100" height="40" label="회원가입" handleOnClick={handleRegisterClick} />
       </S.ButtonWrapper>
     </S.Container >
   )

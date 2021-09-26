@@ -12,7 +12,7 @@ const muiTheme = createTheme({
       main: "#fff"
     },
     error: {
-      main: '#009688'
+      main: '#C93B3B'
     },
     text: {
       primary: '#525463',
