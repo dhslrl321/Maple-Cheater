@@ -36,6 +36,6 @@ class MailUtilTest {
     void generateTempPassword() {
         String tempPassword = mailUtil.generateTempPassword();
 
-        assertEquals(10, tempPassword.length());
+        assertEquals(8, tempPassword.length());
     }
 }

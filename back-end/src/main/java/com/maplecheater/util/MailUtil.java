@@ -28,8 +28,7 @@ public class MailUtil {
         String header = "회원가입 인증 코드 확인";
         String paragraph = "아래의 확인 코드를 Maple-Cheater 홈페이지에의 인증 코드에 입력하세요";
 
-        if (type.equals(EmailTemplateType.AUTHENTICATION)) {
-            code = code.substring(0, 3) + "-" + code.substring(3, 6);
+        if (type.equals(EmailTemplateType.TEMP_PASSWORD)) {
             header = "임시 비밀번호 발급";
             paragraph = "아래의 임시 비밀번호를 이용해서 로그인을 한 뒤, 비밀번호를 바꿔주세요";
         }
@@ -62,6 +61,6 @@ public class MailUtil {
      */
     public String generateTempPassword() {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-        return uuid.substring(0, 10);
+        return uuid.substring(0, 8);
     }
 }
