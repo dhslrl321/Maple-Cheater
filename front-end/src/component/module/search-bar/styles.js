@@ -19,18 +19,6 @@ export const SearchBarWrapper = styled.div`
   @media screen and (max-width: 576px) {
     font-size: 0.7rem;
   }
-
-  label {
-    @media screen and (max-width: 768px) {
-      font-size: 0.8rem;
-    }
-  }
-
-  input {
-    @media screen and (max-width: 768px) {
-      height: 10px;
-    }
-  }
 `;
 
 export const Button = styled.button`

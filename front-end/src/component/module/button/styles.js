@@ -25,10 +25,6 @@ export const Button = styled.button`
     color: ${props => props.theme.color.white};
   }
 
-  @media screen and (max-width: 768px) {
-    height: 43px;
-  }
-
   @media screen and (max-width: 576px) {
     font-size: 0.8rem;
   }
