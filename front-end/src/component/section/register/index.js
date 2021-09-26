@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 
 import InputBox from "../../module/input-box";
-import SelectBox from "../../module/select-box";
-
 import PageHeader from "../../module/page-header";
 import Button from "../../module/button";
 
@@ -14,10 +12,11 @@ const index = ({
   inputLock,
   handleSendMail,
   handleAuthenticateAuthCode,
-  loading }) => {
+  loading, }) => {
 
   const { email, authCode, password, passwordCheck, nickname } = values;
   const { emailLock, authCodeLock } = inputLock;
+  const { sendEmailLoading, authenticateAuthCodeLoading } = loading;
 
   return (
     <S.Container>
@@ -37,7 +36,7 @@ const index = ({
             height="55"
             label="인증 번호 전송"
             disabled={emailLock}
-            loading={loading}
+            loading={sendEmailLoading}
             handleOnClick={handleSendMail} />
         </S.Column>
       </S.InputWrapper>
@@ -55,6 +54,7 @@ const index = ({
             width="80"
             height="55"
             label="인증"
+            loading={authenticateAuthCodeLoading}
             handleOnClick={handleAuthenticateAuthCode} />
         </S.Column>
       </S.InputWrapper>

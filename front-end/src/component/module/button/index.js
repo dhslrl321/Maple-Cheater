@@ -13,22 +13,29 @@ const index = ({
   disabled,
   loading }) => {
 
-  const content = loading
-    ? <div><CircularProgress color="white" size={20} /></div>
-    : label;
-
-  return (
+  return loading ? (
     <S.Button
       onClick={handleOnClick}
       width={width}
       height={height}
       bold={bold}
-      disabled={disabled}
+      disabled
       withoutMargin={withoutMargin}
     >
-      {content}
+      <CircularProgress color="white" size={20} />
     </S.Button>
-  )
+  ) : (
+      <S.Button
+        onClick={handleOnClick}
+        width={width}
+        height={height}
+        bold={bold}
+        disabled={loading && true}
+        withoutMargin={withoutMargin}
+      >
+        {label}
+      </S.Button>
+    );
 }
 
 export default index

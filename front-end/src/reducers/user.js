@@ -1,5 +1,3 @@
-import { login } from "../services/auth-service2";
-
 import { SET_USER } from "./types";
 
 const initialState = {
@@ -29,21 +27,21 @@ export const setUser = (user) => {
 }
 
 // function dispatch
-export const loadAccessToken = (loginRequestData) => {
-  return async (dispatch) => {
-    const loginResponseData = await login(loginRequestData);
+// export const loadAccessToken = (loginRequestData) => {
+//   return async (dispatch) => {
+//     const loginResponseData = await login(loginRequestData);
 
-    const { userId, email, nickname, accessToken } = loginResponseData;
+//     const { userId, email, nickname, accessToken } = loginResponseData;
 
-    console.log(accessToken);
+//     console.log(accessToken);
 
-    const user = {
-      userId,
-      email,
-      nickname,
-      accessToken
-    };
+//     const user = {
+//       userId,
+//       email,
+//       nickname,
+//       accessToken
+//     };
 
-    dispatch(setUser(user));
-  }
-}
+//     dispatch(setUser(user));
+//   }
+// }

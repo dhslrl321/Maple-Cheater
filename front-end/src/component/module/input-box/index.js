@@ -4,16 +4,20 @@ import { makeStyles } from '@material-ui/core'
 import TextField from "@mui/material/TextField";
 import Box from '@mui/material/Box';
 
-const index = ({ styleType, name, label, handleOnChange, value, disabled }) => {
+const index = ({
+  styleType,
+  name,
+  label,
+  handleOnChange,
+  value,
+  disabled, }) => {
 
   const outlinedProps = {
-    id: "outlined-basic",
     variant: "outlined",
     fullWidth: true
   }
 
   const multilineProps = {
-    id: "outlined-multiline-static",
     multiline: true,
     fullWidth: true,
     rows: 5
@@ -25,9 +29,6 @@ const index = ({ styleType, name, label, handleOnChange, value, disabled }) => {
       name={name}
       value={value}
       onChange={handleOnChange}
-      label={label} />
-  } else if (styleType === "SimpleWithPrimaryColor") {
-    return <TextField {...outlinedProps}
       label={label} />
   } else if (styleType === "Password") {
     return <TextField {...outlinedProps}
