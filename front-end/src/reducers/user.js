@@ -1,47 +1,77 @@
-import { SET_USER } from "./types";
+import { fetchLogin } from "../services/auth-service";
+import * as T from "../constants/action-type";
+
 
 const initialState = {
-
+  user: {
+    loading: false,
+    data: null,
+    status: null,
+    error: null
+  }
 };
 
 // reducer
 export const reducer = (state = initialState, action) => {
-  if (action.type === SET_USER) {
-    const { user } = action.payload;
+  const { type, payload } = action;
+  if (type === T.GET_USER) {
     return {
-      user: user
+      ...state,
+      user: {
+        loading: true,
+        data: null,
+        status: null,
+        error: null,
+      }
     }
+  } else if (type === T.GET_USER_SUCCESS) {
+    const { data, status } = payload;
+    return {
+      ...state,
+      user: {
+        loading: false,
+        data,
+        status,
+        error: null
+      }
+    }
+  } else if (type === T.GET_USER_FAILURE) {
+    const { data, status, error } = payload;
+    return {
+      ...state,
+      user: {
+        loading: false,
+        data,
+        status,
+        error,
+      }
+    };
   } else {
     return state;
   }
 };
 
 // action creator
-export const setUser = (user) => {
-  return {
-    type: SET_USER,
-    user: {
-      user,
-    }
+export const getUser = (user) => async dispatch => {
+  dispatch({ type: T.GET_USER });
+
+  const { data, status, error } = await fetchLogin(user);
+  if (error === null) {
+    dispatch({
+      type: T.GET_USER_SUCCESS,
+      payload: {
+        data,
+        status
+      },
+    });
+  } else {
+    dispatch({
+      type: T.GET_USER_FAILURE,
+      payload: {
+        data,
+        status,
+        error
+      }
+    })
   }
-}
-
-// function dispatch
-// export const loadAccessToken = (loginRequestData) => {
-//   return async (dispatch) => {
-//     const loginResponseData = await login(loginRequestData);
-
-//     const { userId, email, nickname, accessToken } = loginResponseData;
-
-//     console.log(accessToken);
-
-//     const user = {
-//       userId,
-//       email,
-//       nickname,
-//       accessToken
-//     };
-
-//     dispatch(setUser(user));
-//   }
-// }
+};

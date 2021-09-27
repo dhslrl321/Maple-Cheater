@@ -7,8 +7,8 @@ export const fetchEmailVerification = async (email) => {
   } catch (e) {
     const { data: { message }, status } = e.response;
     return { data: message, status, error: e };
-  }
-}
+  };
+};
 
 export const fetchAuthenticateAuthCode = async (email, authCode) => {
   try {
@@ -17,8 +17,8 @@ export const fetchAuthenticateAuthCode = async (email, authCode) => {
   } catch (error) {
     const { data: { message }, status } = error.response;
     return { data: message, status, error };
-  }
-}
+  };
+};
 
 export const fetchSendTempPassword = async (email) => {
   try {
@@ -27,5 +27,22 @@ export const fetchSendTempPassword = async (email) => {
   } catch (error) {
     const { data: { message }, status } = error.response;
     return { data: message, status, error };
-  }
-}
+  };
+};
+
+export const fetchLogin = async (user) => {
+  const { email, password } = user;
+
+  const requestBody = {
+    email,
+    password
+  };
+
+  try {
+    const { data, status } = await API.post("/authenticate", JSON.stringify(requestBody));
+    return { data, status, error: null };
+  } catch (error) {
+    const { data: { message }, status } = error.response;
+    return { data: message, status, error };
+  };
+};

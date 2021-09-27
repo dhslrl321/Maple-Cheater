@@ -1,12 +1,13 @@
 import API from "../utils/api";
 
 export const fetchRegister = async (user) => {
+  const { email, password, nickname } = user;
 
   const requestBody = {
-    email: user.email,
-    password: user.password,
-    nickname: user.nickname,
-  }
+    email,
+    password,
+    nickname
+  };
 
   try {
     const { data, status } = await API.post("/users", JSON.stringify(requestBody));
@@ -16,3 +17,4 @@ export const fetchRegister = async (user) => {
     return { data: message, status, error };
   }
 }
+

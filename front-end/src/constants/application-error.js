@@ -1,1 +1,0 @@
-export const INPUT_VALUE_EMPTY = "application-error/INPUT_VALUE_EMPTY";
