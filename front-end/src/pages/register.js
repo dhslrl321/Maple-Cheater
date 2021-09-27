@@ -9,6 +9,8 @@ import useAxios from "../hooks/use-axios";
 import { fetchEmailVerification, fetchAuthenticateAuthCode } from "../services/auth-service";
 import { fetchRegister } from "../services/user-service";
 
+import { emailValidator } from "../utils/validator";
+
 
 const register = () => {
   const router = useRouter();
@@ -101,6 +103,15 @@ const register = () => {
       return;
     }
 
+    if (!emailValidator(email)) {
+      setAlert({
+        open: true,
+        title: "입력 값 에러",
+        message: "이메일 형식에 맞게 입력해주세요",
+      });
+      return;
+    }
+
     if (password !== passwordCheck) {
       setAlert({
         open: true,
@@ -120,6 +131,15 @@ const register = () => {
         open: true,
         title: "입력 값이 존재하지 않음",
         message: "이메일을 입력하세요!"
+      });
+      return;
+    }
+
+    if (!emailValidator(email)) {
+      setAlert({
+        open: true,
+        title: "입력 값 에러",
+        message: "이메일 형식에 맞게 입력해주세요",
       });
       return;
     }

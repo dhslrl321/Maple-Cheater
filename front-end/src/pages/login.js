@@ -8,9 +8,10 @@ import AlertSelfClose from "../component/module/alert-self-close";
 import Alert from "../component/module/alert";
 
 import { getUser } from "../reducers/user";
+import { emailValidator } from "../utils/validator";
 
 const login = () => {
-  const { data, loading, error, status } = useSelector(state => state.userReducer.user);
+  const { data, status } = useSelector(state => state.userReducer.user);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -52,6 +53,16 @@ const login = () => {
       });
       return;
     }
+
+    if (!emailValidator(email)) {
+      setAlert({
+        open: true,
+        title: "입력 값 에러",
+        message: "이메일 형식에 맞게 입력해주세요",
+      });
+      return;
+    }
+
     const user = {
       email,
       password
