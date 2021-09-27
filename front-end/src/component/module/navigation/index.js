@@ -1,19 +1,42 @@
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
+import * as S from "./styles";
+
 import Link from "next/link";
 
 import { FaBars } from "react-icons/fa";
 
 import Avatar from "../avatar";
 import Drawer from "../drawer";
+import Dropdown from "../dropdown";
 
-import * as S from "./styles";
-import { useState } from "react";
+import * as Storage from "../../../utils/storage";
+
 
 const index = () => {
-
+  const [user, setUser] = useState();
   const [open, setOpen] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
+
   const toggle = () => {
     setOpen(!open);
   };
+
+  const handleDropdownOver = () => {
+    setDropdown(true);
+  }
+
+  const handleDropdownLeave = () => {
+    setDropdown(false);
+  }
+
+  const { data, status } = useSelector(state => state.userReducer.user);
+
+  useEffect(() => {
+    const user = Storage.getUser();
+    setUser(user);
+  }, []);
 
   return (
     <S.Back>
@@ -36,13 +59,26 @@ const index = () => {
             </S.MenuWrapper>
           </S.NavColumn>
           <S.ButtonWrapper>
-            <li><Link href="/login">로그인</Link></li>
-            <li>
-              <Link href="/register">
-                <S.RegisterButton>회원가입</S.RegisterButton>
-              </Link>
-            </li>
-            {/* <Avatar /> auth 진행해야함 */}
+
+            {status === 200 || user !== null ? (
+              <div
+                onMouseOver={handleDropdownOver}
+                onMouseLeave={handleDropdownLeave}>
+                <Avatar />
+                <Dropdown dropdown={dropdown} />
+              </div>
+            ) : (
+                <>
+                  <li>
+                    <Link href="/login">로그인</Link>
+                  </li>
+                  <li>
+                    <Link href="/register">
+                      <S.RegisterButton>회원가입</S.RegisterButton>
+                    </Link>
+                  </li>
+                </>
+              )}
           </S.ButtonWrapper>
           <S.DrawerWrapper>
             <S.MobileIcon>

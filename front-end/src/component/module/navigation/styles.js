@@ -6,6 +6,7 @@ export const Back = styled.div`
 `;
 
 export const Container = styled.nav`
+  position: relative;
   width: 100%;
   height: 60px;
   background: ${props => props.theme.color.white};
@@ -14,12 +15,12 @@ export const Container = styled.nav`
   justify-content: center;
   align-items: center;
   position: fixed;
-
   font-weight: bold;
   font-size: 1rem;
   color: ${props => props.theme.color.gray};
   z-index: 999;
 `;
+
 export const Nav = styled.div`
   width: 100%;
   max-width: 1400px;
@@ -28,6 +29,7 @@ export const Nav = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
 export const NavColumn = styled.div`
   display: flex;
   justify-content: center;

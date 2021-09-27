@@ -9,6 +9,7 @@ import Alert from "../component/module/alert";
 
 import { getUser } from "../reducers/user";
 import { emailValidator } from "../utils/validator";
+import * as Storage from "../utils/storage";
 
 const login = () => {
   const { data, status } = useSelector(state => state.userReducer.user);
@@ -72,6 +73,16 @@ const login = () => {
   }
 
   if (status === 200) {
+    const { userId, email, nickname, accessToken } = data;
+    const responseUser = {
+      userId,
+      email,
+      nickname
+    };
+
+    Storage.setUser(responseUser);
+
+    Storage.setAccessToken(accessToken);
     router.push("/");
   }
 
