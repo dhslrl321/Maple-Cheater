@@ -81,7 +81,7 @@ const index = ({ open, toggle }) => {
                   </Link>
                 </S.LinkColumn>
                 <S.LinkColumn>
-                  <Link href="/">
+                  <Link href="/logout">
                     <ListItem button>로그아웃</ListItem>
                   </Link>
                 </S.LinkColumn>

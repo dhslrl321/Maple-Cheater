@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 import * as S from "./styles";
-
-import Link from "next/link";
 
 import { FaBars } from "react-icons/fa";
 
@@ -27,8 +26,7 @@ const Navigation = () => {
     setDropdown(false);
   }
 
-  const { data, status, loading } = useSelector(state => state.userReducer.user);
-
+  const { status, loading } = useSelector(state => state.userReducer.user);
 
   return (
     <S.Back>
@@ -40,7 +38,7 @@ const Navigation = () => {
             </S.TitleWrapper>
             <S.MenuWrapper>
               <li>
-                <Link href="/cheater">사용자 검색</Link>
+                <Link href="/search">사용자 검색</Link>
               </li>
               <li>
                 <Link href="/report">피해 등록</Link>
