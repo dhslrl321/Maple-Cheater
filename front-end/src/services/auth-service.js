@@ -47,9 +47,14 @@ export const fetchLogin = async (user) => {
   };
 };
 
-export const validateUser = async (accessToken) => {
+export const fetchValidateUser = async (accessToken) => {
   try {
-    const { data, status } = await API.get("/authenticate/validate"); // 헤더에 엑세스 토큰 넣어야함
+    const { data, status } = await API.get(
+      "/authenticate/validate", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
     return { data, status, error: null };
   } catch (error) {
     const { data: { message }, status } = error.response;

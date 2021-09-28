@@ -8,19 +8,7 @@ import useAuthentication from "../hooks/use-authentication";
 const withAuthentication = WrappedComponent => {
   const container = () => {
     const user = useAuthentication();
-
-    return !user ? (
-      <>
-        <Loading />
-        <AlertSelfClose
-          severity="warning"
-          title="제목"
-          message="메시지"
-        />
-      </>
-    ) : (
-        <WrappedComponent />
-      );
+    return !user ? <Loading /> : <WrappedComponent />;
   }
 
   return container;

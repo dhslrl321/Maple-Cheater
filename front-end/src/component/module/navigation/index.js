@@ -11,11 +11,7 @@ import Avatar from "../avatar";
 import Drawer from "../drawer";
 import Dropdown from "../dropdown";
 
-import * as Storage from "../../../utils/storage";
-
-
-const index = () => {
-  const [user, setUser] = useState();
+const Navigation = () => {
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
 
@@ -31,12 +27,8 @@ const index = () => {
     setDropdown(false);
   }
 
-  const { data, status } = useSelector(state => state.userReducer.user);
+  const { data, status, loading } = useSelector(state => state.userReducer.user);
 
-  useEffect(() => {
-    const user = Storage.getUser();
-    setUser(user);
-  }, []);
 
   return (
     <S.Back>
@@ -59,26 +51,30 @@ const index = () => {
             </S.MenuWrapper>
           </S.NavColumn>
           <S.ButtonWrapper>
-
-            {status === 200 || user !== null ? (
-              <S.AvatarWrapper
-                onMouseOver={handleDropdownOver}
-                onMouseLeave={handleDropdownLeave}>
-                <Avatar isNavigation />
-                <Dropdown dropdown={dropdown} />
-              </S.AvatarWrapper>
+            {loading ? (
+              <></>
             ) : (
-                <>
-                  <li>
-                    <Link href="/login">로그인</Link>
-                  </li>
-                  <li>
-                    <Link href="/register">
-                      <S.RegisterButton>회원가입</S.RegisterButton>
-                    </Link>
-                  </li>
-                </>
+                status === 200 ? (
+                  <S.AvatarWrapper
+                    onMouseOver={handleDropdownOver}
+                    onMouseLeave={handleDropdownLeave}>
+                    <Avatar isNavigation />
+                    <Dropdown dropdown={dropdown} />
+                  </S.AvatarWrapper>
+                ) : (
+                    <>
+                      <li>
+                        <Link href="/login">로그인</Link>
+                      </li>
+                      <li>
+                        <Link href="/register">
+                          <S.RegisterButton>회원가입</S.RegisterButton>
+                        </Link>
+                      </li>
+                    </>
+                  )
               )}
+
           </S.ButtonWrapper>
           <S.DrawerWrapper>
             <S.MobileIcon>
@@ -92,4 +88,4 @@ const index = () => {
   )
 }
 
-export default index;
+export default Navigation;

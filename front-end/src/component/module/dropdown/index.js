@@ -7,41 +7,22 @@ import * as S from "./styles";
 import Avatar from "../avatar";
 import Divider from '@mui/material/Divider';
 
-import * as Storage from "../../../utils/storage";
-
 const Dropdown = ({ dropdown }) => {
 
-  const [user, setUser] = useState({
-    email: "",
-    nickname: ""
-  });
-
-  useEffect(() => {
-    const storageData = Storage.getUser();
-
-    const email = storageData && storageData.email;
-    const nickname = storageData && storageData.nickname;
-
-    if (!email && !nickname) {
-      setUser({
-        email,
-        nickname
-      })
-    }
-  }, [])
+  const { data, status } = useSelector(state => state.userReducer.user);
 
   return (
     <S.Container dropdown={dropdown}>
-      {user && (
+      {(status !== 401 && data !== null) && (
         <S.UserProfile>
           <S.AvatarWrapper>
             <Avatar />
           </S.AvatarWrapper>
           <S.Nickname>
-            {user.nickname}
+            {data.nickname}
           </S.Nickname>
           <S.Email>
-            {user.email}
+            {data.email}
           </S.Email>
           <Divider style={{ width: "100%" }} />
         </S.UserProfile>

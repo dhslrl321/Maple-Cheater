@@ -1,4 +1,4 @@
-import { fetchLogin } from "../services/auth-service";
+import { fetchLogin, fetchValidateUser } from "../services/auth-service";
 import * as T from "../constants/action-type";
 
 
@@ -56,6 +56,38 @@ export const reducer = (state = initialState, action) => {
         error: null
       }
     }
+  } else if (type === T.VALIDATE_USER) {
+    return {
+      ...state,
+      user: {
+        loading: true,
+        data: null,
+        state: null,
+        error: null,
+      }
+    }
+  } else if (type === T.VALIDATE_USER_SUCCESS) {
+    const { data, status } = payload;
+    return {
+      ...state,
+      user: {
+        loading: false,
+        data,
+        status,
+        error: null,
+      }
+    }
+  } else if (type === T.VALIDATE_USER_FAILURE) {
+    const { data, status, error } = payload;
+    return {
+      ...state,
+      user: {
+        loading: false,
+        data,
+        status,
+        error,
+      }
+    }
   }
   else {
     return state;
@@ -78,6 +110,30 @@ export const getUser = (user) => async dispatch => {
   } else {
     dispatch({
       type: T.GET_USER_FAILURE,
+      payload: {
+        data,
+        status,
+        error
+      }
+    })
+  }
+};
+
+export const validateUser = (accessToken) => async dispatch => {
+  dispatch({ type: T.VALIDATE_USER });
+
+  const { data, status, error } = await fetchValidateUser(accessToken);
+  if (error === null) {
+    dispatch({
+      type: T.VALIDATE_USER_SUCCESS,
+      payload: {
+        data,
+        status
+      },
+    });
+  } else {
+    dispatch({
+      type: T.VALIDATE_USER_FAILURE,
       payload: {
         data,
         status,

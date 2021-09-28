@@ -17,15 +17,18 @@ export const setAccessToken = (accessToken) => {
 
 export const getAccessToken = () => {
   const accessToken = window.localStorage.getItem("accessToken");
-
-  if (!accessToken) {
+  if (!accessToken || !accessToken.startsWith('"') || accessToken.endsWith('"')) {
     return null;
   }
 
   return JSON.parse(accessToken);
 }
 
-export const clearUser = () => {
+export const clearAll = () => {
   window.localStorage.removeItem("accessToken");
+  window.localStorage.removeItem("user");
+}
+
+export const clearUser = () => {
   window.localStorage.removeItem("user");
 }

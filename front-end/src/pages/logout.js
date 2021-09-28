@@ -13,7 +13,7 @@ const logout = () => {
   const dispatch = useDispatch();
 
   const clearAllUserData = () => {
-    Storage.clearUser();
+    Storage.clearAll();
     dispatch(clearUser());
   }
 
