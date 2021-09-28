@@ -2,6 +2,7 @@ package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.LoginRequestData;
 import com.maplecheater.domain.dto.response.LoginResponseData;
+import com.maplecheater.domain.dto.response.ValidateUserResponseData;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.role.RoleRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -81,5 +83,22 @@ public class AuthenticationService {
      */
     public List<Role> getRoles(Long userId) {
         return roleRepository.findAllByUserId(userId);
+    }
+
+    /**
+     * 회원 id 를 받아 사용자 비밀번호를 제외한 ValidateUserResponseData 를 반환한다.
+     *
+     * @param tokenUserId : 토큰에 저장된 사용자 이름
+     * @return ValidateUserResponseData
+     */
+    public ValidateUserResponseData validateUser(Long tokenUserId) {
+        User user = userRepository.findById(tokenUserId).orElseThrow(
+                () -> new UserNotFoundException());
+
+        return ValidateUserResponseData.builder()
+                .userId(user.getId())
+                .nickname(user.getNickname())
+                .email(user.getEmail())
+                .build();
     }
 }

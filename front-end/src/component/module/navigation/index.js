@@ -61,12 +61,12 @@ const index = () => {
           <S.ButtonWrapper>
 
             {status === 200 || user !== null ? (
-              <div
+              <S.AvatarWrapper
                 onMouseOver={handleDropdownOver}
                 onMouseLeave={handleDropdownLeave}>
-                <Avatar />
+                <Avatar isNavigation />
                 <Dropdown dropdown={dropdown} />
-              </div>
+              </S.AvatarWrapper>
             ) : (
                 <>
                   <li>

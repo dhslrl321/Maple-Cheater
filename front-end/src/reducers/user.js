@@ -46,7 +46,18 @@ export const reducer = (state = initialState, action) => {
         error,
       }
     };
-  } else {
+  } else if (type === T.CLEAR_USER) {
+    return {
+      ...state,
+      user: {
+        loading: false,
+        data: null,
+        status: null,
+        error: null
+      }
+    }
+  }
+  else {
     return state;
   }
 };
@@ -75,3 +86,7 @@ export const getUser = (user) => async dispatch => {
     })
   }
 };
+
+export const clearUser = () => dispatch => {
+  dispatch({ type: T.CLEAR_USER, payload: {} });
+}

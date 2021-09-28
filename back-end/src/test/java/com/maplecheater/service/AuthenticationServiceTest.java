@@ -2,6 +2,7 @@ package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.LoginRequestData;
 import com.maplecheater.domain.dto.response.LoginResponseData;
+import com.maplecheater.domain.dto.response.ValidateUserResponseData;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.role.RoleRepository;
@@ -37,6 +38,7 @@ class AuthenticationServiceTest {
     private static final String WRONG_PASS_USER_EMAIL = "wrong@password.user";
 
     private static final Long USER_ID = 1004L;
+    private static final Long INVALID_USER_ID = 1004L;
     private static final String ENCODED_PASSWORD = "$2a$10$zSnzZDu5Jpyqch0zez9soekcecOTmgT8MFFzG.Sd7vClwexE.syd2";
     private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MzMzNjY2MDF9.grfL76CaNeaDo2N-EW25KYCg-SGkwBz1MoQ12MFhSzI";
 
@@ -78,6 +80,15 @@ class AuthenticationServiceTest {
 
         given(roleRepository.findAllByUserId(USER_ID))
                 .willReturn(Collections.singletonList(new Role(USER_ID, RoleType.USER)));
+
+        given(roleRepository.findAllByUserId(INVALID_USER_ID))
+                .willReturn(Collections.singletonList(new Role(INVALID_USER_ID, RoleType.USER)));
+
+        given(userRepository.findById(USER_ID))
+                .willReturn(Optional.of(user));
+
+        given(userRepository.findById(INVALID_USER_ID))
+                .willReturn(Optional.empty());
 
         willThrow(new AuthenticationFailedException())
                 .given(userRepository)
@@ -158,5 +169,22 @@ class AuthenticationServiceTest {
     void parseToken() {
         Long parsedUserId = authenticationService.parseToken(VALID_TOKEN);
         // parsedUserId 에서 널포남
+    }
+
+    @Test
+    @DisplayName("validateUser_success")
+    void validateUser_success() {
+        ValidateUserResponseData response = authenticationService.validateUser(USER_ID);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    @DisplayName("validateUser_fail")
+    void validateUser_fail() {
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
+                () -> authenticationService.validateUser(INVALID_USER_ID));
+
+        assertNotNull(exception.getMessage());
     }
 }

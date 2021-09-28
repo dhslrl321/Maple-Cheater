@@ -2,7 +2,7 @@ import API from "../utils/api";
 
 export const fetchEmailVerification = async (email) => {
   try {
-    const { data, status } = await API.get("/authenticate/" + email);
+    const { data, status } = await API.get("/authenticate/email/" + email);
     return { data, status, error: null };
   } catch (e) {
     const { data: { message }, status } = e.response;
@@ -12,7 +12,7 @@ export const fetchEmailVerification = async (email) => {
 
 export const fetchAuthenticateAuthCode = async (email, authCode) => {
   try {
-    const { data, status } = await API.get("/authenticate/" + email + "/" + authCode);
+    const { data, status } = await API.get("/authenticate/email/code/" + email + "/" + authCode);
     return { data, status, error: null };
   } catch (error) {
     const { data: { message }, status } = error.response;
@@ -46,3 +46,13 @@ export const fetchLogin = async (user) => {
     return { data: message, status, error };
   };
 };
+
+export const validateUser = async (accessToken) => {
+  try {
+    const { data, status } = await API.get("/authenticate/validate"); // 헤더에 엑세스 토큰 넣어야함
+    return { data, status, error: null };
+  } catch (error) {
+    const { data: { message }, status } = error.response;
+    return { data: message, status, error };
+  };
+}

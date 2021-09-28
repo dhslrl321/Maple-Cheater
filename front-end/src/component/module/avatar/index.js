@@ -6,7 +6,7 @@ import * as S from "./styles";
 
 import { FaAngleDown } from "react-icons/fa"
 
-const index = () => {
+const index = ({ isNavigation }) => {
   return (
     <S.Container>
       <S.AvatarWrapper>
@@ -15,9 +15,11 @@ const index = () => {
           src="/newbie.png"
           sx={{ width: 36, height: 36 }} />
       </S.AvatarWrapper>
-      <S.IconWrapper>
-        <FaAngleDown />
-      </S.IconWrapper>
+      {isNavigation && (
+        <S.IconWrapper>
+          <FaAngleDown />
+        </S.IconWrapper>
+      )}
     </S.Container>
   )
 

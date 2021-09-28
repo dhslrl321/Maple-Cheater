@@ -118,3 +118,7 @@ export const MobileIcon = styled.div`
   font-size: 20px;
   color: ${props => props.theme.color.deepBlue};
 `;
+
+export const AvatarWrapper = styled.div`
+  margin-right: 50px;  
+`;
