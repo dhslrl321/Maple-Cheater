@@ -48,4 +48,5 @@ export const Email = styled.span`
   width: 120px;
   word-break: break-word;
   margin: 6px 0 10px 0;
+  text-align: center;
 `;

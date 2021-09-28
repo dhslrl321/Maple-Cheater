@@ -29,3 +29,23 @@ export const DrawerTitle = styled.h1`
   color: ${props => props.theme.color.primary};
   font-weight: bold;
 `;
+
+export const AvatarWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 15px 0;
+`;
+
+export const Nickname = styled.span`
+  font-size: 1rem;
+  margin: 6px 0;
+`;
+
+export const Email = styled.span`
+  font-size: 0.9rem;
+  word-break: break-word;
+  margin-top: 6px;
+  text-align: center;
+`;
