@@ -44,7 +44,7 @@ const Navigation = () => {
                 <Link href="/report">피해 등록</Link>
               </li>
               <li>
-                <Link href="/guide">이용 규칙</Link>
+                <Link href="/guideline">이용 규칙</Link>
               </li>
             </S.MenuWrapper>
           </S.NavColumn>

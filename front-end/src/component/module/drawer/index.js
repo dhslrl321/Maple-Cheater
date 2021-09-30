@@ -55,7 +55,7 @@ const index = ({ open, toggle }) => {
               </Link>
             </S.LinkColumn>
             <S.LinkColumn>
-              <Link href="/guide">
+              <Link href="/guideline">
                 <ListItem button>이용 규칙</ListItem>
               </Link>
             </S.LinkColumn>
