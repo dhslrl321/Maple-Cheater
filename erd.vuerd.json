@@ -3,7 +3,7 @@
     "width": 3000,
     "height": 3000,
     "scrollTop": 0,
-    "scrollLeft": 0,
+    "scrollLeft": 8,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -284,43 +284,20 @@
               "widthDefault": 60
             },
             "id": "0eea3587-2777-75ea-a186-eb9c357d3266"
-          },
-          {
-            "name": "complaint_count",
-            "comment": "",
-            "dataType": "INTEGER",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 91,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "c151e5d1-4c82-49da-e371-2421e47f0e48"
           }
         ],
         "ui": {
           "active": false,
-          "left": 779.2000006008158,
-          "top": 99.50000000000016,
-          "zIndex": 279,
+          "left": 773.2000006008158,
+          "top": 100.50000000000016,
+          "zIndex": 382,
           "widthName": 60,
           "widthComment": 60
         },
         "id": "ddec6302-e9aa-cddd-46d5-bc28d0f9c845"
       },
       {
-        "name": "COMPLAINT",
+        "name": "REPORT",
         "comment": "",
         "columns": [
           {
@@ -370,7 +347,7 @@
             "id": "ac27f5e0-f4ec-e53c-58ab-f1da5aaf2d0c"
           },
           {
-            "name": "cheater_ingame_nickname",
+            "name": "ingame_nickname",
             "comment": "",
             "dataType": "VARCHAR",
             "default": "",
@@ -385,7 +362,7 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 143,
+              "widthName": 98,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -393,30 +370,7 @@
             "id": "d8381397-3b7a-6143-f9e5-9e2c9d468238"
           },
           {
-            "name": "cheater_account",
-            "comment": "",
-            "dataType": "VARCHAR",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 91,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "d09d280e-b611-9059-7b79-94600d0997ad"
-          },
-          {
-            "name": "trading_type",
+            "name": "cheating_type",
             "comment": "",
             "dataType": "VARCHAR",
             "default": "",
@@ -431,7 +385,7 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 69,
+              "widthName": 77,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -439,7 +393,7 @@
             "id": "7d5d4eec-6fdc-02dd-fe0e-81ac14ef5b90"
           },
           {
-            "name": "trading_datetime",
+            "name": "cheating_datetime",
             "comment": "",
             "dataType": "DATETIME",
             "default": "",
@@ -454,7 +408,7 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 94,
+              "widthName": 102,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -462,31 +416,8 @@
             "id": "385713ff-370f-aeb9-92c1-bccfd3837376"
           },
           {
-            "name": "cheater_details",
-            "comment": "",
-            "dataType": "TEXT",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 83,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "7e151895-2d83-d321-37b2-59da8e38f9f3"
-          },
-          {
             "name": "situation",
-            "comment": "",
+            "comment": "문제 상황",
             "dataType": "TEXT",
             "default": "",
             "option": {
@@ -508,9 +439,9 @@
             "id": "6cdd0de2-639e-4a19-9572-5701dd261ece"
           },
           {
-            "name": "solved",
-            "comment": "",
-            "dataType": "VARCHAR",
+            "name": "accepted",
+            "comment": "신고가 인정 되었는지",
+            "dataType": "TINYINT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -524,11 +455,11 @@
               "fk": false,
               "pfk": false,
               "widthName": 60,
-              "widthComment": 60,
+              "widthComment": 110,
               "widthDataType": 60,
               "widthDefault": 60
             },
-            "id": "f169ac5d-b8a4-d8dc-ffc3-86cec0be7ae5"
+            "id": "90ededa5-0035-292f-8864-328e3f3e2ab1"
           },
           {
             "name": "users_id",
@@ -558,8 +489,8 @@
           "active": false,
           "left": 102.19999766826626,
           "top": 447.3999999856949,
-          "zIndex": 295,
-          "widthName": 69,
+          "zIndex": 400,
+          "widthName": 60,
           "widthComment": 60
         },
         "id": "ee17b7b6-cb2c-6bf2-f5e7-82ea3033ad1a"
@@ -616,10 +547,10 @@
           }
         ],
         "ui": {
-          "active": true,
-          "left": 1343.0000273227683,
-          "top": 427.4000075674053,
-          "zIndex": 299,
+          "active": false,
+          "left": 1294.0000273227683,
+          "top": 967.4000075674053,
+          "zIndex": 324,
           "widthName": 60,
           "widthComment": 60
         },
@@ -689,7 +620,7 @@
             "ui": {
               "active": false,
               "pk": false,
-              "fk": true,
+              "fk": false,
               "pfk": false,
               "widthName": 60,
               "widthComment": 60,
@@ -701,9 +632,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 798.2000142621998,
-          "top": 417.40000756740534,
-          "zIndex": 297,
+          "left": 679.2000142621998,
+          "top": 955.4000075674053,
+          "zIndex": 323,
           "widthName": 114,
           "widthComment": 60
         },
@@ -783,7 +714,7 @@
             "id": "c5a56682-a224-c9ee-9cd0-c9ae869c4573"
           },
           {
-            "name": "complaint_id",
+            "name": "report_id",
             "comment": "",
             "dataType": "BIGINT",
             "default": "",
@@ -798,7 +729,7 @@
               "pk": false,
               "fk": true,
               "pfk": false,
-              "widthName": 70,
+              "widthName": 60,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -808,9 +739,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 799.0000153064731,
-          "top": 671.4000134706499,
-          "zIndex": 296,
+          "left": 770.0000153064731,
+          "top": 666.4000134706499,
+          "zIndex": 417,
           "widthName": 100,
           "widthComment": 60
         },
@@ -938,9 +869,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1330.7600007575988,
-          "top": 92.60001727390352,
-          "zIndex": 293,
+          "left": 1360.7600007575988,
+          "top": 88.60001727390352,
+          "zIndex": 328,
           "widthName": 94,
           "widthComment": 60
         },
@@ -1068,13 +999,227 @@
         ],
         "ui": {
           "active": false,
-          "left": 161.68002564087055,
-          "top": 813.1200294158945,
-          "zIndex": 294,
+          "left": 100.68002564087055,
+          "top": 819.1200294158945,
+          "zIndex": 300,
           "widthName": 120,
           "widthComment": 60
         },
         "id": "4e9a15fc-a114-888a-99cb-19ccd59042a6"
+      },
+      {
+        "name": "CHEATER_DETAIL",
+        "comment": "",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "BIGINT",
+            "default": "",
+            "option": {
+              "autoIncrement": true,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "5fdcf6f0-2540-dc38-61da-30fbdd501ce8"
+          },
+          {
+            "name": "registered_at",
+            "comment": "",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 72,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "7f1e3f0c-0baf-28c9-31f4-72dddc5446fe"
+          },
+          {
+            "name": "cheating_type",
+            "comment": "",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 77,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "797410b9-b06b-c731-b16e-c31f848ff1d0"
+          },
+          {
+            "name": "cheating_datetime",
+            "comment": "",
+            "dataType": "DATETIME",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 102,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "f724a9d8-a316-e420-ac47-45033be941cf"
+          },
+          {
+            "name": "situation",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "f83fbf1a-7738-be1d-34ea-3c7862ee6267"
+          },
+          {
+            "name": "cheate_id",
+            "comment": "",
+            "dataType": "BIGINT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "990d1e50-0d1c-789c-15e2-4679d2ecd8a7"
+          }
+        ],
+        "ui": {
+          "active": true,
+          "left": 776,
+          "top": 391,
+          "zIndex": 423,
+          "widthName": 98,
+          "widthComment": 60
+        },
+        "id": "2f7d261f-ff8a-f29a-a720-6dcbce51e566"
+      },
+      {
+        "name": "CHEATING_TYPE",
+        "comment": "",
+        "columns": [
+          {
+            "name": "id",
+            "comment": "",
+            "dataType": "BIGINT",
+            "default": "",
+            "option": {
+              "autoIncrement": true,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "69bc24d1-465d-1c16-d603-3969a03663e1"
+          },
+          {
+            "name": "type",
+            "comment": "현금 거래, 대리작, 사냥터 비매너",
+            "dataType": "VARCHAR",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 168,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "6b5f3648-1f93-c64d-8f7f-efbe93a64b30"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 1364,
+          "top": 403,
+          "zIndex": 404,
+          "widthName": 93,
+          "widthComment": 60
+        },
+        "id": "caf2f9a0-f797-5723-77f1-bff2b2608ee0"
       }
     ]
   },
@@ -1099,7 +1244,7 @@
           "columnIds": [
             "67bbc4a4-4b5b-4ce1-e408-86e41f183640"
           ],
-          "x": 340.6999976682663,
+          "x": 345.1999976682663,
           "y": 447.3999999856949,
           "direction": "top"
         },
@@ -1113,8 +1258,8 @@
           "columnIds": [
             "92e5e0c6-11a6-64c1-c757-0c60ec425a4b"
           ],
-          "x": 1343.0000273227683,
-          "y": 482.4000075674053,
+          "x": 1294.0000273227683,
+          "y": 1022.4000075674053,
           "direction": "left"
         },
         "end": {
@@ -1122,34 +1267,11 @@
           "columnIds": [
             "e8afe3fe-89df-3992-4730-df5cd4a2df86"
           ],
-          "x": 1192.2000142621998,
-          "y": 482.65000756740534,
+          "x": 1073.2000142621998,
+          "y": 1020.6500075674053,
           "direction": "right"
         },
         "id": "75cd8f41-379a-36c4-615f-6efa2873e634",
-        "relationshipType": "OneN"
-      },
-      {
-        "identification": false,
-        "start": {
-          "tableId": "ddec6302-e9aa-cddd-46d5-bc28d0f9c845",
-          "columnIds": [
-            "17666733-564f-95bd-e28c-8041b84077b4"
-          ],
-          "x": 995.2000006008158,
-          "y": 271.00000000000017,
-          "direction": "bottom"
-        },
-        "end": {
-          "tableId": "a0c90f1e-55ca-560e-9c72-e7f776d03b2c",
-          "columnIds": [
-            "f34a7ea2-ea9b-e298-0e6b-250878a8003d"
-          ],
-          "x": 995.2000142621998,
-          "y": 417.40000756740534,
-          "direction": "top"
-        },
-        "id": "26afccdf-e963-cd87-c519-7a5f0b2d525f",
         "relationshipType": "OneN"
       },
       {
@@ -1159,8 +1281,8 @@
           "columnIds": [
             "3549c267-8252-2d58-5c3c-612cef5dc3c8"
           ],
-          "x": 579.1999976682663,
-          "y": 584.3999999856949,
+          "x": 588.1999976682663,
+          "y": 563.8999999856949,
           "direction": "right"
         },
         "end": {
@@ -1168,11 +1290,34 @@
           "columnIds": [
             "f7ff1195-6273-78c0-b0c4-44f816a93c30"
           ],
-          "x": 799.0000153064731,
-          "y": 746.9000134706499,
+          "x": 770.0000153064731,
+          "y": 741.9000134706499,
           "direction": "left"
         },
         "id": "e0cea78f-a118-4ad5-2008-b0a1a2a801f8",
+        "relationshipType": "OneN"
+      },
+      {
+        "identification": false,
+        "start": {
+          "tableId": "ddec6302-e9aa-cddd-46d5-bc28d0f9c845",
+          "columnIds": [
+            "17666733-564f-95bd-e28c-8041b84077b4"
+          ],
+          "x": 989.2000006008158,
+          "y": 251.50000000000017,
+          "direction": "bottom"
+        },
+        "end": {
+          "tableId": "2f7d261f-ff8a-f29a-a720-6dcbce51e566",
+          "columnIds": [
+            "990d1e50-0d1c-789c-15e2-4679d2ecd8a7"
+          ],
+          "x": 994,
+          "y": 391,
+          "direction": "top"
+        },
+        "id": "cf4efe73-31bc-24c9-c97a-3334948f6d5a",
         "relationshipType": "OneN"
       }
     ]
