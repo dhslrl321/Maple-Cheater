@@ -3,17 +3,18 @@
 ### 회원
 
 - [x] **POST** `/api/v1/users` : 회원을 추가한다.
-- [x] **PATCH** `/api/v1/users/password` : 비밀번호를 수정한다.
-- [x] **PATCH** `/api/v1/users/nickname` : 닉네임을 수정한다.
-- [x] **DELETE** `/api/v1/users` : 회원을 탈퇴시킨다.
+- [x] **PATCH** `/api/v1/users/{id}/password` : 비밀번호를 수정한다.
+- [x] **PATCH** `/api/v1/users/{id}/nickname` : 닉네임을 수정한다.
+- [x] **DELETE** `/api/v1/users/{id}` : 회원을 탈퇴시킨다.
 - [x] **GET** `/api/v1/users/exists/{email}` : 이메일이 존재하는지 검색한다.
 
 ### 로그인 & 회원가입
 
 - [x] **POST** `/api/v1/authenticate` : 로그인을 수행한다.
-- [x] **GET** `/api/v1/authenticate/{email}` : 인증 메일을 보낸다.
-- [x] **GET** `/api/v1/authenticate/{email}/{code}` : 이메일 인증 번호를 비교한다.
+- [x] **GET** `/api/v1/authenticate/email/{email}` : 인증 메일을 보낸다.
+- [x] **GET** `/api/v1/authenticate/email/code/{email}/{code}` : 이메일 인증 번호를 비교한다.
 - [x] **POST** `/api/v1/authenticate/password/{email}` : 임시 비밀번호를 생성해 메일로 보낸다.
+- [x] **GET** `/api/v1/authenticate/validate` : 현재 연결된 세션이 유효한지 확인한다.
 
 ### 트래픽 요약
 
@@ -22,260 +23,16 @@
 ### 치터
 
 - **GET** `/api/v1/cheaters/nicknames` : 캐릭터 이름으로 치터를 검색한다.
-- **GET** `/api/v1/cheaters/account` : 계좌 번호로 치터를 검색한다.
-- **POST** `/api/v1/cheaters` : 치터를 추가한다. 만약 기존에 치터가 존재한다면 횟수를 증가시킨다.
 
-### 신고서
+### 리포트
 
-- **GET** `/api/v1/complaints` : 나의 모든 피해 신고서 확인하기
-- **GET** `/api/v1/complaints/{id}` : 특정 피해 신고서 확인하기
-- **POST** `/api/v1/complaints` : 피해 신고서 등록하기
+- **POST** `/api/v1/reports` : 피해 신고서 등록하기
+- **GET** `/api/v1/reports/{userId}` : 내가 신고한 목록을 확인한다.
+- **GET** `/api/v1/reports/{userId}/{reportId}` : 내가 신고한 특정 신고를 확인한다.
 
----
+### 관리자
 
-# 회원
-
-### 회원 추가하기
-
-> **이메일, 비밀번호, 닉네임**을 받아서 회원을 추가한다.  
-> 회원을 추가할 때는 `EMAIL_VERIFICATION` 테이블에서 VERIFIED 필드의 값이 VERIFIED 일 때만 추가하고 그 이외에는 400 Bad Request를 반환한다.
-
-#### Request
-
-```json
-HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-{
-  "email": "maplecheater0@gmail.com",
-  "password": "@fhoi1239!23a",
-  "nickname": "히어로123"
-}
-```
-
-#### Response - 정상
-
-```json
-HTTP/1.1 201 Created
-Content-Type: application/json;charset=UTF-8
-{
-  "email": "maplecheater@gmail.com",
-  "nickname": "히어로123"
-}
-```
-
----
-
-### 비밀번호 변경
-
-> 기존의 비밀번호와 새로운 비밀번호를 받아 기존의 비밀번호를 검증하고 새로운 비밀번호로 갱신한다.
-
-#### Request
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "oldPassword": "@fhoi1239!23a",
-  "newPassword": "newP123"
-}
-```
-
-#### Response - 성공
-
-```json
-HTTP/1.1 204 No Content
-```
-
-#### Response - 실패
-
-```json
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "message": "400 Bad Request"
-}
-```
-
----
-
-### 닉네임 변경
-
-> 닉네임을 변경한다.
-
-#### Request
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "nickname": "히히히"
-}
-```
-
-#### Response - 성공
-
-```json
-HTTP/1.1 204 No Content
-```
-
-#### Response - 실패
-
-```json
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "message": "400 Bad Request"
-}
-```
-
-# 로그인 & 회원가입
-
-### 인증 메일 보내기
-
-> 인증 메일을 Body 에 있는 email로 보낸다.
-
-#### Request
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "email": "maplecheater0@gmail.com"
-}
-```
-
-#### Response - 정상
-
-```json
-HTTP/1.1 204 No Content
-Content-Type: application/json;charset=UTF-8
-```
-
----
-
-### 인증 코드 비교하기
-
-> 이메일로 보낸 인증 코드와 사용자가 입력한 인증 코드를 비교한다.  
-> 인증 코드가 다르다면 400 Bad Request를 반환한다.
-
-#### Request
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "email": "maplecheater0@gmail.com",
-  "code": "A237BD"
-}
-```
-
-#### Response - 정상
-
-```json
-HTTP/1.1 204 No Content
-```
-
-#### Response - 실패
-
-```json
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "message": "인증 코드가 맞지 않습니다."
-}
-```
-
----
-
-### 로그인
-
-> 로그인을 수행한다.
-
-#### Request
-
-```json
-HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-{
-  "email": "maplecheater0@gmail.com",
-  "password": "@fhoi1239!23a",
-}
-```
-
-#### Response - 정상
-
-```json
-HTTP/1.1 200 OK
-{
-    "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImV4cCI6MTYzMzQ0ODY3Nn0.F47kSEhKBTqP1qsi1_kBsgnttQDsymGscuKxuypqwfw"
-}
-```
-
-#### Response - 실패
-
-```json
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "message": "로그인 정보가 일치하지 않습니다."
-}
-```
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-### 제목
-
-> 설명을 쓴다.  
-> Line 을 띄고싶을 떄는 스페이스 두번을 붙힌다.
-
-#### Request
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "": ""
-}
-```
-
-#### Response - 정상
-
-```json
-HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-{
-  "": ""
-}
-```
-
-#### Response - 실패
-
-```json
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "": ""
-}
-```
+- **POST** `/api/v1/admins/services/reports` : 특정 신고를 등록한다.
+- **GET** `/api/v1/admins/services/reports` : 모든 피해 신고서를 확인한다.
+- **GET** `/api/v1/admins/services/reports/{id}` : 특정 신고 정보를 확인한다.
+- **GET** `/api/v1/admins/services/reports/reject/{id}` : 특정 신고를 거부한다.

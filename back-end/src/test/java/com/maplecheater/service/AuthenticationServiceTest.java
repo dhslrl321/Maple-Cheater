@@ -38,7 +38,7 @@ class AuthenticationServiceTest {
     private static final String WRONG_PASS_USER_EMAIL = "wrong@password.user";
 
     private static final Long USER_ID = 1004L;
-    private static final Long INVALID_USER_ID = 1004L;
+    private static final Long INVALID_USER_ID = 1005L;
     private static final String ENCODED_PASSWORD = "$2a$10$zSnzZDu5Jpyqch0zez9soekcecOTmgT8MFFzG.Sd7vClwexE.syd2";
     private static final String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MzMzNjY2MDF9.grfL76CaNeaDo2N-EW25KYCg-SGkwBz1MoQ12MFhSzI";
 
