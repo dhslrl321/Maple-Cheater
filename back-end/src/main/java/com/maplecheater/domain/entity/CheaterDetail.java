@@ -16,11 +16,11 @@ public class CheaterDetail {
     private String situation;
     private LocalDateTime cheatingDatetime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cheater_id")
     private Cheater cheater;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cheating_type_id")
     private CheatingType cheatingType;
 }
