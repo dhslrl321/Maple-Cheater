@@ -2,8 +2,8 @@
   "canvas": {
     "width": 3000,
     "height": 3000,
-    "scrollTop": 3,
-    "scrollLeft": 111,
+    "scrollTop": 0,
+    "scrollLeft": 480,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -1152,9 +1152,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1256,
-          "top": 416,
-          "zIndex": 512,
+          "left": 1274,
+          "top": 393,
+          "zIndex": 514,
           "widthName": 98,
           "widthComment": 60
         },
@@ -1213,9 +1213,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 655,
-          "top": 638,
-          "zIndex": 506,
+          "left": 673,
+          "top": 641,
+          "zIndex": 513,
           "widthName": 93,
           "widthComment": 60
         },
@@ -1374,8 +1374,8 @@
           "columnIds": [
             "990d1e50-0d1c-789c-15e2-4679d2ecd8a7"
           ],
-          "x": 1256,
-          "y": 458.875,
+          "x": 1274,
+          "y": 435.875,
           "direction": "left"
         },
         "id": "cf4efe73-31bc-24c9-c97a-3334948f6d5a",
@@ -1388,8 +1388,8 @@
           "columnIds": [
             "69bc24d1-465d-1c16-d603-3969a03663e1"
           ],
-          "x": 1157,
-          "y": 693,
+          "x": 1175,
+          "y": 696,
           "direction": "right"
         },
         "end": {
@@ -1397,8 +1397,8 @@
           "columnIds": [
             "60d37e39-e895-7a9f-c90d-a1b2dc33d2b8"
           ],
-          "x": 1256,
-          "y": 544.625,
+          "x": 1274,
+          "y": 521.625,
           "direction": "left"
         },
         "id": "bf86e49b-cd80-7ab5-49d9-a7b9945e4baa",
@@ -1457,8 +1457,8 @@
           "columnIds": [
             "69bc24d1-465d-1c16-d603-3969a03663e1"
           ],
-          "x": 655,
-          "y": 693,
+          "x": 673,
+          "y": 696,
           "direction": "left"
         },
         "end": {

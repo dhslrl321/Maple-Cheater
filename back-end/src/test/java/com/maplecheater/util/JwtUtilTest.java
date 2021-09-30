@@ -41,7 +41,7 @@ class JwtUtilTest {
     @DisplayName("토큰 생성 테스트")
     void generateToken() {
         String token = jwtUtil.generateToken(USER_ID);
-
+        System.out.println(token);
         assertNotNull(token);
     }
 

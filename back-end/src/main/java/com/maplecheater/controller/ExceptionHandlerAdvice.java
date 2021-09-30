@@ -47,4 +47,10 @@ public class ExceptionHandlerAdvice {
     public ErrorResponseData handleVerificationNotFoundException(VerificationNotFoundException e) {
         return new ErrorResponseData(e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ExceptionHandler(CheaterNotFoundException.class)
+    public ErrorResponseData handleCheaterNotFoundException(CheaterNotFoundException e) {
+        return new ErrorResponseData(e.getMessage());
+    }
 }

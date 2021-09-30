@@ -134,12 +134,6 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("회원가입 - 실패 - 중복된 이메일")
-    void register_fail_duplicated_email() {
-
-    }
-
-    @Test
     @DisplayName("회원가입 - 실패 - 인증되지 않은 이메일")
     void register_fail_not_verified_email() throws Exception {
         RegisterRequestData invalidRequest = RegisterRequestData.builder()

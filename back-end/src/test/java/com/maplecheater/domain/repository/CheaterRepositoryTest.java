@@ -13,12 +13,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Transactional
 class CheaterRepositoryTest {
+
+    private static final String INGAME_NICKNAME = "cheaters";
 
     @Autowired
     private CheaterRepository cheaterRepository;
@@ -31,7 +34,7 @@ class CheaterRepositoryTest {
         IngameServer ingameServer = ingameServerRepository.save(new IngameServer("크로아"));
 
         Cheater cheater = Cheater.builder()
-                .ingameNickname("CodeDeploy")
+                .ingameNickname(INGAME_NICKNAME)
                 .registeredAt(LocalDateTime.now())
                 .ingameServer(ingameServer)
                 .build();
@@ -40,9 +43,10 @@ class CheaterRepositoryTest {
     }
 
     @Test
-    @DisplayName("테스트")
-    void t() {
-
+    @DisplayName("cheater 이름으로 cheating 정보 모두 조회")
+    void findByIngameNickname() {
+        Optional<Cheater> optionalCheater = cheaterRepository.findByIngameNickname(INGAME_NICKNAME);
+        assertNotNull(optionalCheater.get());
     }
 
 }
