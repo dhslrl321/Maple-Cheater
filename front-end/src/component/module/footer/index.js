@@ -13,10 +13,10 @@ const index = () => {
       </S.TextWrapper>
       <S.LinkWrapper>
         <S.Text>
-          <Link href="/">커뮤니티 이용 정책</Link>
+          <Link href="/guideline">커뮤니티 이용 정책</Link>
         </S.Text>
         <S.Text>
-          <Link href="/">개인정보처리방침</Link>
+          <Link href="/privacy-policy">개인정보처리방침</Link>
         </S.Text>
       </S.LinkWrapper>
     </S.Container>
