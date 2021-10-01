@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MailUtilTest {
@@ -37,5 +39,11 @@ class MailUtilTest {
         String tempPassword = mailUtil.generateTempPassword();
 
         assertEquals(8, tempPassword.length());
+    }
+
+    @Test
+    @DisplayName("adsf")
+    void adsf() {
+        System.out.println(LocalDateTime.now());
     }
 }

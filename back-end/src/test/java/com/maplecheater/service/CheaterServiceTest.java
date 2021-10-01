@@ -1,6 +1,7 @@
 package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.AddCheaterRequestData;
+import com.maplecheater.domain.dto.response.CheaterDetailResponseData;
 import com.maplecheater.domain.dto.response.SearchCheaterResponseData;
 import com.maplecheater.domain.entity.Cheater;
 import com.maplecheater.domain.entity.CheaterDetail;
@@ -59,16 +60,6 @@ class CheaterServiceTest {
                 .ingameServer(new IngameServer("크로아"))
                 .build();
 
-        CheaterDetail cheaterDetail1 = CheaterDetail.builder()
-                .cheater(cheater)
-                .cheatingType(new CheatingType("현금 거래"))
-                .build();
-
-        CheaterDetail cheaterDetail2 = CheaterDetail.builder()
-                .cheater(cheater)
-                .cheatingType(new CheatingType("현금 거래"))
-                .build();
-
         given(ingameServerRepository.findById(EXIST_INGAME_SERVER))
                 .willReturn(Optional.of(new IngameServer(1L, "크로아")));
 
@@ -85,7 +76,7 @@ class CheaterServiceTest {
                 .willReturn(Optional.of(cheater));
 
         given(cheaterDetailRepository.findAllByCheaterNickname(EXIST_NICKNAME))
-                .willReturn(List.of(cheaterDetail1, cheaterDetail2));
+                .willReturn(List.of(new CheaterDetailResponseData(), new CheaterDetailResponseData()));
 
         given(cheaterRepository.findByIngameNickname(NOT_EXIST_NICKNAME))
                 .willReturn(Optional.empty());
@@ -96,7 +87,7 @@ class CheaterServiceTest {
     @DisplayName("getCheater - 성공")
     void getCheater_success() {
         SearchCheaterResponseData response = cheaterService.getCheater(EXIST_NICKNAME);
-        assertEquals(2, response.getCheaterDetails().size());
+        assertEquals(2, response.getCheaterReportHistories().size());
     }
 
     @Test

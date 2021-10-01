@@ -1,6 +1,8 @@
 package com.maplecheater.domain.repository.cheaterdetail;
 
+import com.maplecheater.domain.dto.response.CheaterDetailResponseData;
 import com.maplecheater.domain.entity.CheaterDetail;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -19,9 +21,16 @@ public class CheaterDetailRepositoryImpl implements CheaterDetailRepositoryCusto
     }
 
     @Override
-    public List<CheaterDetail> findAllByCheaterNickname(String ingameNickname) {
+    public List<CheaterDetailResponseData> findAllByCheaterNickname(String ingameNickname) {
         return queryFactory
-                .selectFrom(cheaterDetail)
+                .select(Projections.fields(CheaterDetailResponseData.class,
+                        cheater.id.as("cheaterId"),
+                        cheaterDetail.cheater.ingameNickname.as("cheaterNickname"),
+                        cheaterDetail.cheatingType.type.as("cheatingType"),
+                        cheaterDetail.cheatingDatetime.as("cheatingDatetime"),
+                        cheaterDetail.situation
+                        ))
+                .from(cheaterDetail)
                 .join(cheaterDetail.cheater, cheater)
                 .where(cheater.ingameNickname.eq(ingameNickname))
                 .fetch();

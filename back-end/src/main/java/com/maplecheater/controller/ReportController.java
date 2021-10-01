@@ -1,10 +1,8 @@
 package com.maplecheater.controller;
 
-import com.maplecheater.domain.dto.request.AddCheaterRequestData;
 import com.maplecheater.domain.dto.request.AddReportRequestData;
 import com.maplecheater.domain.dto.request.UpdateReportStatusRequestData;
-import com.maplecheater.domain.dto.response.AddReportResponseData;
-import com.maplecheater.domain.entity.Report;
+import com.maplecheater.domain.dto.response.*;
 import com.maplecheater.security.UserAuthentication;
 import com.maplecheater.service.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +21,13 @@ public class ReportController {
 
     @GetMapping
     @PreAuthorize("isAuthenticated() and hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Page<Report>> getReports(Pageable pageable) {
+    public ResponseEntity<Page<ReportPreviewResponseData>> getReports(Pageable pageable) {
         return ResponseEntity.ok(reportService.getReports(pageable));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated() and hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Report> getReport(@PathVariable Long id) {
+    public ResponseEntity<ReportDetailResponseData> getReport(@PathVariable Long id) {
         return ResponseEntity.ok(reportService.getReport(id));
     }
 
@@ -43,8 +41,9 @@ public class ReportController {
 
     @PatchMapping("/{id}")
     @PreAuthorize("isAuthenticated() and hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Report> getReport(@RequestBody UpdateReportStatusRequestData request,
-                                            @PathVariable Long id) {
+    public ResponseEntity<UpdateReportStatusResponseData> updateReportStatus(
+            @RequestBody UpdateReportStatusRequestData request,
+            @PathVariable Long id) {
         return ResponseEntity.ok(reportService.updateStatus(request, id));
     }
 }

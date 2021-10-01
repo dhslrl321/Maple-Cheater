@@ -1,5 +1,7 @@
 package com.maplecheater.domain.repository;
 
+import com.maplecheater.domain.dto.response.ReportDetailResponseData;
+import com.maplecheater.domain.dto.response.ReportPreviewResponseData;
 import com.maplecheater.domain.entity.CheatingType;
 import com.maplecheater.domain.entity.IngameServer;
 import com.maplecheater.domain.entity.Report;
@@ -15,14 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,24 +84,31 @@ class ReportRepositoryTest {
     }
 
     @Test
-    @DisplayName("특정 user 의 id 로 저장한 모든 report 찾기")
-    void findAllByUserId() {
+    @DisplayName("데이터베이스에 존재하는 모든 report 를 조회한다.")
+    void findAllDTO() {
         PageRequest pageRequest = PageRequest.of(0, 10);
-
-        Page<Report> reports = reportRepository.findAllByUserId(pageRequest,1L);
+        Page<ReportPreviewResponseData> reports = reportRepository.findAllDTO(pageRequest);
 
         assertEquals(1, reports.getTotalPages());
-        assertEquals(2, reports.getTotalElements());
+        assertEquals(3, reports.getTotalElements());
+    }
+
+    @Test
+    @DisplayName("특정 user 의 id 로 저장한 모든 report 찾기")
+    void findAllByUserIdDTO() {
+        PageRequest pageRequest = PageRequest.of(0, 10);
+
+        reportRepository.findAllByUserIdDTO(pageRequest,1L);
     }
 
     @Test
     @DisplayName("특정 user 가 소유하고 있는 신고서 id 를 받아 조회")
-    void findByReportIdAndUserId() {
+    void findByReportIdAndUserIdDTO() {
         Long userId = 1L;
         Long reportId = 1L;
 
-        Optional<Report> byReportIdAndUserId = reportRepository.findByReportIdAndUserId(reportId, userId);
-        assertEquals("CodeDeploy", byReportIdAndUserId.get().getIngameNickname());
+        Optional<ReportDetailResponseData> result = reportRepository.findByReportIdAndUserIdDTO(reportId, userId);
+        assertEquals("CodeDeploy", result.get().getCheaterNickname());
     }
 
 }

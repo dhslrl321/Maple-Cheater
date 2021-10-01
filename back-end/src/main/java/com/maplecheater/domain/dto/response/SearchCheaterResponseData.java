@@ -10,8 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchCheaterResponseData {
-    private String ingameNickname;
-    private String ingameServer;
+    private String cheaterNickname;
+    private String cheaterServer;
     private Integer reportCount;
-    private List<CheaterDetail> cheaterDetails;
+    private List<CheaterDetailResponseData> cheaterReportHistories;
 }

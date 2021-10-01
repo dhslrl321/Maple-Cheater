@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maplecheater.domain.dto.request.AddReportRequestData;
 import com.maplecheater.domain.dto.request.UpdateReportStatusRequestData;
 import com.maplecheater.domain.dto.response.AddReportResponseData;
-import com.maplecheater.domain.entity.Report;
+import com.maplecheater.domain.dto.response.ReportDetailResponseData;
+import com.maplecheater.domain.dto.response.ReportPreviewResponseData;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.type.RoleType;
 import com.maplecheater.exception.IllegalDataException;
@@ -27,7 +28,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -86,17 +86,17 @@ class ReportControllerTest {
             return AddReportResponseData.builder().build();
         });
 
-        List<Report> reports = new ArrayList<>();
+        List<ReportPreviewResponseData> reports = new ArrayList<>();
 
         IntStream.range(0, 30).forEach(i -> {
-            reports.add(Report.builder().build());
+            reports.add(ReportPreviewResponseData.builder().build());
         });
 
         given(reportService.getReports(any()))
                 .willReturn(new PageImpl<>(reports));
 
         given(reportService.getReport(any()))
-                .willReturn(new Report());
+                .willReturn(new ReportDetailResponseData());
     }
 
     @Test

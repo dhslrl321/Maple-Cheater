@@ -2,7 +2,7 @@ package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.AddReportRequestData;
 import com.maplecheater.domain.dto.request.UpdateReportStatusRequestData;
-import com.maplecheater.domain.dto.response.AddReportResponseData;
+import com.maplecheater.domain.dto.response.*;
 import com.maplecheater.domain.entity.CheatingType;
 import com.maplecheater.domain.entity.IngameServer;
 import com.maplecheater.domain.entity.Report;
@@ -20,8 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -57,6 +56,7 @@ public class ReportService {
                 .status(ReportStatus.PENDING)
                 .situation(request.getSituation())
                 .cheatingDatetime(request.getCheatingDatetime())
+                .registeredAt(LocalDateTime.now())
                 .user(user)
                 .cheatingType(cheatingType)
                 .ingameServer(ingameServer)
@@ -74,8 +74,8 @@ public class ReportService {
      *
      * @return Pageable List
      */
-    public Page<Report> getReports(Pageable pageable) {
-        return reportRepository.findAll(pageable);
+    public Page<ReportPreviewResponseData> getReports(Pageable pageable) {
+        return reportRepository.findAllDTO(pageable);
     }
 
     /**
@@ -84,10 +84,10 @@ public class ReportService {
      * @param id : 조회하려는 page 의 id
      * @return report entity
      */
-    public Report getReport(Long id) {
-        Report report = reportRepository.findById(id)
+    public ReportDetailResponseData getReport(Long id) {
+        ReportDetailResponseData response = reportRepository.findByIdDTO(id)
                 .orElseThrow(() -> new IllegalDataException("[" + id + "] 는 존재하지 않는 신고서입니다."));
-        return report;
+        return response;
     }
 
 
@@ -97,7 +97,7 @@ public class ReportService {
      * @param request : boolean accept 만 존재하는 dto
      * @return update 된 report
      */
-    public Report updateStatus(UpdateReportStatusRequestData request, Long reportId) {
+    public UpdateReportStatusResponseData updateStatus(UpdateReportStatusRequestData request, Long reportId) {
         Report report = reportRepository.findById(reportId)
                 .orElseThrow(() -> new IllegalDataException("[" + reportId + "]" + " 는 존재하지 않는 report 입니다."));
 
@@ -107,6 +107,12 @@ public class ReportService {
             report.reject();
         }
 
-        return reportRepository.save(report);
+        Report savedReport = reportRepository.save(report);
+        return UpdateReportStatusResponseData.builder()
+                .reportId(savedReport.getId())
+                .reporterEmail(savedReport.getUser().getEmail())
+                .cheaterIngameNickname(savedReport.getIngameNickname())
+                .status(savedReport.getStatus())
+                .build();
     }
 }

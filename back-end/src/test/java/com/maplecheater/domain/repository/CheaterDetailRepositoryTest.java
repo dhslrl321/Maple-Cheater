@@ -1,5 +1,6 @@
 package com.maplecheater.domain.repository;
 
+import com.maplecheater.domain.dto.response.CheaterDetailResponseData;
 import com.maplecheater.domain.entity.Cheater;
 import com.maplecheater.domain.entity.CheaterDetail;
 import com.maplecheater.domain.entity.CheatingType;
@@ -92,12 +93,12 @@ class CheaterDetailRepositoryTest {
     @DisplayName("findAllByIngameNickname")
     void findAllByIngameNickname() {
         String ingameNickname = "cheater";
-        List<CheaterDetail> cheaterDetails = cheaterDetailRepository.findAllByCheaterNickname(ingameNickname);
+        List<CheaterDetailResponseData> cheaterDetails = cheaterDetailRepository.findAllByCheaterNickname(ingameNickname);
 
-        CheaterDetail cheaterDetail = cheaterDetails.get(0);
+        CheaterDetailResponseData cheaterDetailResponseData = cheaterDetails.get(0);
 
         assertAll(
-                () -> assertEquals(ingameNickname, cheaterDetail.getCheater().getIngameNickname()),
+                () -> assertEquals(ingameNickname, cheaterDetailResponseData.getCheaterNickname()),
                 () -> assertEquals(3, cheaterDetails.size())
         );
     }

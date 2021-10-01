@@ -5,8 +5,9 @@ import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
+import com.maplecheater.domain.dto.response.ReportDetailResponseData;
+import com.maplecheater.domain.dto.response.ReportPreviewResponseData;
 import com.maplecheater.domain.entity.EmailVerification;
-import com.maplecheater.domain.entity.Report;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.emailverification.EmailVerificationRepository;
 import com.maplecheater.domain.repository.report.ReportRepository;
@@ -14,12 +15,9 @@ import com.maplecheater.domain.repository.role.RoleRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.VerificationType;
 import com.maplecheater.exception.*;
-import org.apache.catalina.LifecycleState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -145,21 +143,21 @@ class UserServiceTest {
         given(userRepository.existsByEmail(EMAIL))
                 .willReturn(false);
 
-        List<Report> reports = new ArrayList<>();
+        List<ReportPreviewResponseData> reports = new ArrayList<>();
 
         IntStream.range(0, 10).forEach(each -> {
-            reports.add(new Report());
+            reports.add(new ReportPreviewResponseData());
         });
 
-        Page<Report> pagedReports = new PageImpl<>(reports);
+        Page<ReportPreviewResponseData> pagedReports = new PageImpl<>(reports);
 
-        given(reportRepository.findAllByUserId(PageRequest.of(PAGE_INDEX, PAGE_SIZE), VALID_USER_ID))
+        given(reportRepository.findAllByUserIdDTO(PageRequest.of(PAGE_INDEX, PAGE_SIZE), VALID_USER_ID))
                 .willReturn(pagedReports);
 
-        given(reportRepository.findByReportIdAndUserId(VALID_REPORT_ID, VALID_USER_ID))
-                .willReturn(Optional.of(new Report()));
+        given(reportRepository.findByReportIdAndUserIdDTO(VALID_REPORT_ID, VALID_USER_ID))
+                .willReturn(Optional.of(new ReportDetailResponseData()));
 
-        given(reportRepository.findByReportIdAndUserId(INVALID_REPORT_ID, VALID_USER_ID))
+        given(reportRepository.findByReportIdAndUserIdDTO(INVALID_REPORT_ID, VALID_USER_ID))
                 .willReturn(Optional.empty());
     }
 
@@ -337,7 +335,7 @@ class UserServiceTest {
         PageRequest pageRequest = PageRequest.of(0, 5);
         Long tokenUserId = 1L;
 
-        Page<Report> page = userService.getAllReports(pageRequest, 1L, tokenUserId);
+        Page<ReportPreviewResponseData> page = userService.getAllReports(pageRequest, 1L, tokenUserId);
 
         assertEquals(10, page.getTotalElements());
     }
@@ -345,7 +343,7 @@ class UserServiceTest {
     @Test
     @DisplayName("userId 와 reportId 를 받아서 특정 신고서 확인 - 성공")
     void getReport() {
-        Report report = userService.getReport(VALID_REPORT_ID, 1L, VALID_USER_ID);
+        ReportDetailResponseData report = userService.getReport(VALID_REPORT_ID, 1L, VALID_USER_ID);
         assertNotNull(report);
     }
 

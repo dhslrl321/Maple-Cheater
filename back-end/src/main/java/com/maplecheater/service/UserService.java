@@ -5,7 +5,8 @@ import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
-import com.maplecheater.domain.entity.Report;
+import com.maplecheater.domain.dto.response.ReportDetailResponseData;
+import com.maplecheater.domain.dto.response.ReportPreviewResponseData;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.emailverification.EmailVerificationRepository;
@@ -18,7 +19,6 @@ import com.maplecheater.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -162,11 +162,11 @@ public class UserService {
      * @param tokenUserId : 요청 토큰에 포함된 userId
      * @return Report Paging Data
      */
-    public Page<Report> getAllReports(Pageable pageable, Long userId, Long tokenUserId) {
+    public Page<ReportPreviewResponseData> getAllReports(Pageable pageable, Long userId, Long tokenUserId) {
         if(userId != tokenUserId) {
             throw new UnauthorizedException();
         }
-        return reportRepository.findAllByUserId(pageable, tokenUserId);
+        return reportRepository.findAllByUserIdDTO(pageable, tokenUserId);
     }
 
     /**
@@ -176,13 +176,14 @@ public class UserService {
      * @param tokenUserId : 토큰에 포함된 사용자 id
      * @return report entity
      */
-    public Report getReport(Long reportId, Long userId, Long tokenUserId) {
+    public ReportDetailResponseData getReport(Long reportId, Long userId, Long tokenUserId) {
         if(userId != tokenUserId) {
             throw new UnauthorizedException();
         }
 
-        Report report = reportRepository.findByReportIdAndUserId(reportId, tokenUserId)
+        ReportDetailResponseData response = reportRepository.findByReportIdAndUserIdDTO(reportId, tokenUserId)
                 .orElseThrow(() -> new IllegalDataException("해당 사용자로 조회된 신고 번호가 존재하지 않습니다."));
-        return report;
+
+        return response;
     }
 }

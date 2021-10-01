@@ -19,16 +19,17 @@ public class Report {
     private String situation;
     @Enumerated(EnumType.STRING)
     private ReportStatus status;
+    private LocalDateTime registeredAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ingame_server_id")
     private IngameServer ingameServer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "cheating_type_id")
     private CheatingType cheatingType;
 

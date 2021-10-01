@@ -5,7 +5,8 @@ import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
-import com.maplecheater.domain.entity.Report;
+import com.maplecheater.domain.dto.response.ReportDetailResponseData;
+import com.maplecheater.domain.dto.response.ReportPreviewResponseData;
 import com.maplecheater.security.UserAuthentication;
 import com.maplecheater.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -68,18 +69,18 @@ public class UserController {
 
     @GetMapping("/{id}/reports")
     @PreAuthorize("isAuthenticated() and hasAuthority('USER')")
-    public ResponseEntity<Page<Report>> getAllMyReports(@PathVariable("id") Long userId,
-                                                UserAuthentication authentication,
-                                                Pageable pageable) {
+    public ResponseEntity<Page<ReportPreviewResponseData>> getAllMyReports(@PathVariable("id") Long userId,
+                                                                           UserAuthentication authentication,
+                                                                           Pageable pageable) {
         Long tokenUserId = authentication.getUserid();
         return ResponseEntity.ok(userService.getAllReports(pageable, userId, tokenUserId));
     }
 
     @GetMapping("/{userId}/reports/{reportId}")
     @PreAuthorize("isAuthenticated() and hasAuthority('USER')")
-    public ResponseEntity<Report> getReport(@PathVariable Long userId,
-                                                        @PathVariable Long reportId,
-                                                        UserAuthentication authentication) {
+    public ResponseEntity<ReportDetailResponseData> getReport(@PathVariable Long userId,
+                                                              @PathVariable Long reportId,
+                                                              UserAuthentication authentication) {
         Long tokenUserId = authentication.getUserid();
         return ResponseEntity.ok(userService.getReport(reportId, userId, tokenUserId));
     }

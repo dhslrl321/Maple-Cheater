@@ -1,6 +1,7 @@
 package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.AddCheaterRequestData;
+import com.maplecheater.domain.dto.response.CheaterDetailResponseData;
 import com.maplecheater.domain.dto.response.SearchCheaterResponseData;
 import com.maplecheater.domain.entity.Cheater;
 import com.maplecheater.domain.entity.CheaterDetail;
@@ -39,14 +40,14 @@ public class CheaterService {
         Cheater cheater = cheaterRepository.findByIngameNickname(nickname)
                 .orElseThrow(() -> new CheaterNotFoundException(nickname));
 
-        List<CheaterDetail> details = cheaterDetailRepository
+        List<CheaterDetailResponseData> details = cheaterDetailRepository
                 .findAllByCheaterNickname(nickname);
 
         return SearchCheaterResponseData.builder()
-                .ingameNickname(cheater.getIngameNickname())
-                .ingameServer(cheater.getIngameServer().getServer())
+                .cheaterNickname(cheater.getIngameNickname())
+                .cheaterServer(cheater.getIngameServer().getServer())
                 .reportCount(details.size())
-                .cheaterDetails(details)
+                .cheaterReportHistories(details)
                 .build();
     }
 

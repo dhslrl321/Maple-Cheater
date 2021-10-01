@@ -16,7 +16,7 @@ public class Cheater {
     private String ingameNickname;
     private LocalDateTime registeredAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingame_server_id")
     private IngameServer ingameServer;
 }

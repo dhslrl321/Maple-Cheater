@@ -2,7 +2,7 @@ package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.AddReportRequestData;
 import com.maplecheater.domain.dto.request.UpdateReportStatusRequestData;
-import com.maplecheater.domain.dto.response.AddReportResponseData;
+import com.maplecheater.domain.dto.response.*;
 import com.maplecheater.domain.entity.CheatingType;
 import com.maplecheater.domain.entity.IngameServer;
 import com.maplecheater.domain.entity.Report;
@@ -86,25 +86,48 @@ class ReportServiceTest {
                 .willReturn(Optional.empty());
 
         given(reportRepository.save(any())).willReturn(Report.builder()
+                .id(EXIST_REPORT_ID)
+                .user(User.builder()
+                        .email("email@email.com")
+                        .nickname("nickname")
+                        .build())
+                .cheatingType(new CheatingType(1L, "현금 거래"))
+                .ingameServer(new IngameServer(1L, "크로아"))
                 .ingameNickname("cheater")
-                .cheatingType(new CheatingType("현금 거래"))
-                .ingameServer(new IngameServer("크로아"))
-                .status(ReportStatus.PENDING)
+                .cheatingDatetime(LocalDateTime.now())
+                .status(ReportStatus.ACCEPTED)
                 .build());
 
-        List<Report> reports = new ArrayList<>();
+        List<ReportPreviewResponseData> reports = new ArrayList<>();
         IntStream.range(PAGE_INDEX, PAGE_SIZE).forEach(each -> {
-            Report savedReport = reportRepository.save(new Report());
-            reports.add(savedReport);
+            reportRepository.save(new Report());
+            reports.add(new ReportPreviewResponseData());
         });
 
-        Page<Report> pagedReport = new PageImpl<>(reports);
+        Page<ReportPreviewResponseData> pagedReport = new PageImpl<>(reports);
 
-        given(reportRepository.findAll(PageRequest.of(PAGE_INDEX, PAGE_SIZE)))
+        given(reportRepository.findAllDTO(PageRequest.of(PAGE_INDEX, PAGE_SIZE)))
                 .willReturn(pagedReport);
 
+        given(reportRepository.findByIdDTO(EXIST_REPORT_ID))
+                .willReturn(Optional.of(ReportDetailResponseData.builder().reportId(EXIST_REPORT_ID).build()));
+
+        given(reportRepository.findByIdDTO(NOT_EXIST_REPORT_ID))
+                .willReturn(Optional.empty());
+
         given(reportRepository.findById(EXIST_REPORT_ID))
-                .willReturn(Optional.of(Report.builder().id(EXIST_REPORT_ID).build()));
+                .willReturn(Optional.of(Report.builder()
+                        .id(EXIST_REPORT_ID)
+                        .user(User.builder()
+                            .email("email@email.com")
+                            .nickname("nickname")
+                            .build())
+                        .cheatingType(new CheatingType(1L, "현금 거래"))
+                        .ingameServer(new IngameServer(1L, "크로아"))
+                        .ingameNickname("cheater")
+                        .cheatingDatetime(LocalDateTime.now())
+                        .status(ReportStatus.ACCEPTED)
+                        .build()));
 
         given(reportRepository.findById(NOT_EXIST_REPORT_ID))
                 .willReturn(Optional.empty());
@@ -173,7 +196,7 @@ class ReportServiceTest {
     void getReports_success() {
         PageRequest pageRequest = PageRequest.of(PAGE_INDEX, PAGE_SIZE);
 
-        Page<Report> response = reportService.getReports(pageRequest);
+        Page<ReportPreviewResponseData> response = reportService.getReports(pageRequest);
         assertNotNull(response);
     }
 
@@ -187,7 +210,8 @@ class ReportServiceTest {
     @Test
     @DisplayName("getReport - 성공 - 단건 조회")
     void getReport_success() {
-        Report report = reportService.getReport(EXIST_REPORT_ID);
+        ReportDetailResponseData report = reportService.getReport(EXIST_REPORT_ID);
+
         assertNotNull(report);
     }
 
@@ -203,11 +227,14 @@ class ReportServiceTest {
     @Test
     @DisplayName("updateStatus - 성공")
     void updateStatus() {
-        Report report = reportService.updateStatus(new UpdateReportStatusRequestData(false), EXIST_REPORT_ID);
-        assertEquals(ReportStatus.PENDING, report.getStatus()); // Mocking 에 논리적 문제로 인해 현재는 PENDING 으로 설정함
+        UpdateReportStatusResponseData report = reportService.updateStatus(
+                new UpdateReportStatusRequestData(false),
+                EXIST_REPORT_ID);
+
+        assertEquals(ReportStatus.ACCEPTED, report.getStatus()); // Mocking 에 논리적 문제로 인해 현재는 PENDING 으로 설정함
 
         report = reportService.updateStatus(new UpdateReportStatusRequestData(true), EXIST_REPORT_ID);
-        assertEquals(ReportStatus.PENDING, report.getStatus()); // Mocking 에 논리적 문제로 인해 현재는 PENDING 으로 설정함
+        assertEquals(ReportStatus.ACCEPTED, report.getStatus()); // Mocking 에 논리적 문제로 인해 현재는 PENDING 으로 설정함
     }
 
     @Test

@@ -7,7 +7,7 @@ import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
-import com.maplecheater.domain.entity.Report;
+import com.maplecheater.domain.dto.response.ReportDetailResponseData;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.type.RoleType;
 import com.maplecheater.exception.InvalidVerificationException;
@@ -30,7 +30,6 @@ import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -124,7 +123,7 @@ class UserControllerTest {
                 .getAllReports(any(), eq(2L), eq(1L));
 
         given(userService.getReport(1L, 1L, 1L))
-                .willReturn(new Report());
+                .willReturn(new ReportDetailResponseData());
 
         willThrow(new UnauthorizedException())
                 .given(userService)
