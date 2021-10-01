@@ -3,7 +3,7 @@
     "width": 3000,
     "height": 3000,
     "scrollTop": 0,
-    "scrollLeft": 480,
+    "scrollLeft": 40,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -512,7 +512,7 @@
           "active": false,
           "left": 102.19999766826626,
           "top": 447.3999999856949,
-          "zIndex": 498,
+          "zIndex": 517,
           "widthName": 60,
           "widthComment": 60
         },
@@ -764,7 +764,7 @@
           "active": false,
           "left": 119.00001530647307,
           "top": 852.4000134706499,
-          "zIndex": 510,
+          "zIndex": 515,
           "widthName": 100,
           "widthComment": 60
         },

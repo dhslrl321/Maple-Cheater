@@ -53,4 +53,10 @@ public class ExceptionHandlerAdvice {
     public ErrorResponseData handleCheaterNotFoundException(CheaterNotFoundException e) {
         return new ErrorResponseData(e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalDataException.class)
+    public ErrorResponseData handleIllegalDataException(IllegalDataException e) {
+        return new ErrorResponseData(e.getMessage());
+    }
 }
