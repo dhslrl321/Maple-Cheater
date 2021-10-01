@@ -7,6 +7,7 @@ import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
+import com.maplecheater.domain.entity.Report;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.type.RoleType;
 import com.maplecheater.exception.InvalidVerificationException;
@@ -20,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -112,6 +115,20 @@ class UserControllerTest {
         willThrow(new UnauthorizedException())
                 .given(userService)
                 .unregister(4L, 3L);
+
+        given(userService.getAllReports(PageRequest.of(0, 5), 1L, 1L))
+                .willReturn(Page.empty());
+
+        willThrow(new UnauthorizedException())
+                .given(userService)
+                .getAllReports(any(), eq(2L), eq(1L));
+
+        given(userService.getReport(1L, 1L, 1L))
+                .willReturn(new Report());
+
+        willThrow(new UnauthorizedException())
+                .given(userService)
+                .getReport(1L, 2L, 1L);
 
     }
 
@@ -206,6 +223,42 @@ class UserControllerTest {
     void unregister_fail_invalid_authentication() throws Exception {
         mockMvc.perform(delete("/api/v1/users/{id}", 4L)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + USER3_VALID_TOKEN))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("신고 이력 조회")
+    void getAllMyReports() throws Exception {
+        mockMvc.perform(get("/api/v1/users/{id}/reports", 1L)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + VALID_TOKEN))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("신고 이력 조회 - 실패 - 인증 오류")
+    void getAllMyReports_fail_unauthorized() throws Exception {
+        mockMvc.perform(get("/api/v1/users/{id}/reports", 2L)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + VALID_TOKEN))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("신고 이력 조회")
+    void getReport() throws Exception {
+        mockMvc.perform(get("/api/v1/users/{id}/reports/{id}", 1L, 1L)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + VALID_TOKEN))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("신고 이력 조회 - 실패 - 인증 오류")
+    void getReport_fail_unauthorized() throws Exception {
+        mockMvc.perform(get("/api/v1/users/{id}/reports/{id}", 2L, 1L)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + VALID_TOKEN))
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
     }

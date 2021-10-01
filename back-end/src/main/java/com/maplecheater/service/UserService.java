@@ -5,9 +5,11 @@ import com.maplecheater.domain.dto.request.ChangePasswordRequestData;
 import com.maplecheater.domain.dto.request.RegisterRequestData;
 import com.maplecheater.domain.dto.response.EmailCheckResponseData;
 import com.maplecheater.domain.dto.response.RegisterResponseData;
+import com.maplecheater.domain.entity.Report;
 import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.emailverification.EmailVerificationRepository;
+import com.maplecheater.domain.repository.report.ReportRepository;
 import com.maplecheater.domain.repository.role.RoleRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.RoleType;
@@ -15,6 +17,9 @@ import com.maplecheater.domain.type.VerificationType;
 import com.maplecheater.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +32,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final EmailVerificationRepository emailVerificationRepository;
     private final RoleRepository roleRepository;
+    private final ReportRepository reportRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
@@ -147,5 +153,36 @@ public class UserService {
 
         selectedUser.unregister();
         userRepository.save(selectedUser);
+    }
+
+    /**
+     * 토큰에 포함된 사용자의 id 를 기반으로 해당 사용자가 신고한 모든 신고서를 확인한다.
+     *
+     * @param pageable : JPA Pageable
+     * @param tokenUserId : 요청 토큰에 포함된 userId
+     * @return Report Paging Data
+     */
+    public Page<Report> getAllReports(Pageable pageable, Long userId, Long tokenUserId) {
+        if(userId != tokenUserId) {
+            throw new UnauthorizedException();
+        }
+        return reportRepository.findAllByUserId(pageable, tokenUserId);
+    }
+
+    /**
+     * 토큰에 포함된 사용자의 id 로 생성된 특정 report 조회
+     *
+     * @param reportId : 조회하려는 대상의 id
+     * @param tokenUserId : 토큰에 포함된 사용자 id
+     * @return report entity
+     */
+    public Report getReport(Long reportId, Long userId, Long tokenUserId) {
+        if(userId != tokenUserId) {
+            throw new UnauthorizedException();
+        }
+
+        Report report = reportRepository.findByReportIdAndUserId(reportId, tokenUserId)
+                .orElseThrow(() -> new IllegalDataException("해당 사용자로 조회된 신고 번호가 존재하지 않습니다."));
+        return report;
     }
 }
