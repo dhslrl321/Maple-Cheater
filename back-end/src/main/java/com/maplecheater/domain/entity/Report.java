@@ -31,4 +31,18 @@ public class Report {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cheating_type_id")
     private CheatingType cheatingType;
+
+    /**
+     * 스스로 상태를 PENDING 에서 ACCEPTED 로 변경한다.
+     */
+    public void accept() {
+        this.status = ReportStatus.ACCEPTED;
+    }
+
+    /**
+     * 스스로 상태를 PENDING 에서 REJECTED 로 변경한다.
+     */
+    public void reject() {
+        this.status = ReportStatus.REJECTED;
+    }
 }

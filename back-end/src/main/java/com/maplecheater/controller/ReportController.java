@@ -2,17 +2,18 @@ package com.maplecheater.controller;
 
 import com.maplecheater.domain.dto.request.AddCheaterRequestData;
 import com.maplecheater.domain.dto.request.AddReportRequestData;
+import com.maplecheater.domain.dto.request.UpdateReportStatusRequestData;
 import com.maplecheater.domain.dto.response.AddReportResponseData;
+import com.maplecheater.domain.entity.Report;
 import com.maplecheater.security.UserAuthentication;
 import com.maplecheater.service.ReportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,11 +21,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReportController {
     private final ReportService reportService;
 
+    @GetMapping
+    @PreAuthorize("isAuthenticated() and hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Page<Report>> getReports(Pageable pageable) {
+        return ResponseEntity.ok(reportService.getReports(pageable));
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated() and hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Report> getReport(@PathVariable Long id) {
+        return ResponseEntity.ok(reportService.getReport(id));
+    }
+
     @PostMapping
-    @PreAuthorize("isAuthenticated() and hasAuthority('USER')")
+    @PreAuthorize("isAuthenticated() and hasAnyAuthority('USER')")
     public ResponseEntity<AddReportResponseData> addReport(@RequestBody AddReportRequestData request,
                                                            UserAuthentication authentication) {
         Long tokenUserId = authentication.getUserid();
         return ResponseEntity.status(HttpStatus.CREATED).body(reportService.addReport(request, tokenUserId));
+    }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("isAuthenticated() and hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Report> getReport(@RequestBody UpdateReportStatusRequestData request,
+                                            @PathVariable Long id) {
+        return ResponseEntity.ok(reportService.updateStatus(request, id));
     }
 }

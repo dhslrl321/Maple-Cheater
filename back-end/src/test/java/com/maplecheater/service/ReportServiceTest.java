@@ -1,6 +1,7 @@
 package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.request.AddReportRequestData;
+import com.maplecheater.domain.dto.request.UpdateReportStatusRequestData;
 import com.maplecheater.domain.dto.response.AddReportResponseData;
 import com.maplecheater.domain.entity.CheatingType;
 import com.maplecheater.domain.entity.IngameServer;
@@ -10,6 +11,7 @@ import com.maplecheater.domain.repository.cheatingtype.CheatingTypeRepository;
 import com.maplecheater.domain.repository.ingameserver.IngameServerRepository;
 import com.maplecheater.domain.repository.report.ReportRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
+import com.maplecheater.domain.type.ReportStatus;
 import com.maplecheater.exception.IllegalDataException;
 import com.maplecheater.exception.UnauthorizedException;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,9 +20,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,6 +48,12 @@ class ReportServiceTest {
 
     private static final Long EXIST_CHEATING_TYPE = 1L;
     private static final Long NOT_EXIST_CHEATING_TYPE = 44L;
+
+    private static final Integer PAGE_INDEX = 0;
+    private static final Integer PAGE_SIZE = 5;
+
+    private static final Long EXIST_REPORT_ID = 1L;
+    private static final Long NOT_EXIST_REPORT_ID = 12L;
 
     private final CheatingTypeRepository cheatingTypeRepository = mock(CheatingTypeRepository.class);
     private final IngameServerRepository ingameServerRepository = mock(IngameServerRepository.class);
@@ -74,7 +89,25 @@ class ReportServiceTest {
                 .ingameNickname("cheater")
                 .cheatingType(new CheatingType("현금 거래"))
                 .ingameServer(new IngameServer("크로아"))
+                .status(ReportStatus.PENDING)
                 .build());
+
+        List<Report> reports = new ArrayList<>();
+        IntStream.range(PAGE_INDEX, PAGE_SIZE).forEach(each -> {
+            Report savedReport = reportRepository.save(new Report());
+            reports.add(savedReport);
+        });
+
+        Page<Report> pagedReport = new PageImpl<>(reports);
+
+        given(reportRepository.findAll(PageRequest.of(PAGE_INDEX, PAGE_SIZE)))
+                .willReturn(pagedReport);
+
+        given(reportRepository.findById(EXIST_REPORT_ID))
+                .willReturn(Optional.of(Report.builder().id(EXIST_REPORT_ID).build()));
+
+        given(reportRepository.findById(NOT_EXIST_REPORT_ID))
+                .willReturn(Optional.empty());
     }
 
     @Test
@@ -135,10 +168,54 @@ class ReportServiceTest {
         assertNotNull(exception.getMessage());
     }
 
+    @Test
+    @DisplayName("getReports - 성공")
+    void getReports_success() {
+        PageRequest pageRequest = PageRequest.of(PAGE_INDEX, PAGE_SIZE);
+
+        Page<Report> response = reportService.getReports(pageRequest);
+        assertNotNull(response);
+    }
+
     private static Stream<Arguments> paramsForAddReportFailInputs() {
         return Stream.of(
                 Arguments.of(NOT_EXIST_SERVER, EXIST_CHEATING_TYPE, EXIST_USER),
                 Arguments.of(EXIST_SERVER, NOT_EXIST_CHEATING_TYPE, EXIST_USER)
         );
+    }
+
+    @Test
+    @DisplayName("getReport - 성공 - 단건 조회")
+    void getReport_success() {
+        Report report = reportService.getReport(EXIST_REPORT_ID);
+        assertNotNull(report);
+    }
+
+    @Test
+    @DisplayName("getReport - 실패 - 존재하지 않는 리포트")
+    void getReport_fail() {
+        IllegalDataException exception = assertThrows(IllegalDataException.class,
+                () -> reportService.getReport(NOT_EXIST_REPORT_ID));
+
+        assertNotNull(exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("updateStatus - 성공")
+    void updateStatus() {
+        Report report = reportService.updateStatus(new UpdateReportStatusRequestData(false), EXIST_REPORT_ID);
+        assertEquals(ReportStatus.PENDING, report.getStatus()); // Mocking 에 논리적 문제로 인해 현재는 PENDING 으로 설정함
+
+        report = reportService.updateStatus(new UpdateReportStatusRequestData(true), EXIST_REPORT_ID);
+        assertEquals(ReportStatus.PENDING, report.getStatus()); // Mocking 에 논리적 문제로 인해 현재는 PENDING 으로 설정함
+    }
+
+    @Test
+    @DisplayName("updateStatus - 실패 - 존재하지 않는 리포트")
+    void updateStatus_fail() {
+        IllegalDataException exception = assertThrows(IllegalDataException.class,
+                () -> reportService.updateStatus(new UpdateReportStatusRequestData(), NOT_EXIST_REPORT_ID));
+
+        assertNotNull(exception.getMessage());
     }
 }

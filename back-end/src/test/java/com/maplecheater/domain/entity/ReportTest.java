@@ -32,4 +32,23 @@ class ReportTest {
         );
     }
 
+    @Test
+    @DisplayName("status 상태 변경하기")
+    void changeStatus() {
+        Report report = Report.builder()
+                .id(1L)
+                .ingameNickname("CodeDeploy")
+                .cheatingDatetime(LocalDateTime.now())
+                .situation("상황")
+                .status(ReportStatus.PENDING)
+                .user(new User())
+                .cheatingType(new CheatingType())
+                .ingameServer(new IngameServer())
+                .build();
+
+        report.accept();
+        assertEquals(ReportStatus.ACCEPTED, report.getStatus());
+        report.reject();
+        assertEquals(ReportStatus.REJECTED, report.getStatus());
+    }
 }
