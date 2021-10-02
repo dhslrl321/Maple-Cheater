@@ -12,7 +12,7 @@ export const Container = styled.div`
 `;
 
 export const SearchBarWrapper = styled.div`
-  width: 70%;
+  width: 80%;
   display: flex;
   max-width: 1100px;
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 70%;
+  width: 80%;
   max-width: 1100px;
   display: flex;
   justify-content: center;
@@ -11,8 +11,12 @@ export const Container = styled.div`
 
 export const Title = styled.h1`
   font-size: 1.4rem;
-  margin: 28px 0;
+  margin: 18px 0;
   font-weight: bold;
+
+  @media screen and (max-width: 576px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const CheaterCard = styled.div`
@@ -27,10 +31,11 @@ export const CheaterCard = styled.div`
   box-shadow: 0px 3px 22px rgba(0, 0, 0, 0.16);
   font-size: 0.9rem;
   padding: 0 20px;
+  margin-bottom:20px;
 `;
 
 export const Manual = styled.div`
-  line-height: 1.7;
+  line-height: 2;
 `;
 
 export const CheaterWrapper = styled.div`
@@ -43,4 +48,17 @@ export const CheaterWrapper = styled.div`
 
 export const NicknameWrapper = styled.h3`
   margin-right: 10px;
+`;
+
+export const CheaterDetailWrapper = styled.div`
+  width: 100%;
+  max-width: 1100px;
+  background: ${props => props.theme.color.white};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 0px 3px 22px rgba(0, 0, 0, 0.16);
+  font-size: 0.9rem;
+  padding: 10px 20px;
 `;
