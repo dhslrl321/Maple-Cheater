@@ -16,19 +16,18 @@ const rootHoc = ({ children }) => {
 
   useEffect(() => {
     const accessToken = Storage.getAccessToken();
+    const user = Storage.getUser();
 
-    if (tokenValidator) {
+    if (tokenValidator(accessToken)) {
       Storage.clearAll();
       return;
     }
 
-    const user = Storage.getUser();
     if (accessToken === null) {
-      if (user !== null) {
-        Storage.clearUser();
-      }
+      Storage.clearAll();
       return;
-    };
+    }
+
     dispatch(validateUser(accessToken));
     status === 401 && Storage.clearAll();
   }, []);

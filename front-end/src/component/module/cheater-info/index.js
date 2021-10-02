@@ -17,7 +17,7 @@ const cheaterReportHistories = [
   { cheatingDatetime: "2021-10-01T20:24:37", situation: "아르카나 자리 스틸", cheatingType: "사냥터 비매너" },
 ]
 
-const CheaterInfo = () => {
+const CheaterInfo = ({ histories }) => {
 
   const isSmall = useMediaQuery("(max-width: 567px)");
 
@@ -52,11 +52,11 @@ const CheaterInfo = () => {
     <S.Container>
       <S.Title>검색 결과</S.Title>
       <S.CheaterCard>
-        {false ? cheater : cheaterManual}
+        {true ? cheater : cheaterManual}
       </S.CheaterCard>
       <S.Title>세부 내역</S.Title>
       <S.CheaterDetailWrapper>
-        {false ? detail : detailManual}
+        {true ? detail : detailManual}
       </S.CheaterDetailWrapper>
     </S.Container>
   )

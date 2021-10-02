@@ -17,7 +17,7 @@ export const setAccessToken = (accessToken) => {
 
 export const getAccessToken = () => {
   const accessToken = window.localStorage.getItem("accessToken");
-  if (!accessToken || !accessToken.startsWith('"') || accessToken.endsWith('"')) {
+  if (!accessToken) {
     return null;
   }
 
@@ -31,4 +31,8 @@ export const clearAll = () => {
 
 export const clearUser = () => {
   window.localStorage.removeItem("user");
+}
+
+export const clearAccessToken = () => {
+  window.localStorage.removeItem("accessToken");
 }
