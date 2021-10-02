@@ -36,7 +36,9 @@ const rootHoc = ({ children }) => {
   return (
     <>
       <Navigation />
-      {children}
+      <div style={{ minHeight: "1080px" }}>
+        {children}
+      </div>
       <Footer />
     </>
   )

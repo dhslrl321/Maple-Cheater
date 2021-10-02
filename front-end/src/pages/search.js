@@ -1,13 +1,10 @@
 import React from 'react'
 
 import withAuthentication from "../higher-order-component/with-authentication";
+import Search from "../component/section/search";
 
 const cheater = () => {
-  return (
-    <div>
-      사용자 검색
-    </div>
-  )
+  return <Search />
 }
 
 export default withAuthentication(cheater);
