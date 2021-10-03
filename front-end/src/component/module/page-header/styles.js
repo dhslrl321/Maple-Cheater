@@ -22,7 +22,7 @@ export const Title = styled.h1`
 `;
 
 export const Subtitle = styled.h3`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: ${props => props.theme.color.gray};
 
   @media screen and (max-width: 576px) {
