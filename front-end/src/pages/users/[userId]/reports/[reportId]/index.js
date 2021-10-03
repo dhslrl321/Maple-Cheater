@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 import ReportDetail from "../../../../../component/section/report-detail";
@@ -7,23 +8,12 @@ import withAuthentication from "../../../../../higher-order-component/with-authe
 import * as Storage from "../../../../../utils/storage";
 import useAxios from "../../../../../hooks/use-axios";
 import { fetchMyReportDetail } from "../../../../../services/user-service";
-
-
-
-const data = {
-  reportId: 1,
-  registeredAt: "2021-10-02T01:56:00.928488",
-  cheaterNickname: "CodeDeploy",
-  cheaterServer: "스카니아",
-  cheatingType: "현금 거래",
-  cheatingDatetime: "2021-10-01T20:24:37",
-  situation: "주문서 거래를 시도하다가 안된다고 그냥 막 던졌어요",
-  status: "PENDING"
-};
+import { enableAlert } from "../../../../../reducers/application";
 
 const reportId = () => {
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const accessToken = Storage.getAccessToken();
 
@@ -31,13 +21,22 @@ const reportId = () => {
   const [reportListState, refetch] = useAxios(
     () => fetchMyReportDetail(accessToken, userId, reportId), [accessToken, userId], true);
 
-  const { loading, data: stateData, status: stateStatus } = reportListState;
+  const { loading, data, status } = reportListState;
 
   useEffect(() => {
     refetch();
   }, []);
 
-  return <ReportDetail report={data} />
+  if (status === 401 || status === 400) {
+    router.push("/");
+    dispatch(enableAlert({
+      title: "인증 오류",
+      message: "비정상적인 접근이 탐지되었습니다. 누적되면 제제를 당할 수 있습니다.",
+      severity: "error"
+    }))
+  }
+
+  return <ReportDetail report={status === 200 && data} />
 }
 
 export default withAuthentication(reportId);

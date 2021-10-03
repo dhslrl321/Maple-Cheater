@@ -26,7 +26,7 @@ const cheater = () => {
       const content = {
         title: "입력 값 에러",
         message: "거래를 진행하려는 캐릭터의 닉네임을 입력해주세요!",
-        severity: "info"
+        severity: "error"
       }
       dispatch(showAlert(content));
       return;
@@ -35,8 +35,8 @@ const cheater = () => {
     if (whitespaceValidator(searchText)) {
       const content = {
         title: "입력 값 에러",
-        message: "닉네임에는 공백을 포함시키지 않습니다ㅠㅠ",
-        severity: "info"
+        message: "닉네임에는 공백을 허용하지 않습니다!",
+        severity: "error"
       }
       dispatch(showAlert(content));
       return;

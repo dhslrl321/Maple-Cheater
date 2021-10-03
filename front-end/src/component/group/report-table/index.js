@@ -1,5 +1,7 @@
 import React from 'react'
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import * as S from "./styles";
 
@@ -25,15 +27,13 @@ const convertToClip = (status, isSmall) => {
 
 const ReportTable = ({ reports }) => {
 
-  const router = useRouter();
+  const { data } = useSelector(state => state.userReducer.user);
 
   const isSmall = useMediaQuery("(max-width: 567px)");
-  const handleRowClick = (userId, reportId) => {
-    router.push(`/users/${userId}/reports/${reportId}`)
-  }
   if (reports.length === 0) {
     return (<S.EmptyDetailText>내가 신고한 이력이 존재하지 않습니다!</S.EmptyDetailText>)
   }
+
   return (
     <TableContainer >
       <Table sx={{ minWidth: 200 }} aria-label="simple table">
@@ -46,32 +46,36 @@ const ReportTable = ({ reports }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {reports.map((report) => (
-            <TableRow
+          {reports.map((report, index) => (
+            <Link
               key={report.reportId}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              hover
-              style={{ cursor: "pointer" }}
-            >
-              <TableCell align="left" scope="row" onClick={() => handleRowClick(1, report.reportId)}>
-                <S.Text>{report.reporterNickname}</S.Text>
-              </TableCell>
-              <TableCell align="right">
-                <S.Text>
-                  {report.cheatingType}
-                </S.Text>
-              </TableCell>
-              <TableCell align="right">
-                <S.Text>
-                  {convertToClip(report.status, isSmall)}
-                </S.Text>
-              </TableCell>
-              <TableCell align="right">
-                <S.Text>
-                  {report.registeredAt.substr(0, 10)}
-                </S.Text>
-              </TableCell>
-            </TableRow>
+              href="/users/[userId]/reports/[reportId]"
+              as={`/users/${data && data.userId}/reports/${report.reportId}`}>
+              <TableRow
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                hover
+                style={{ cursor: "pointer" }}
+              >
+                <TableCell align="left" scope="row">
+                  <S.Text>{report.reporterNickname}</S.Text>
+                </TableCell>
+                <TableCell align="right">
+                  <S.Text>
+                    {report.cheatingType}
+                  </S.Text>
+                </TableCell>
+                <TableCell align="right">
+                  <S.Text>
+                    {convertToClip(report.status, isSmall)}
+                  </S.Text>
+                </TableCell>
+                <TableCell align="right">
+                  <S.Text>
+                    {report.registeredAt.substr(0, 10)}
+                  </S.Text>
+                </TableCell>
+              </TableRow>
+            </Link>
           ))}
         </TableBody>
       </Table>

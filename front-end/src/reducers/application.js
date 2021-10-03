@@ -2,7 +2,10 @@ import * as T from "../constants/action-type";
 
 const initialState = {
   alert: {
-
+    show: false,
+    severity: "error",
+    title: "",
+    message: "",
   }
 };
 
@@ -23,7 +26,8 @@ export const reducer = (state = initialState, action) => {
     return {
       ...state,
       alert: {
-        show: false,
+        ...alert,
+        show: false
       }
     }
   } else {
@@ -31,7 +35,7 @@ export const reducer = (state = initialState, action) => {
   }
 };
 
-export const showAlert = (content) => dispatch => {
+export const enableAlert = (content) => dispatch => {
   const { title, message, severity } = content;
   const payload = {
     title,
@@ -42,8 +46,5 @@ export const showAlert = (content) => dispatch => {
 }
 
 export const disableAlert = () => dispatch => {
-  const payload = {
-    show: true,
-  }
-  dispatch({ type: T.DISABLE_ALERT, payload });
+  dispatch({ type: T.DISABLE_ALERT });
 }

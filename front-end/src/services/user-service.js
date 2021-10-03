@@ -21,7 +21,7 @@ export const fetchRegister = async (user) => {
 export const fetchMyReportList = async (accessToken, userId) => {
   try {
     const { data, status } = await API.get(
-      `/users/${userId}/reports?page=0&size=5`, {
+      `/users/${userId}/reports`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }

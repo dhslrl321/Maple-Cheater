@@ -37,6 +37,16 @@ const CheaterInfo = () => {
     </S.CheaterWrapper>
   );
 
+  if (status === 401 || status === 400) {
+    dispatch(showAlert({
+      title: "인증 오류",
+      message: "비정상적인 접근이 탐지되었습니다. 누적되면 제제를 당할 수 있습니다.",
+      severity: "error"
+    }))
+    router.push("/");
+    return <></>;
+  }
+
   const detail = (
     <CheaterDetailTable
       isSmall={isSmall}
