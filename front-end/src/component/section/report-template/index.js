@@ -6,6 +6,8 @@ import PageHeader from "../../module/page-header";
 import Select from '../../module/select';
 import InputBox from "../../module/input-box";
 import FileDropzone from "../../module/file-dropzone";
+import Modal from "../../modal-template/modal";
+import ReportSubmit from "../../modal-template/report-submit";
 
 import { server, cheatingType, year, month, day } from "../../../constants/select-value";
 
@@ -20,6 +22,9 @@ const ReportTemplate = ({ values, handleOnChange, handleOnFileUpload }) => {
 
   return (
     <S.Container>
+      <Modal open={false}>
+        <ReportSubmit />
+      </Modal>
       <PageHeader
         title="피해 신고하기"
         subtitle="피해를 보신 사항에 대해서 신고하고 다른 사용자들에게 피해를 방지할 수 있도록 도와주세요" />
