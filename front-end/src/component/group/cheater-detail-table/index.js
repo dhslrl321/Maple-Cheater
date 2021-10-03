@@ -25,9 +25,9 @@ const CheateDetailTable = ({ cheaterNickname, histories, isSmall }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {histories.map((history) => (
+          {histories.map((history, index) => (
             <TableRow
-              key="1"
+              key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="left" scope="row">

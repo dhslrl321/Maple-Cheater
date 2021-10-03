@@ -7,3 +7,8 @@ export const tokenValidator = (token) => {
   const regex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
   return regex.test(token);
 }
+
+export const whitespaceValidator = (text) => {
+  const regex = /\s/;
+  return regex.test(text);
+}

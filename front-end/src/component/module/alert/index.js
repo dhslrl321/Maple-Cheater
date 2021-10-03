@@ -4,7 +4,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
-const index = ({ isOpen, severity, handleAlertClose, title, message }) => {
+const index = ({ isOpen, severity = "success", handleAlertClose, title, message }) => {
   return (
     <>
       <Snackbar

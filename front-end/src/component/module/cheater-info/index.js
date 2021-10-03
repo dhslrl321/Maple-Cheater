@@ -1,4 +1,4 @@
-import React from 'react'
+import { useSelector } from "react-redux";
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -8,18 +8,13 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
 import CheaterDetailTable from "../../group/cheater-detail-table";
+import Loading from "../loading";
 
-const cheaterReportHistories = [
-  { cheatingDatetime: "2021-10-01T20:24:37", situation: "영환불작", cheatingType: "주문서 거래" },
-  { cheatingDatetime: "2021-10-01T20:24:37", situation: "물통 사기", cheatingType: "현금 거래" },
-  { cheatingDatetime: "2021-10-01T20:24:37", situation: "리턴 스크롤 사기", cheatingType: "주문서 거래" },
-  { cheatingDatetime: "2021-10-01T20:24:37", situation: "사냥 방해", cheatingType: "사냥터 비매너" },
-  { cheatingDatetime: "2021-10-01T20:24:37", situation: "아르카나 자리 스틸", cheatingType: "사냥터 비매너" },
-]
-
-const CheaterInfo = ({ histories }) => {
-
+const CheaterInfo = () => {
   const isSmall = useMediaQuery("(max-width: 567px)");
+
+  const { nickname } = useSelector(state => state.cheaterReducer.search);
+  const { loading, status, data } = useSelector(state => state.cheaterReducer.cheater);
 
   const cheaterManual = (
     <S.Manual>거래를 진행중인 상대방의 <span style={{ fontWeight: "bold" }}>캐릭터 이름</span>을 입력하면 해당 캐릭터로 신고된 이력에 대해서 파악할 수 있습니다.</S.Manual>
@@ -32,31 +27,48 @@ const CheaterInfo = ({ histories }) => {
   const cheater = (
     <S.CheaterWrapper>
       <S.NicknameWrapper>
-        <Chip label="CodeDeploy" color="default" size={isSmall ? "small" : "medium"} />
+        <Chip label={nickname} color="default" size={isSmall ? "small" : "medium"} />
       </S.NicknameWrapper>
       <Stack direction="row" spacing={1} flexDirection={isSmall ? "column" : "row"} >
-        <Chip label={`현금 거래 : ${1}`} color="error" variant="outlined" size={isSmall ? "small" : "medium"} />
-        <Chip label={`주문서 거래 : ${2}`} color="warning" variant="outlined" size={isSmall ? "small" : "medium"} />
-        <Chip label={`사냥터 비매너 : ${2}`} color="success" variant="outlined" size={isSmall ? "small" : "medium"} />
+        <Chip label={`현금 거래`} color="error" variant="outlined" size={isSmall ? "small" : "medium"} />
+        <Chip label={`주문서 거래`} color="warning" variant="outlined" size={isSmall ? "small" : "medium"} />
+        <Chip label={`사냥터 비매너`} color="success" variant="outlined" size={isSmall ? "small" : "medium"} />
       </Stack>
     </S.CheaterWrapper>
-  )
+  );
 
   const detail = (
     <CheaterDetailTable
       isSmall={isSmall}
-      cheaterNickname={"CodeDeploy"}
-      histories={cheaterReportHistories} />);
+      cheaterNickname={nickname}
+      histories={status === 200 ? data.cheaterReportHistories : []} />);
 
   return (
     <S.Container>
       <S.Title>검색 결과</S.Title>
       <S.CheaterCard>
-        {true ? cheater : cheaterManual}
+        {loading ? (
+          <Loading />
+        ) : (
+            status === 200 || status === 202 ? (
+              cheater
+            ) : (
+                cheaterManual
+              )
+          )}
+
       </S.CheaterCard>
-      <S.Title>세부 내역</S.Title>
+      <S.Title>확인된 신고 이력</S.Title>
       <S.CheaterDetailWrapper>
-        {true ? detail : detailManual}
+        {loading ? (
+          <Loading />
+        ) : (
+            status === 200 || status === 202 ? (
+              detail
+            ) : (
+                detailManual
+              )
+          )}
       </S.CheaterDetailWrapper>
     </S.Container>
   )

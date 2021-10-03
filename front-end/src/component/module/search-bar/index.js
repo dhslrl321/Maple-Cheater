@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { makeStyles } from '@material-ui/core'
-import TextField, { TextFieldClasses } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 
 import Button from "../button";
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const index = () => {
+const index = ({ handleOnChange, handleSearchOnClick, searchText, loading }) => {
 
   const classes = useStyles();
 
@@ -34,8 +34,16 @@ const index = () => {
           id="outlined-basic"
           label="거래를 진행중인 상대방의 캐릭터 닉네임을 입력해주세요"
           variant="outlined"
-          className={classes.textField} />
-        <Button label="조회" width={100} height={55} />
+          className={classes.textField}
+          onChange={handleOnChange}
+          value={searchText}
+        />
+        <Button
+          label="조회"
+          width={100}
+          height={55}
+          handleOnClick={handleSearchOnClick}
+          disabled={loading} />
       </S.SearchBarWrapper>
     </S.Container>
   )

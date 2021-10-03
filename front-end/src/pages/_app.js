@@ -1,6 +1,5 @@
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
-import { useRouter } from "next/router";
 
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 
@@ -14,7 +13,6 @@ import RootHoc from "../higher-order-component/root-hoc";
 import store from "../reducers";
 
 const MyApp = ({ Component, pageProps }) => {
-  const router = useRouter();
 
   return (
     <>
