@@ -14,6 +14,7 @@ import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.ReportStatus;
 import com.maplecheater.exception.IllegalDataException;
 import com.maplecheater.exception.UnauthorizedException;
+import com.maplecheater.util.S3Uploader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIA54ESPZJLFOHGKPMQ
+      secretKey: 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
+    s3:
+      bucket: image-maplecheater
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

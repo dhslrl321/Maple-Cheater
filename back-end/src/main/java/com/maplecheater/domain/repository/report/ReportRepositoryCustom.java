@@ -15,4 +15,5 @@ public interface ReportRepositoryCustom {
     Optional<ReportDetailResponseData> findByReportIdAndUserIdDTO(Long reportId, Long userId);
 
     Optional<ReportDetailResponseData> findByIdDTO(Long id);
+
 }

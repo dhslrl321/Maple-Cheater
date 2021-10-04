@@ -2,8 +2,8 @@
   "canvas": {
     "width": 3000,
     "height": 3000,
-    "scrollTop": 20,
-    "scrollLeft": 1040,
+    "scrollTop": 0,
+    "scrollLeft": 0,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -691,8 +691,8 @@
             "id": "b6e3b0e6-6836-951f-ade2-122dcbfa9ae0"
           },
           {
-            "name": "file_path",
-            "comment": "",
+            "name": "image_url",
+            "comment": "s3 버킷에 올라간 이미지 url",
             "dataType": "VARCHAR",
             "default": "",
             "option": {
@@ -707,30 +707,7 @@
               "fk": false,
               "pfk": false,
               "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "21abb7b9-e8d6-09a9-fccf-713dac07cf9d"
-          },
-          {
-            "name": "file_name",
-            "comment": "",
-            "dataType": "VARCHAR",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
+              "widthComment": 144,
               "widthDataType": 60,
               "widthDefault": 60
             },
@@ -761,10 +738,10 @@
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 130.00001530647307,
           "top": 819.4000134706499,
-          "zIndex": 531,
+          "zIndex": 557,
           "widthName": 100,
           "widthComment": 60
         },
@@ -1351,7 +1328,7 @@
           "columnIds": [
             "f7ff1195-6273-78c0-b0c4-44f816a93c30"
           ],
-          "x": 327.0000153064731,
+          "x": 369.0000153064731,
           "y": 819.4000134706499,
           "direction": "top"
         },

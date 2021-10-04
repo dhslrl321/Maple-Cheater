@@ -4,6 +4,7 @@ import com.maplecheater.domain.dto.request.AddReportRequestData;
 import com.maplecheater.domain.dto.request.UpdateReportStatusRequestData;
 import com.maplecheater.domain.dto.response.*;
 import com.maplecheater.security.UserAuthentication;
+import com.maplecheater.service.EvidenceService;
 import com.maplecheater.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,14 @@ import org.springframework.web.bind.annotation.*;
 public class ReportController {
     private final ReportService reportService;
 
+    @PostMapping
+    @PreAuthorize("isAuthenticated() and hasAnyAuthority('USER')")
+    public ResponseEntity<AddReportResponseData> addReport(@RequestBody AddReportRequestData request,
+                                                           UserAuthentication authentication) {
+        Long tokenUserId = authentication.getUserid();
+        return ResponseEntity.status(HttpStatus.CREATED).body(reportService.addReport(request, tokenUserId));
+    }
+
     @GetMapping
     @PreAuthorize("isAuthenticated() and hasAnyAuthority('ADMIN')")
     public ResponseEntity<Page<ReportPreviewResponseData>> getReports(Pageable pageable) {
@@ -29,14 +38,6 @@ public class ReportController {
     @PreAuthorize("isAuthenticated() and hasAnyAuthority('ADMIN')")
     public ResponseEntity<ReportDetailResponseData> getReport(@PathVariable Long id) {
         return ResponseEntity.ok(reportService.getReport(id));
-    }
-
-    @PostMapping
-    @PreAuthorize("isAuthenticated() and hasAnyAuthority('USER')")
-    public ResponseEntity<AddReportResponseData> addReport(@RequestBody AddReportRequestData request,
-                                                           UserAuthentication authentication) {
-        Long tokenUserId = authentication.getUserid();
-        return ResponseEntity.status(HttpStatus.CREATED).body(reportService.addReport(request, tokenUserId));
     }
 
     @PatchMapping("/{id}")

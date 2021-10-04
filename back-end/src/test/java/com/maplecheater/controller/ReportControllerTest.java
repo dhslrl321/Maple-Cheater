@@ -10,6 +10,7 @@ import com.maplecheater.domain.entity.Role;
 import com.maplecheater.domain.type.RoleType;
 import com.maplecheater.exception.IllegalDataException;
 import com.maplecheater.service.AuthenticationService;
+import com.maplecheater.service.EvidenceService;
 import com.maplecheater.service.ReportService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
