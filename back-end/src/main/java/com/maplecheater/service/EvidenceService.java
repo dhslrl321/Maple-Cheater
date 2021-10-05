@@ -1,6 +1,7 @@
 package com.maplecheater.service;
 
 import com.maplecheater.domain.dto.response.EvidenceImageResponseData;
+import com.maplecheater.domain.entity.Evidence;
 import com.maplecheater.domain.entity.Report;
 import com.maplecheater.domain.repository.evidence.EvidenceRepository;
 import com.maplecheater.domain.repository.report.ReportRepository;
@@ -40,20 +41,35 @@ public class EvidenceService {
     /**
      * Multipart Image list 를 받아 이미지를 업로드한다.
      *
+     * @param reportId : 신고서 id
      * @param images : 이미지 리스트
      * @return 업로드된 이미지 리스트
      */
-    public List<EvidenceImageResponseData> uploadToS3(List<MultipartFile> images) throws IOException {
+    public List<EvidenceImageResponseData> uploadToS3(Long reportId, List<MultipartFile> images) throws IOException {
 
         if(images.size() == 0) {
             throw new IllegalDataException("업로드할 이미지가 존재하지 않습니다");
         }
 
+        Report report = reportRepository.findById(reportId).orElseThrow(
+                () -> new IllegalDataException("신고 번호 [" + reportId + "] 가 존재하지 않습니다."));
+
         List<String> urls = s3Uploader.upload(images, "static");
+
         List<EvidenceImageResponseData> result = new ArrayList<>();
+
         for (String url : urls) {
-            result.add(new EvidenceImageResponseData(url));
+
+            Evidence evidence = Evidence.builder()
+                    .imageUrl(url)
+                    .report(report)
+                    .build();
+
+            Evidence savedEvidence = evidenceRepository.save(evidence);
+            String imageUrl = savedEvidence.getImageUrl();
+            result.add(new EvidenceImageResponseData(imageUrl));
         }
+
         return result;
     }
 }

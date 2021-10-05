@@ -16,6 +16,7 @@ import Button from '../../module/button';
 
 const ReportTemplate = ({
   values,
+  loading,
   handleOnChange,
   handleOnFileUpload,
   handleSubmitButtonClick,
@@ -116,7 +117,7 @@ const ReportTemplate = ({
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>증거 이미지 제출</S.Label>
-          <Alert style={{ marginBottom: "20px" }} severity="info">증거 이미지가 있어야 신고 승인률이 높아집니다.</Alert>
+          <Alert style={{ marginBottom: "20px" }} severity="info">증거 이미지는 필수로 포함되어야 하며 최대 5개의 이미지 파일 (png, jpg, jpeg) 만 허용합니다.</Alert>
           <FileDropzone handleOnFileUpload={handleOnFileUpload} filesLimit={5} />
         </S.InputColumn>
         <S.SubmitButtonWrapper>
@@ -127,7 +128,7 @@ const ReportTemplate = ({
                 <Alert severity="success">제출 버튼을 클릭해주세요!</Alert>
               )}
           </div>
-          <Button handleOnClick={handleSubmitButtonClick} disabled={buttonLock} width={80} height={45} bold={true} label="제출" />
+          <Button loading={loading} handleOnClick={handleSubmitButtonClick} disabled={buttonLock} width={80} height={45} bold={true} label="제출" />
         </S.SubmitButtonWrapper>
       </S.ReportWrapper>
     </S.Container>

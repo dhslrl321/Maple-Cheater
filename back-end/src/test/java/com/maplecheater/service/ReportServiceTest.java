@@ -8,6 +8,7 @@ import com.maplecheater.domain.entity.IngameServer;
 import com.maplecheater.domain.entity.Report;
 import com.maplecheater.domain.entity.User;
 import com.maplecheater.domain.repository.cheatingtype.CheatingTypeRepository;
+import com.maplecheater.domain.repository.evidence.EvidenceRepository;
 import com.maplecheater.domain.repository.ingameserver.IngameServerRepository;
 import com.maplecheater.domain.repository.report.ReportRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
@@ -60,6 +61,8 @@ class ReportServiceTest {
     private final IngameServerRepository ingameServerRepository = mock(IngameServerRepository.class);
     private final UserRepository userRepository = mock(UserRepository.class);
     private final ReportRepository reportRepository = mock(ReportRepository.class);
+    private final EvidenceRepository evidenceRepository = mock(EvidenceRepository.class);
+    private final S3Uploader s3Uploader = mock(S3Uploader.class);
 
     private ReportService reportService;
 
@@ -69,7 +72,9 @@ class ReportServiceTest {
                 cheatingTypeRepository,
                 ingameServerRepository,
                 userRepository,
-                reportRepository);
+                reportRepository,
+                evidenceRepository,
+                s3Uploader);
 
         given(cheatingTypeRepository.findById(EXIST_CHEATING_TYPE))
                 .willReturn(Optional.of(new CheatingType("현금 거래")));

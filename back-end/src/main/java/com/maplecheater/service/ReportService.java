@@ -3,24 +3,26 @@ package com.maplecheater.service;
 import com.maplecheater.domain.dto.request.AddReportRequestData;
 import com.maplecheater.domain.dto.request.UpdateReportStatusRequestData;
 import com.maplecheater.domain.dto.response.*;
-import com.maplecheater.domain.entity.CheatingType;
-import com.maplecheater.domain.entity.IngameServer;
-import com.maplecheater.domain.entity.Report;
-import com.maplecheater.domain.entity.User;
+import com.maplecheater.domain.entity.*;
 import com.maplecheater.domain.repository.cheatingtype.CheatingTypeRepository;
+import com.maplecheater.domain.repository.evidence.EvidenceRepository;
 import com.maplecheater.domain.repository.ingameserver.IngameServerRepository;
 import com.maplecheater.domain.repository.report.ReportRepository;
 import com.maplecheater.domain.repository.user.UserRepository;
 import com.maplecheater.domain.type.ReportStatus;
 import com.maplecheater.exception.IllegalDataException;
 import com.maplecheater.exception.UnauthorizedException;
+import com.maplecheater.util.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -30,6 +32,8 @@ public class ReportService {
     private final IngameServerRepository ingameServerRepository;
     private final UserRepository userRepository;
     private final ReportRepository reportRepository;
+    private final EvidenceRepository evidenceRepository;
+    private final S3Uploader s3Uploader;
 
     /**
      * 치터 신고서를 생성한다.
@@ -61,6 +65,58 @@ public class ReportService {
                 .cheatingType(cheatingType)
                 .ingameServer(ingameServer)
                 .build());
+
+        return AddReportResponseData.builder()
+                .ingameNickname(savedReport.getIngameNickname())
+                .ingameServer(savedReport.getIngameServer().getServer())
+                .cheatingType(savedReport.getCheatingType().getType())
+                .build();
+    }
+
+    /**
+     * 치터 신고서를 생성한다.
+     * server, 신고하는 user, cheatingType 에 대한 검증을 수행한다.
+     *
+     * @param request : AddReport DTO
+     * @return AddReportResponseData : server, nickname, cheatingType
+     */
+    public AddReportResponseData addReport2(AddReportRequestData request,
+                                            List<MultipartFile> images,
+                                            Long tokenUserId) throws IOException {
+
+        if(request.getUserId() != tokenUserId) { // 요청하는 user 와 실제 user 가 다른 경우
+            throw new UnauthorizedException();
+        }
+
+        CheatingType cheatingType = cheatingTypeRepository.findById(request.getCheatingType())
+                .orElseThrow(() -> new IllegalDataException("존재하지 않는 신고 분류입니다."));
+        IngameServer ingameServer = ingameServerRepository.findById(request.getIngameServer())
+                .orElseThrow(() -> new IllegalDataException("존재하지 않는 서버입니다."));
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new IllegalDataException("존재하지 않는 사용자입니다."));
+
+        Report savedReport = reportRepository.save(Report.builder()
+                .ingameNickname(request.getIngameNickname())
+                .status(ReportStatus.PENDING)
+                .situation(request.getSituation())
+                .cheatingDatetime(request.getCheatingDatetime())
+                .registeredAt(LocalDateTime.now())
+                .user(user)
+                .cheatingType(cheatingType)
+                .ingameServer(ingameServer)
+                .build());
+
+        if(images.size() != 0) { // 이미지가 존재한다면
+            List<String> urls = s3Uploader.upload(images, "static");
+
+            for (String url : urls) {
+                Evidence evidence = Evidence.builder()
+                        .imageUrl(url)
+                        .report(savedReport)
+                        .build();
+                evidenceRepository.save(evidence);
+            }
+        }
 
         return AddReportResponseData.builder()
                 .ingameNickname(savedReport.getIngameNickname())

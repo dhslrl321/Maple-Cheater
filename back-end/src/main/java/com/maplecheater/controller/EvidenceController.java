@@ -22,8 +22,9 @@ public class EvidenceController {
         return ResponseEntity.ok(evidenceService.getImageUrl(reportId));
     }
 
-    @PostMapping
-    public ResponseEntity<List<EvidenceImageResponseData>> uploadToS3(List<MultipartFile> images) throws IOException {
-        return ResponseEntity.ok(evidenceService.uploadToS3(images));
+    @PostMapping("/{reportId}")
+    public ResponseEntity<List<EvidenceImageResponseData>> uploadToS3(@PathVariable Long reportId,
+                                                                      List<MultipartFile> images) throws IOException {
+        return ResponseEntity.ok(evidenceService.uploadToS3(reportId, images));
     }
 }

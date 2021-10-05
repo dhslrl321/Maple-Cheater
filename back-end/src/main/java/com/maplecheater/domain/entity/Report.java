@@ -16,6 +16,7 @@ public class Report {
     private Long id;
     private String ingameNickname;
     private LocalDateTime cheatingDatetime;
+    @Column(columnDefinition = "TEXT")
     private String situation;
     @Enumerated(EnumType.STRING)
     private ReportStatus status;

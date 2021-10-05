@@ -28,7 +28,7 @@ const rootHoc = ({ children }) => {
 
   const dispatch = useDispatch();
 
-  const { status } = useSelector(state => state.userReducer.user);
+  const { data, status } = useSelector(state => state.userReducer.user);
   const { show, severity, title, message } = useSelector(state => state.applicationReducer.alert);
 
   useEffect(() => {
@@ -45,8 +45,20 @@ const rootHoc = ({ children }) => {
     }
 
     dispatch(validateUser(accessToken));
+
     status === 401 && Storage.clearAll();
+    status === 403 && Storage.clearAll();
   }, []);
+
+  if (status === 200) {
+    const { userId, nickname, email } = data;
+    const responseUser = {
+      userId,
+      nickname,
+      email
+    }
+    Storage.setUser(responseUser);
+  }
 
   const handleAlertClose = () => {
     dispatch(disableAlert());

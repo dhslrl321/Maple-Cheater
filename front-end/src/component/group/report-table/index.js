@@ -14,16 +14,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Chip from '@mui/material/Chip';
 
-
-const convertToClip = (status, isSmall) => {
-  if (status === "PENDING") {
-    return <Chip color="default" label="확인중" size={isSmall ? "small" : ""} />
-  } else if (status === "REJECTED") {
-    return <Chip variant="outlined" label="거절" color="error" size={isSmall ? "small" : ""} />
-  } else {
-    return <Chip variant="outlined" label="등록" color="success" size={isSmall ? "small" : ""} />
-  }
-}
+import { convertToClip } from "../../../utils/converter";
 
 const ReportTable = ({ reports }) => {
 

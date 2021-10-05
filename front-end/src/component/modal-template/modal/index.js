@@ -3,7 +3,7 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
-const style = {
+const defaultStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -16,7 +16,16 @@ const style = {
   outline: 0
 };
 
-const index = ({ open, handleOnModalClose, children }) => {
+const imageStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  outline: 0
+};
+
+
+const index = ({ open, handleOnModalClose, children, image }) => {
   return (
     <Modal
       open={open}
@@ -24,7 +33,7 @@ const index = ({ open, handleOnModalClose, children }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={image ? imageStyle : defaultStyle}>
         {children}
       </Box>
     </Modal>

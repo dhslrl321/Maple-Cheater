@@ -26,7 +26,6 @@ export const reducer = (state = initialState, action) => {
     return {
       ...state,
       alert: {
-        ...alert,
         show: false
       }
     }

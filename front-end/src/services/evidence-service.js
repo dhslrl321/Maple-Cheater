@@ -1,11 +1,12 @@
 import API from "../utils/api";
+import * as Storage from "../utils/storage";
 
-export const fetchEvidenceByReportId = async (accessToken, reportId) => {
+export const fetchEvidenceByReportId = async (reportId) => {
   try {
     const { data, status } = await API.get(
       `/evidences/${reportId}`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${Storage.getAccessToken()}`
       }
     });
     return { data, status, error: null };
@@ -15,17 +16,17 @@ export const fetchEvidenceByReportId = async (accessToken, reportId) => {
   }
 }
 
-export const fetchUploadImage = async (accessToken, files) => {
+export const fetchUploadImage = async (files, reportId) => {
 
   const formData = new FormData();
   files.map(file => formData.append("images", file));
 
   try {
-    const { data, status } = await API.get(
+    const { data, status } = await API.post(
       `/evidences/${reportId}`,
       formData, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${Storage.getAccessToken()}`,
         "Content-Type": "multipart/form-data",
       }
     });

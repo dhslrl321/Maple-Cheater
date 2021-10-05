@@ -12,7 +12,7 @@ import useAxios from '../../../hooks/use-axios';
 import { fetchSendTempPassword } from "../../../services/auth-service";
 
 
-const index = () => {
+const FindPassword = () => {
 
   const [email, setEmail] = useState("");
   const [inputEmpty, setInputEmpty] = useState(false);
@@ -74,4 +74,4 @@ const index = () => {
   )
 }
 
-export default index
+export default FindPassword

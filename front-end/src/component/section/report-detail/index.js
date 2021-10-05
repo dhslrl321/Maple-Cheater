@@ -1,16 +1,21 @@
-import React from 'react'
+import { useSelector } from "react-redux";
+import Link from "next/link";
 
 import * as S from "./styles";
 
 import PageHeader from "../../module/page-header";
 import Report from "../../module/report";
+import { FaAngleLeft } from "react-icons/fa";
 
-const ReportDetail = ({ report }) => {
+const ReportDetail = ({ images, report, loading }) => {
+
+  const { data } = useSelector(state => state.userReducer.user);
+
   return (
     <S.Container>
       <PageHeader title="신고 세부 정보" />
-      <div> 뒤로 가기</div>
-      <Report report={report} />
+      <Link href={data ? `/users/${data.userId}/reports` : `/`}><S.GoBack ><FaAngleLeft /> 뒤로 가기</S.GoBack></Link>
+      <Report reporter={data && data.nickname} images={images} report={report} loading={loading} />
     </S.Container>
   )
 }

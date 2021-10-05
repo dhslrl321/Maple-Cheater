@@ -1,4 +1,5 @@
 import API from "../utils/api";
+import * as Storage from "../utils/storage";
 
 export const fetchRegister = async (user) => {
   const { email, password, nickname } = user;
@@ -33,12 +34,13 @@ export const fetchMyReportList = async (accessToken, userId) => {
   };
 };
 
-export const fetchMyReportDetail = async (accessToken, userId, reportId) => {
+export const fetchMyReportDetail = async (userId, reportId) => {
+  console.log(Storage.getAccessToken());
   try {
     const { data, status } = await API.get(
       `/users/${userId}/reports/${reportId}`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${Storage.getAccessToken()}`
       }
     });
     return { data, status, error: null };

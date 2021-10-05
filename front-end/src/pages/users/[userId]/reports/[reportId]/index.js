@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 import ReportDetail from "../../../../../component/section/report-detail";
 
 import withAuthentication from "../../../../../higher-order-component/with-authentication";
-import * as Storage from "../../../../../utils/storage";
 import useAxios from "../../../../../hooks/use-axios";
 import { fetchMyReportDetail } from "../../../../../services/user-service";
+import { fetchEvidenceByReportId } from "../../../../../services/evidence-service";
 import { enableAlert } from "../../../../../reducers/application";
 
 const reportId = () => {
@@ -15,16 +15,20 @@ const reportId = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const accessToken = Storage.getAccessToken();
 
   const { userId, reportId } = router.query;
   const [reportListState, refetch] = useAxios(
-    () => fetchMyReportDetail(accessToken, userId, reportId), [accessToken, userId], true);
+    () => fetchMyReportDetail(userId, reportId), [userId, reportId], true);
+
+  const [evidenceState, evidenceRefetch] = useAxios(
+    () => fetchEvidenceByReportId(reportId), [reportId], true);
 
   const { loading, data, status } = reportListState;
+  const { data: evidenceData, status: evidenceStatus } = evidenceState;
 
   useEffect(() => {
     refetch();
+    evidenceRefetch();
   }, []);
 
   if (status === 401 || status === 400) {
@@ -36,7 +40,7 @@ const reportId = () => {
     }))
   }
 
-  return <ReportDetail report={status === 200 && data} />
+  return <ReportDetail report={status === 200 && data} images={evidenceStatus === 200 && evidenceData} loading={loading} />
 }
 
 export default withAuthentication(reportId);
