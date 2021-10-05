@@ -2,6 +2,7 @@ import React from 'react'
 
 import * as S from "./styles";
 
+import Alert from "@mui/material/Alert";
 import PageHeader from "../../module/page-header";
 import Select from '../../module/select';
 import InputBox from "../../module/input-box";
@@ -10,9 +11,15 @@ import Modal from "../../modal-template/modal";
 import ReportSubmit from "../../modal-template/report-submit";
 
 import { server, cheatingType, year, month, day } from "../../../constants/select-value";
+import Button from '../../module/button';
 
 
-const ReportTemplate = ({ values, handleOnChange, handleOnFileUpload }) => {
+const ReportTemplate = ({
+  values,
+  handleOnChange,
+  handleOnFileUpload,
+  handleSubmitButtonClick,
+  buttonLock }) => {
 
   const { nickname, situation, serverSelect,
     cheatingTypeSelect,
@@ -109,8 +116,19 @@ const ReportTemplate = ({ values, handleOnChange, handleOnFileUpload }) => {
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>증거 이미지 제출</S.Label>
+          <Alert style={{ marginBottom: "20px" }} severity="info">증거 이미지가 있어야 신고 승인률이 높아집니다.</Alert>
           <FileDropzone handleOnFileUpload={handleOnFileUpload} filesLimit={5} />
         </S.InputColumn>
+        <S.SubmitButtonWrapper>
+          <div style={{ marginBottom: "30px" }}>
+            {buttonLock ? (
+              <Alert severity="warning">모든 입력 필드를 채워야 제출이 가능합니다.</Alert>
+            ) : (
+                <Alert severity="success">제출 버튼을 클릭해주세요!</Alert>
+              )}
+          </div>
+          <Button handleOnClick={handleSubmitButtonClick} disabled={buttonLock} width={80} height={45} bold={true} label="제출" />
+        </S.SubmitButtonWrapper>
       </S.ReportWrapper>
     </S.Container>
   )

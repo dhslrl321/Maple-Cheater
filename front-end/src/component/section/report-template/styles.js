@@ -71,3 +71,12 @@ export const InputColumn = styled.div`
   align-items: flex-start;
   flex-direction: column;
 `;
+
+export const SubmitButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  margin-top: 60px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;

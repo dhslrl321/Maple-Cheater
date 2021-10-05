@@ -25,9 +25,9 @@ export const cheatingType = [
 
 export const year = [
   { id: 0, value: "년도" },
-  { id: 1, value: 2020 },
-  { id: 2, value: 2021 },
-  { id: 3, value: 2022 },
+  { id: 2019, value: 2019 },
+  { id: 2020, value: 2020 },
+  { id: 2021, value: 2021 },
 ]
 
 export const month = [
