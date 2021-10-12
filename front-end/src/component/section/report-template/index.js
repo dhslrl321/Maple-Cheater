@@ -3,6 +3,7 @@ import React from 'react'
 import * as S from "./styles";
 
 import Alert from "@mui/material/Alert";
+import { FaRegQuestionCircle } from "react-icons/fa";
 import PageHeader from "../../module/page-header";
 import Select from '../../module/select';
 import InputBox from "../../module/input-box";
@@ -39,6 +40,7 @@ const ReportTemplate = ({
       <S.ReportWrapper>
         <S.InputColumn>
           <S.Label>서버</S.Label>
+          <S.HelpText><FaRegQuestionCircle /><span>상대방의 인게임 서버를 입력해주세요</span></S.HelpText>
           <S.ServerSelectWrapper>
             <Select
               name="serverSelect"
@@ -51,17 +53,19 @@ const ReportTemplate = ({
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>상대 캐릭터 닉네임</S.Label>
+          <S.HelpText><FaRegQuestionCircle /><span>상대방의 인게임 닉네임을 입력해주세요</span></S.HelpText>
           <S.NicknameWrapper>
             <InputBox
               styleType="Simple"
               name="nickname"
               value={nickname}
               handleOnChange={handleOnChange}
-              label="거래를 했던 상대 캐릭터 닉네임을 입력하세요" />
+              label="상대 캐릭터 닉네임을 입력하세요" />
           </S.NicknameWrapper>
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>신고 종류</S.Label>
+          <S.HelpText><FaRegQuestionCircle /><span>신고 종류 (현금 거래, 주문서 거래, 사냥터 비매너) 를 선택해주세요</span></S.HelpText>
           <S.ServerSelectWrapper>
             <Select
               title="신고 종류"
@@ -74,6 +78,7 @@ const ReportTemplate = ({
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>거래 시간</S.Label>
+          <S.HelpText><FaRegQuestionCircle /><span>거래가 발생한 시간에 대해서 적어주세요.</span></S.HelpText>
           <S.DatetimeWrapper>
             <S.DateTime>
               <Select
@@ -106,6 +111,7 @@ const ReportTemplate = ({
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>문제 상황</S.Label>
+          <S.HelpText><FaRegQuestionCircle /><span>문제의 상황에 대해서 최대 500자 이내로 적어주세요! 문제 상황과 증거 이미지를 토대로 해당 신고 내용을 평가하고 채택합니다</span></S.HelpText>
           <S.SituationWrapper>
             <InputBox
               styleType="Multiline"
@@ -117,6 +123,7 @@ const ReportTemplate = ({
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>증거 이미지 제출</S.Label>
+          <S.HelpText><FaRegQuestionCircle /><span>신고서의 진위여부를 더욱 잘 판단할 수 있도록 거래시 나눴던 대화의 캡쳐나 거래 내역을 5개 이내로 업로드해주세요</span></S.HelpText>
           <Alert style={{ marginBottom: "20px" }} severity="info">증거 이미지는 필수로 포함되어야 하며 최대 5개의 이미지 파일 (png, jpg, jpeg) 만 허용합니다.</Alert>
           <FileDropzone handleOnFileUpload={handleOnFileUpload} filesLimit={5} />
         </S.InputColumn>

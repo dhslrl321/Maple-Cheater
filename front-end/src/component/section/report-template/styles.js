@@ -80,3 +80,15 @@ export const SubmitButtonWrapper = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+
+export const HelpText = styled.div`
+  font-size: 0.8rem;
+  color: #9E9E9E;
+  margin: 0 0 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    margin-left: 6px;
+  }
+`;
