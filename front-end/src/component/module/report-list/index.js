@@ -5,10 +5,10 @@ import * as S from "./styles";
 import ReportTable from "../../group/report-table";
 import Loading from "../loading";
 
-const ReportList = ({ reports, loading, status }) => {
+const ReportList = ({ isAdmin, reports, loading }) => {
   return (
     <S.Container>
-      {loading ? <Loading /> : <ReportTable reports={reports} />}
+      {loading ? <Loading /> : <ReportTable isAdmin={isAdmin} reports={reports} />}
     </S.Container>
   )
 }

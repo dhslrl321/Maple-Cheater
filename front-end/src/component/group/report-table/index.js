@@ -12,11 +12,10 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Chip from '@mui/material/Chip';
 
 import { convertToClip } from "../../../utils/converter";
 
-const ReportTable = ({ reports }) => {
+const ReportTable = ({ isAdmin, reports }) => {
 
   const { data } = useSelector(state => state.userReducer.user);
 
@@ -40,8 +39,8 @@ const ReportTable = ({ reports }) => {
           {reports.map((report, index) => (
             <Link
               key={report.reportId}
-              href="/users/[userId]/reports/[reportId]"
-              as={`/users/${data && data.userId}/reports/${report.reportId}`}>
+              href={isAdmin ? "/admin/user/service/reports/[reportId]" : "/users/[userId]/reports/[reportId]"}
+              as={isAdmin ? `/admin/user/service/reports/${report.reportId}` : `/users/${data && data.userId}/reports/${report.reportId}`}>
               <TableRow
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 hover

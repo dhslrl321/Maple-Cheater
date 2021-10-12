@@ -2,23 +2,22 @@ import React, { useEffect } from 'react'
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
-import ReportDetail from "../../../../../component/section/report-detail";
+import ReportDetail from "../../../../../../component/section/report-detail";
 
-import withAuthentication from "../../../../../higher-order-component/with-authentication";
-import useAxios from "../../../../../hooks/use-axios";
-import { fetchMyReportDetail } from "../../../../../services/user-service";
-import { fetchEvidenceByReportId } from "../../../../../services/evidence-service";
-import { enableAlert } from "../../../../../reducers/application";
+import withAuthentication from "../../../../../../higher-order-component/with-authentication";
+import useAxios from "../../../../../../hooks/use-axios";
+import { fetchReportById } from "../../../../../../services/admin-service";
+import { fetchEvidenceByReportId } from "../../../../../../services/evidence-service";
+import { enableAlert } from "../../../../../../reducers/application";
 
 const reportId = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
 
-
-  const { userId, reportId } = router.query;
+  const { reportId } = router.query;
   const [reportListState, refetch] = useAxios(
-    () => fetchMyReportDetail(userId, reportId), [userId, reportId], true);
+    () => fetchReportById(reportId), [reportId], true);
 
   const [evidenceState, evidenceRefetch] = useAxios(
     () => fetchEvidenceByReportId(reportId), [reportId], true);
@@ -40,7 +39,7 @@ const reportId = () => {
     }))
   }
 
-  return <ReportDetail report={status === 200 && data} images={evidenceStatus === 200 && evidenceData} loading={loading} />
+  return <ReportDetail isAdmin report={status === 200 && data} images={evidenceStatus === 200 && evidenceData} loading={loading} />
 }
 
 export default withAuthentication(reportId);
