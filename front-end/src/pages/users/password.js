@@ -7,6 +7,7 @@ import useAxios from "../../hooks/use-axios";
 import withAuthentication from "../../higher-order-component/with-authentication";
 import { fetchChangePassword } from "../../services/user-service";
 import { enableAlert } from "../../reducers/application";
+import { passwordValidator } from "../../utils/validator";
 
 const password = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,22 @@ const password = () => {
     [data && data.userId, inputs.oldPassword, inputs.newPassword], true);
 
   const handleChangeClick = () => {
+    if (!passwordValidator(inputs.newPassword) || !passwordValidator(inputs.oldPassword)) {
+      setInputs({
+        oldPassword: "",
+        newPassword: "",
+        newPasswordCheck: "",
+      })
+
+      dispatch(enableAlert({
+        title: "비밀번호 형식 오류",
+        message: "비밀번호는 공백을 제외한 숫자, 영문의 조합으로 8-12자리 이내여야 합니다.",
+        severity: "error"
+      }));
+
+      return;
+    }
+
     refetch();
   }
 
