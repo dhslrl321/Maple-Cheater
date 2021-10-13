@@ -8,7 +8,7 @@ import AlertSelfClose from "../component/module/alert-self-close";
 import Alert from "../component/module/alert";
 
 import { getUser } from "../reducers/user";
-import { emailValidator } from "../utils/validator";
+import { emailValidator, emptyTextValidator } from "../utils/validator";
 import * as Storage from "../utils/storage";
 
 const login = () => {
@@ -46,7 +46,7 @@ const login = () => {
   const handleLoginClick = () => {
     const { email, password } = inputs;
 
-    if (email === "" || password === "") {
+    if (!emptyTextValidator(email) || !emptyTextValidator(password)) {
       setAlert({
         open: true,
         title: "입력 값 에러",

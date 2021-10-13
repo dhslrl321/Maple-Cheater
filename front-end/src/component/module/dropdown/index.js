@@ -32,7 +32,7 @@ const Dropdown = ({ dropdown }) => {
         <Link href={`/users/[userId]/reports`} as={`/users/${data.userId}/reports`}>내 신고 목록</Link>
       </S.LinkList>
       <S.LinkList>
-        <Link href="/user/password">비밀번호 변경</Link>
+        <Link href="/users/password">비밀번호 변경</Link>
       </S.LinkList>
       <S.LinkList>
         <Link href="/logout">로그아웃</Link>

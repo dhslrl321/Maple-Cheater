@@ -71,12 +71,12 @@ const index = ({ open, toggle }) => {
                 </S.AvatarWrapper>
                 <Divider />
                 <S.LinkColumn>
-                  <Link href="/">
+                  <Link href={`/users/[userId]/reports`} as={`/users/${data.userId}/reports`}>
                     <ListItem button>내 신고 목록</ListItem>
                   </Link>
                 </S.LinkColumn>
                 <S.LinkColumn>
-                  <Link href="/">
+                  <Link href="/users/password">
                     <ListItem button>비밀번호 변경</ListItem>
                   </Link>
                 </S.LinkColumn>

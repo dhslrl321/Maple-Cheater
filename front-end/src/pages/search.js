@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import withAuthentication from "../higher-order-component/with-authentication";
 
-import { whitespaceValidator } from "../utils/validator";
+import { whitespaceValidator, searchValidator, emptyTextValidator } from "../utils/validator";
 import { getCheater } from "../reducers/cheater";
-import { showAlert } from "../reducers/application";
+import { enableAlert } from "../reducers/application";
 import * as Storage from "../utils/storage";
 
 import Search from "../component/section/search";
@@ -22,23 +22,23 @@ const cheater = () => {
   }
 
   const handleSearchOnClick = () => {
-    if (searchText === "") {
+    if (!emptyTextValidator(searchText)) {
       const content = {
         title: "입력 값 에러",
         message: "거래를 진행하려는 캐릭터의 닉네임을 입력해주세요!",
         severity: "error"
       }
-      dispatch(showAlert(content));
+      dispatch(enableAlert(content));
       return;
     }
 
-    if (whitespaceValidator(searchText)) {
+    if (!searchValidator(searchText)) {
       const content = {
         title: "입력 값 에러",
-        message: "닉네임에는 공백을 허용하지 않습니다!",
+        message: "캐릭터 검색은 2-12글자 사이 공백을 제외한 한글, 영문, 숫자만 허용합니다.",
         severity: "error"
       }
-      dispatch(showAlert(content));
+      dispatch(enableAlert(content));
       return;
     }
     const accessToken = Storage.getAccessToken();

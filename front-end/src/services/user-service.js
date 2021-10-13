@@ -35,7 +35,6 @@ export const fetchMyReportList = async (accessToken, userId) => {
 };
 
 export const fetchMyReportDetail = async (userId, reportId) => {
-  console.log(Storage.getAccessToken());
   try {
     const { data, status } = await API.get(
       `/users/${userId}/reports/${reportId}`, {
@@ -50,3 +49,22 @@ export const fetchMyReportDetail = async (userId, reportId) => {
   };
 };
 
+export const fetchChangePassword = async (userId, oldPassword, newPassword) => {
+  const request = {
+    oldPassword,
+    newPassword
+  };
+
+  try {
+    const { data, status } = await API.patch(
+      `/users/${userId}/password`, JSON.stringify(request), {
+      headers: {
+        Authorization: `Bearer ${Storage.getAccessToken()}`
+      }
+    });
+    return { data, status, error: null };
+  } catch (e) {
+    const { data: { message }, status } = e.response;
+    return { data: message, status, error: e };
+  };
+}

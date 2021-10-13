@@ -9,7 +9,7 @@ import useAxios from "../hooks/use-axios";
 import { fetchEmailVerification, fetchAuthenticateAuthCode } from "../services/auth-service";
 import { fetchRegister } from "../services/user-service";
 
-import { emailValidator } from "../utils/validator";
+import { emailValidator, emptyTextValidator, passwordValidator } from "../utils/validator";
 
 
 const register = () => {
@@ -94,7 +94,7 @@ const register = () => {
   const handleRegisterClick = () => {
     const { email, password, passwordCheck, nickname } = inputs;
     const { emailLock, authCodeLock } = inputLock;
-    if (email === "" || password === "" || nickname === "") {
+    if (!emptyTextValidator(email) || !emptyTextValidator(password) || !emptyTextValidator(nickname)) {
       setAlert({
         open: true,
         title: "입력 값 에러",
@@ -121,12 +121,21 @@ const register = () => {
       return;
     }
 
+    if (!passwordValidator(password)) {
+      setAlert({
+        open: true,
+        title: "비밀번호 입력 에러",
+        message: "비밀번호는 숫자와 영어를 조합하여 최소 8자리 이상 15자리 이하이어야 합니다."
+      });
+      return;
+    }
+
     register();
   }
 
   const handleSendMailClick = () => {
     const { email } = inputs;
-    if (email === "") {
+    if (!emptyTextValidator(email)) {
       setAlert({
         open: true,
         title: "입력 값이 존재하지 않음",
@@ -149,7 +158,7 @@ const register = () => {
 
   const handleAuthenticateAuthCodeClick = () => {
     const { email, authCode } = inputs;
-    if (email === "" || authCode === "") {
+    if (!emptyTextValidator(email) || !emptyTextValidator(authCode)) {
       setAlert({
         open: true,
         title: "입력 값이 존재하지 않음",
@@ -157,7 +166,6 @@ const register = () => {
       });
       return;
     }
-
     authenticateAuthCode();
   }
 
