@@ -9,7 +9,7 @@ import { enableAlert } from "../reducers/application";
 
 import Home from "../component/section/home";
 
-const home = () => {
+const HomePage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -46,4 +46,4 @@ const home = () => {
     loading={loading} />
 
 };
-export default home;
+export default HomePage;

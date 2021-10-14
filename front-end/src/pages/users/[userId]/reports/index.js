@@ -12,7 +12,7 @@ import { enableAlert } from "../../../../reducers/application";
 
 import MyReport from "../../../../component/section/my-report";
 
-const userId = () => {
+const UserId = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ const userId = () => {
     status={status} />
 }
 
-export default withAuthentication(userId);
+export default withAuthentication(UserId);
 
 export const getServerSideProps = async () => {
   return {

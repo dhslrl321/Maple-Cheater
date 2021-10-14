@@ -45,4 +45,6 @@ class MyDocument extends Document {
   }
 }
 
+MyDocument.displayName = "MyDocument";
+
 export default MyDocument;

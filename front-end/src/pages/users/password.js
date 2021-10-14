@@ -9,7 +9,7 @@ import { fetchChangePassword } from "../../services/user-service";
 import { enableAlert } from "../../reducers/application";
 import { passwordValidator } from "../../utils/validator";
 
-const password = () => {
+const Password = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [inputs, setInputs] = useState({
@@ -107,4 +107,4 @@ const password = () => {
     lock={buttonLock} />
 }
 
-export default withAuthentication(password);
+export default withAuthentication(Password);

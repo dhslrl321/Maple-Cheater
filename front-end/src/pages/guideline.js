@@ -1,9 +1,7 @@
-import React from 'react'
-
 import Guideline from "../component/section/guideline";
 
-const guide = () => {
-  return <Guideline />
+const Guide = () => {
+  return <Guideline />;
 }
 
-export default guide
+export default Guide

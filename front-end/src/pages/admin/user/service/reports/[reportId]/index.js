@@ -10,7 +10,7 @@ import { fetchReportById } from "../../../../../../services/admin-service";
 import { fetchEvidenceByReportId } from "../../../../../../services/evidence-service";
 import { enableAlert } from "../../../../../../reducers/application";
 
-const reportId = () => {
+const ReportId = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const reportId = () => {
   return <ReportDetail isAdmin report={status === 200 && data} images={evidenceStatus === 200 && evidenceData} loading={loading} />
 }
 
-export default withAuthentication(reportId);
+export default withAuthentication(ReportId);
 
 export const getServerSideProps = async () => {
   return {

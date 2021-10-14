@@ -11,7 +11,7 @@ import { getUser } from "../reducers/user";
 import { emailValidator, emptyTextValidator } from "../utils/validator";
 import * as Storage from "../utils/storage";
 
-const login = () => {
+const LoginPage = () => {
   const { data, status } = useSelector(state => state.userReducer.user);
 
   const dispatch = useDispatch();
@@ -105,4 +105,4 @@ const login = () => {
     </>);
 }
 
-export default login
+export default LoginPage

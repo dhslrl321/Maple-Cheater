@@ -7,7 +7,7 @@ import Loading from "../component/module/loading";
 import * as Storage from "../utils/storage";
 import { clearUser } from "../reducers/user";
 
-const logout = () => {
+const Logout = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -36,4 +36,4 @@ const logout = () => {
   )
 }
 
-export default logout
+export default Logout

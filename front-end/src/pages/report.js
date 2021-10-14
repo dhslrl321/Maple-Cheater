@@ -8,7 +8,7 @@ import useAxios from "../hooks/use-axios";
 import { fetchAddReport } from "../services/report-service";
 import { enableAlert } from "../reducers/application";
 
-const report = () => {
+const Report = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -87,4 +87,4 @@ const report = () => {
     handleSubmitButtonClick={handleSubmitButtonClick} />
 }
 
-export default withAuthentication(report);
+export default withAuthentication(Report);

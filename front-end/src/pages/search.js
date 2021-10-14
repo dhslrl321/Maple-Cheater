@@ -9,7 +9,7 @@ import * as Storage from "../utils/storage";
 
 import Search from "../component/section/search";
 
-const cheater = () => {
+const Cheater = () => {
   const dispatch = useDispatch();
 
   const { nickname } = useSelector(state => state.cheaterReducer.search);
@@ -51,4 +51,4 @@ const cheater = () => {
     searchText={searchText} />
 }
 
-export default withAuthentication(cheater);
+export default withAuthentication(Cheater);

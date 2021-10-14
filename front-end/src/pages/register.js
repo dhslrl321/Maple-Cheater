@@ -12,7 +12,7 @@ import { fetchRegister } from "../services/user-service";
 import { emailValidator, emptyTextValidator, passwordValidator } from "../utils/validator";
 
 
-const register = () => {
+const RegisterPage = () => {
   const router = useRouter();
   const [isSamePassword, setIsSamePassword] = useState(false);
 
@@ -222,4 +222,4 @@ const register = () => {
   )
 }
 
-export default register;
+export default RegisterPage;

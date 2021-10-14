@@ -9,7 +9,7 @@ import { fetchAllReports } from "../../../../../services/admin-service";
 import { enableAlert } from "../../../../../reducers/application";
 import AdminReport from "../../../../../component/section/my-report";
 
-const reports = () => {
+const Reports = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -41,4 +41,4 @@ const reports = () => {
     status={status} />
 }
 
-export default withAuthentication(reports);
+export default withAuthentication(Reports);
