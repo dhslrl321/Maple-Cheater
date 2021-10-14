@@ -23,7 +23,7 @@ const HomePage = () => {
   }
 
   const handleSearchOnClick = () => {
-    if (searchValidator(searchText)) {
+    if (!searchValidator(searchText)) {
       const content = {
         title: "입력 값 에러",
         message: "캐릭터 검색은 2-12글자 사이 공백을 제외한 한글, 영문, 숫자만 허용합니다.",

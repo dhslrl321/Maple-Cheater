@@ -17,7 +17,7 @@ export const CardWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: ${({ isLeft }) => (isLeft ? "row" : "row-reverse")};
-  background: #F0F0F1;
+  background: #FFFFFF;
   color: ${props => props.theme.color.defaultFont};
 
   border-radius: 14px;

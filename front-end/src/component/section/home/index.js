@@ -5,6 +5,7 @@ import * as S from "./styles";
 import PageHeader from "../../module/page-header";
 import SearchBar from "../../module/search-bar";
 import CharacterGroup from "../../group/charater-group";
+import Hero from "../../card/hero";
 
 const index = ({ handleOnChange, handleSearchOnClick, searchText, loading }) => {
   return (
@@ -17,6 +18,7 @@ const index = ({ handleOnChange, handleSearchOnClick, searchText, loading }) => 
         handleSearchOnClick={handleSearchOnClick}
         searchText={searchText}
         loading={loading} />
+      <Hero />
       <CharacterGroup />
     </S.Container>
   )
