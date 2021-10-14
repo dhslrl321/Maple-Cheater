@@ -13,6 +13,7 @@ public class CheaterDetail {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(columnDefinition = "TEXT")
     private String situation;
     private LocalDateTime cheatingDatetime;
 

@@ -22,10 +22,12 @@ const MyApp = ({ Component, pageProps }) => {
         <title>메이플스토리 사기꾼 검색 | maplecheater</title>
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="icon" href="/favicon.ico" />
+
         <meta
           name="description"
           content="지금 MapleCheater 에서 메이플스토리 사기꾼을 검색해보세요!"
         />
+
         <meta property="og:title" content="메이플스토리 사기꾼 검색 | maplecheater" />
         <meta
           property="og:description"
