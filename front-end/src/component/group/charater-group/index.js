@@ -19,10 +19,16 @@ const index = () => {
         isLeft={false} />
 
       <CharacterCard
-        title="inspired by 더 치트"
-        paragraph="Maple Cheater는 사기피해사례 검색의 대표 서비스 '더치트' 에서 많은 아이디어 영감을 받았습니다."
+        title="사냥터 비매너 신고 서비스"
+        paragraph="사냥터 비매너 신고제도를 운영하여 비매너 유저의 거래 신용도에 직접적으로 연관시켜 사냥터 비매너 문제에 기여"
         source="/lala.png"
         isLeft={true} />
+
+      <CharacterCard
+        title="inspired by 더 치트"
+        paragraph="Maple Cheater는 사기피해사례 검색의 대표 서비스 '더치트' 에서 많은 아이디어 영감을 받았습니다."
+        source="/hero.png"
+        isLeft={false} />
     </S.Container>
   )
 }

@@ -6,7 +6,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  margin: 55px 0;
+  margin: 25px 0;
 `;
 
 export const CardWrapper = styled.div`
@@ -17,10 +17,10 @@ export const CardWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: ${({ isLeft }) => (isLeft ? "row" : "row-reverse")};
-  background: ${props => props.theme.color.deepBlue};
-  color: ${props => props.theme.color.white};
+  background: #F0F0F1;
+  color: ${props => props.theme.color.defaultFont};
 
-  border-radius: 5px;
+  border-radius: 14px;
   box-shadow: 0px 3px 22px rgba(0, 0, 0, 0.16);
 
   max-width: 1100px;
