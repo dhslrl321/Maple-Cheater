@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://133.186.159.111/api/v1",
+  baseURL: "http://maplecheater.com/api/v1",
   headers: {
     "Content-Type": "application/json",
   }

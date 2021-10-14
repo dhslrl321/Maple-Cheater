@@ -14,12 +14,8 @@ export const whitespaceValidator = (text) => {
 }
 
 export const searchValidator = (text) => {
-  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
-  const isAcceptableWord = regex.test(text);
-  if (2 <= text.length && text.length <= 12) {
-    return isAcceptableWord && whitespaceValidator(text);
-  }
-  return false;
+  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,12}$/;
+  return regex.test(text);
 }
 
 export const emptyTextValidator = (text) => {
