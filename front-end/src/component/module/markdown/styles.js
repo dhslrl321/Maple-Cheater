@@ -25,6 +25,7 @@ export const Container = styled.div`
 
 export const InlineCode = styled.span`
   background: yellow;
+  word-break: break-all;
 `;
 
 export const CodeBlockWrapper = styled.pre`

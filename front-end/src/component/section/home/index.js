@@ -20,7 +20,7 @@ const index = ({ handleOnChange, handleSearchOnClick, searchText, loading }) => 
         loading={loading} />
       <Hero />
       <CharacterGroup />
-    </S.Container>
+    </S.Container >
   )
 }
 
