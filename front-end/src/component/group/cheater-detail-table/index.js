@@ -35,7 +35,7 @@ const CheateDetailTable = ({ cheaterNickname, histories, isSmall }) => {
               </TableCell>
               <TableCell align="right">
                 <S.Text>
-                  {history.situation}
+                  {history.situation.substr(0, 10) + "..."}
                 </S.Text>
               </TableCell>
               <TableCell align="right">
