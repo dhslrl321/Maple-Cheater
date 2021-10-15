@@ -14,7 +14,7 @@ export const whitespaceValidator = (text) => {
 }
 
 export const searchValidator = (text) => {
-  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,12}$/;
+  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,30}$/;
   return regex.test(text);
 }
 
