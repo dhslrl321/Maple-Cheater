@@ -124,8 +124,8 @@ const ReportTemplate = ({
         <S.InputColumn>
           <S.Label>증거 이미지 제출</S.Label>
           <S.HelpText><FaRegQuestionCircle /><span>신고서의 진위여부를 더욱 잘 판단할 수 있도록 거래시 나눴던 대화의 캡쳐나 거래 내역을 5개 이내로 업로드해주세요</span></S.HelpText>
-          <Alert style={{ marginBottom: "20px" }} severity="info">증거 이미지는 필수로 포함되어야 하며 최대 5개의 이미지 파일 (png, jpg, jpeg) 만 허용합니다.</Alert>
-          <FileDropzone handleOnFileUpload={handleOnFileUpload} filesLimit={5} />
+          <Alert style={{ marginBottom: "20px" }} severity="info">증거 이미지는 필수로 포함되어야 하며 10MB 제한의 최대 5개의 이미지 파일 (png, jpg, jpeg) 만 허용합니다.</Alert>
+          <FileDropzone handleOnFileUpload={handleOnFileUpload} filesLimit={5} maxFileSize={10000000} />
         </S.InputColumn>
         <S.SubmitButtonWrapper>
           <div style={{ marginBottom: "30px" }}>
