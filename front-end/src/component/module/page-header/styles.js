@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const TitleWrapper = styled.div`
-  margin: 24px 0;
+  margin: 10px 0;
 `;
 
 export const Title = styled.h1`
@@ -27,6 +27,6 @@ export const Subtitle = styled.h3`
 
   @media screen and (max-width: 576px) {
     font-size: 0.9rem;
-    margin: 20px;
+    margin: 10px;
   }
 `;

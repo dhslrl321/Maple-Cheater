@@ -87,4 +87,4 @@ const Report = () => {
     handleSubmitButtonClick={handleSubmitButtonClick} />
 }
 
-export default withAuthentication(Report);
+export default Report;

@@ -38,16 +38,22 @@ export const Label = styled.div`
 
 export const ServerSelectWrapper = styled.div`
   width: 30%;
+  @media screen and (max-width: 576px) {
+    width: 90%;
+  }
 `;
 
 export const SituationWrapper = styled.div`
   width: 100%;
+  @media screen and (max-width: 576px) {
+    width: 90%;
+  }
 `;
 
 export const NicknameWrapper = styled.div`
   width: 50%;
   @media screen and (max-width: 576px) {
-    width: 80%;
+    width: 90%;
   }
 `;
 
