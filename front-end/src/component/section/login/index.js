@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Link from "next/link";
 
 import InputBox from "../../module/input-box";
 import PageHeader from "../../module/page-header";
@@ -44,6 +45,11 @@ const index = ({
           value={password}
           label="비밀번호를 입력하세요" />
         <S.FindPasswordWrapper>
+          <Link href="/register">
+            <S.FindPasswordLabel>
+              회원가입
+            </S.FindPasswordLabel>
+          </Link>
           <S.FindPasswordLabel onClick={handleOnModalOpen}>
             비밀번호 찾기
           </S.FindPasswordLabel>
@@ -54,7 +60,6 @@ const index = ({
           </Modal>
         </S.FindPasswordWrapper>
       </S.InputWrapper>
-
       <S.ButtonWrapper>
         <Button handleOnClick={handleLoginClick} width="100" height="40" label="로그인" />
       </S.ButtonWrapper>
