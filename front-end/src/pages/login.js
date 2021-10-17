@@ -98,7 +98,11 @@ const LoginPage = () => {
         handleAlertClose={handleAlertClose}
         title={alert.title}
         message={alert.message} />
-      {((status === 400 || status === 403) && inputs.email !== "") && <AlertSelfClose
+      {(status === 403 && inputs.email !== "") && <AlertSelfClose
+        severity="error"
+        title="로그인 실패"
+        message={data} />}
+      {(status === 400 && inputs.email !== "") && <AlertSelfClose
         severity="error"
         title="로그인 실패"
         message={data} />}
