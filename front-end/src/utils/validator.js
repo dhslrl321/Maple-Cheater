@@ -26,3 +26,8 @@ export const passwordValidator = (password) => {
   const regex = /^[a-zA-Z0-9]{8,15}$/;
   return regex.test(password);
 }
+
+export const situationValidator = (text) => {
+  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{10,300}$/;
+  return regex.test(text);
+}

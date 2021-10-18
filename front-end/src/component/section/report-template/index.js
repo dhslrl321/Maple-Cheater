@@ -111,14 +111,14 @@ const ReportTemplate = ({
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>문제 상황</S.Label>
-          <S.HelpText><FaRegQuestionCircle /><span>문제의 상황에 대해서 최대 500자 이내로 적어주세요! 문제 상황과 증거 이미지를 토대로 해당 신고 내용을 평가하고 채택합니다</span></S.HelpText>
+          <S.HelpText><FaRegQuestionCircle /><span>문제의 상황에 대해서 10자 ~ 300자 이내로 적어주세요</span></S.HelpText>
           <S.SituationWrapper>
             <InputBox
               styleType="Multiline"
               name="situation"
               handleOnChange={handleOnChange}
               value={situation}
-              label="문제의 상황을 500자 이내로 입력해주세요" />
+              label="문제의 상황을 입력해주세요" />
           </S.SituationWrapper>
         </S.InputColumn>
         <S.InputColumn>

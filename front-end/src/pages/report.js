@@ -7,6 +7,7 @@ import ReportTemplate from "../component/section/report-template";
 import useAxios from "../hooks/use-axios";
 import { fetchAddReport } from "../services/report-service";
 import { enableAlert } from "../reducers/application";
+import { situationValidator } from "../utils/validator";
 
 const Report = () => {
 
@@ -45,6 +46,12 @@ const Report = () => {
   }
 
   const handleSubmitButtonClick = () => {
+    if (!situationValidator(inputs.situation)) {
+      dispatch(enableAlert({
+        title: "입력 값 에러",
+        message: "문제 상황은 숫자, 영문, 한글만 포함하여 최소 10자에서 300자까지만 입력할 수 있습니다."
+      }));
+    }
     addReport();
   }
 

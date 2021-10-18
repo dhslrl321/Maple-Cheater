@@ -6,8 +6,13 @@ import * as S from "./styles";
 const index = () => {
   return (
     <S.Container>
+
+      <S.Header>
+        Maple-Cheater 는?
+    </S.Header>
+
       <CharacterCard
-        title="유저의 신뢰 기반 거래에서 정보 기반 거래로"
+        title="신뢰 기반 거래에서 정보 기반 거래로"
         paragraph="Maple Cheater 는 사용자 참여형 커뮤니티 프로젝트로, 사용자의 제보로 사기유저를 검색하여 사기를 방지할 수 있도록 돕는 서비스 입니다."
         source="/lala.png"
         isLeft={true} />

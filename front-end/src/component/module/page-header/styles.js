@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const TitleWrapper = styled.div`
-  margin: 10px 0;
+  margin: 14px 0;
 `;
 
 export const Title = styled.h1`
