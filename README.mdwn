@@ -4,7 +4,7 @@
 - 기술 스택
 - 기능 명세
 
-![logo](https://github.com/dhslrl321/Maple-Cheater/tree/master/images/logo.png)
+![logo](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/logo.png)
 
 # Maple Cheater
 
