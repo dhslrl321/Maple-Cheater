@@ -4,6 +4,8 @@
 - 기술 스택
 - 기능 명세
 
+![logo](https://github.com/dhslrl321/Maple-Cheater/tree/master/images/logo.png)
+
 # Maple Cheater
 
 본 프로젝트는 사용자 참여형**커뮤니티 프로젝트**로, 사용자들의 제보로 사기 캐릭터를 확인할 수 있는 프로젝트입니다.
