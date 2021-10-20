@@ -64,10 +64,10 @@ export const reducer = (state = initialState, action) => {
   }
 }
 
-export const getCheater = (accessToken, nickname) => async dispatch => {
+export const getCheater = (nickname) => async dispatch => {
   dispatch({ type: T.GET_CHEATER });
 
-  const { data, status, error } = await fetchCheater(accessToken, nickname);
+  const { data, status, error } = await fetchCheater(nickname);
 
   if (error === null) {
     dispatch({

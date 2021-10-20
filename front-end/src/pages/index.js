@@ -33,9 +33,8 @@ const HomePage = () => {
       return;
     }
     setLoading(true);
-    const accessToken = Storage.getAccessToken();
     dispatch(setSearchNickname(searchText));
-    dispatch(getCheater(accessToken, searchText));
+    dispatch(getCheater(searchText));
     router.push("/search");
   }
 

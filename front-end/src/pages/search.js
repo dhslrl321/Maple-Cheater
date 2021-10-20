@@ -41,8 +41,8 @@ const Cheater = () => {
       dispatch(enableAlert(content));
       return;
     }
-    const accessToken = Storage.getAccessToken();
-    dispatch(getCheater(accessToken, searchText));
+
+    dispatch(getCheater(searchText));
   }
 
   return <Search
@@ -51,4 +51,4 @@ const Cheater = () => {
     searchText={searchText} />
 }
 
-export default withAuthentication(Cheater);
+export default Cheater;

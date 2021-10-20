@@ -28,11 +28,11 @@ export const passwordValidator = (password) => {
 }
 
 export const situationValidator = (text) => {
-  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{10,300}$/;
+  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\s\n|~!@#$%^&*()+=.,]{10,300}$/;
   return regex.test(text);
 }
 
 export const nicknameValidator = (nickname) => {
-  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/;
-  return regex.test(text);
+  const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,8}$/;
+  return regex.test(nickname);
 }

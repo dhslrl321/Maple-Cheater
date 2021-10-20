@@ -18,7 +18,6 @@ public class CheaterController {
     private final CheaterService cheaterService;
 
     @GetMapping("/{ingameNickname}")
-    @PreAuthorize("isAuthenticated() and hasAuthority('USER')")
     public ResponseEntity<SearchCheaterResponseData> search(@PathVariable String ingameNickname) {
         return ResponseEntity.ok(cheaterService.getCheater(ingameNickname));
     }
