@@ -9,7 +9,7 @@ import useAxios from "../hooks/use-axios";
 import { fetchEmailVerification, fetchAuthenticateAuthCode } from "../services/auth-service";
 import { fetchRegister } from "../services/user-service";
 
-import { emailValidator, emptyTextValidator, passwordValidator } from "../utils/validator";
+import { emailValidator, emptyTextValidator, passwordValidator, nicknameValidator } from "../utils/validator";
 
 
 const RegisterPage = () => {
@@ -126,6 +126,15 @@ const RegisterPage = () => {
         open: true,
         title: "비밀번호 입력 에러",
         message: "비밀번호는 숫자와 영어를 조합하여 최소 8자리 이상 15자리 이하이어야 합니다."
+      });
+      return;
+    }
+
+    if (!nicknameValidator(nickname)) {
+      setAlert({
+        open: true,
+        title: "닉네임 입력 에러",
+        message: "닉네임은 숫자와 영어, 한글을 조합하여 최소 2자리 이상 8자리 이하이어야 합니다."
       });
       return;
     }
