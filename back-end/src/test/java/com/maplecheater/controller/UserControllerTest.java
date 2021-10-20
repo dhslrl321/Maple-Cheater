@@ -150,6 +150,22 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("회원가입 - 실패 - 유효하지 않는 데이터")
+    void register_fail() throws Exception {
+        RegisterRequestData validRegisterRequest = RegisterRequestData.builder()
+                .email(VALID_EMAIL)
+                .password("")
+                .nickname("")
+                .build();
+
+        mockMvc.perform(post("/api/v1/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validRegisterRequest)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @DisplayName("회원가입 - 실패 - 인증되지 않은 이메일")
     void register_fail_not_verified_email() throws Exception {
         RegisterRequestData invalidRequest = RegisterRequestData.builder()

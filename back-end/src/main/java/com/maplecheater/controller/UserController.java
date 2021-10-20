@@ -17,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1/users", produces = "application/json")
@@ -24,7 +27,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<RegisterResponseData> register(@RequestBody RegisterRequestData registerRequestData) {
+    public ResponseEntity<RegisterResponseData> register(@RequestBody @Valid  RegisterRequestData registerRequestData) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(registerRequestData));
     }
 

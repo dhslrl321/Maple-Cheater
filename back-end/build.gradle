@@ -32,6 +32,9 @@ dependencies {
     /** Spring Mail */
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+    /** Spring Validation */
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     /** AWS SDK */
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
 
