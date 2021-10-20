@@ -5,8 +5,8 @@
 ![Generic badge](https://img.shields.io/badge/react.js-17.0.2-yellogreen.svg)
 ![Generic badge](https://img.shields.io/badge/Next.js-11.1.2-green.svg)
 ![Generic badge](https://img.shields.io/badge/Redux-4.1.1-yello.svg)
-![Generic badge](https://img.shields.io/badge/SpringBoot-2.5.4-{orange}.svg)
-![Generic badge](https://img.shields.io/badge/QueryDsl-4.4.0-{lightgrey}.svg)
+![Generic badge](https://img.shields.io/badge/SpringBoot-2.5.4-orange.svg)
+![Generic badge](https://img.shields.io/badge/QueryDsl-4.4.0-lightgrey.svg)
 
 # 목차
 
