@@ -1,4 +1,6 @@
-![logo](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/logo.png)
+<div align="center"> 
+<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/logo.png" alt="logo" height="50" />
+</div>
 
 본 프로젝트는 사용자 참여형**커뮤니티 프로젝트**로, 사용자들의 제보로 사기 캐릭터를 확인할 수 있는 커뮤니티 프로젝트입니다.
 
@@ -66,7 +68,9 @@
 
 ## 📌 기술 스택
 
-![skill](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/skill.png)
+<div align="center"> 
+<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/skill.png" alt="skill" height="50" />
+</div>
 
 - **Frontend**
   - Library : React.js
@@ -95,7 +99,9 @@
 
 ## 📌 배포 구조
 
-![infra](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/infra.png)
+<div align="center"> 
+<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/infra.png" alt="infra" height="50" />
+</div>
 
 - DB Instance 와 Application Instance 는 동일 VPC의 내부망 통신을 수행함
 - File Upload 를 위해 S3 에 Object Upload를 수행할 때 `MultipartFile` -> `File` 변환 과정으로 인한 공격 벡터가 있으므로 DB Instance와 물리적 망분리
