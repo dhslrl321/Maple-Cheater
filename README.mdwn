@@ -1,6 +1,6 @@
 ![logo](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/logo.png)
 
-본 프로젝트는 사용자 참여형**커뮤니티 프로젝트**로, 사용자들의 제보로 사기 캐릭터를 확인할 수 있는 프로젝트입니다.
+본 프로젝트는 사용자 참여형**커뮤니티 프로젝트**로, 사용자들의 제보로 사기 캐릭터를 확인할 수 있는 커뮤니티 프로젝트입니다.
 
 - [https://maplecheater.com](https://maplecheater.com)
 
@@ -19,9 +19,8 @@
 
 2. ### [프로젝트 소개](#-프로젝트-소개)
 
-- - 2-1 [사용 기술](#-사용-기술)
+- - 2-1 [기술 스택](#-기술-스택)
 - - 2-2 [배포 구조](#-배포-구조)
-- - 2-3 [기능 명세](#-배포-구조)
 
 3. ### [Contributors](#-Contributors)
 
@@ -31,11 +30,11 @@
 
 # 🔖 기획 의도 및 기능 명세
 
-### 📌 기획 의도
+## 📌 기획 의도
 
 - 게임 내에서 유저간 신뢰 기반 거래에서 발생할 수 있는 모든 거래에서 사기를 미리 예방할 수 있도록 한다.
 
-### 📌 기능 명세
+## 📌 기능 명세
 
 - **유저 관리**
   - 회원가입
@@ -65,7 +64,7 @@
 
 # ⛳️ 프로젝트 소개
 
-### 📌 기술 스택
+## 📌 기술 스택
 
 ![skill](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/skill.png)
 
@@ -94,7 +93,7 @@
   - Git Branch Strategy : Gitflow
   - Issue Tracking : Github Issue
 
-### 📌 배포 구조
+## 📌 배포 구조
 
 ![infra](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/infra.png)
 
@@ -105,7 +104,7 @@
 
 해당 서비스가 잘 유지되기 위해서는 여러 사람들이 도움을 주었습니다.
 
-### 📌 Contributors
+## 📌 Contributors
 
 | 이름, 닉네임 |                 Github                  |
 | :----------: | :-------------------------------------: |
