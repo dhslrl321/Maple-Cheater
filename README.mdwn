@@ -1,5 +1,5 @@
 <div align="center"> 
-<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/logo.png" alt="logo" height="50" />
+<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/logo.png" alt="logo" />
 </div>
 
 본 프로젝트는 사용자 참여형**커뮤니티 프로젝트**로, 사용자들의 제보로 사기 캐릭터를 확인할 수 있는 커뮤니티 프로젝트입니다.
@@ -69,7 +69,7 @@
 ## 📌 기술 스택
 
 <div align="center"> 
-<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/skill.png" alt="skill" height="50" />
+<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/skill.png" alt="skill" />
 </div>
 
 - **Frontend**
@@ -100,7 +100,7 @@
 ## 📌 배포 구조
 
 <div align="center"> 
-<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/infra.png" alt="infra" height="50" />
+<img style="margin: 10px" src="https://github.com/dhslrl321/Maple-Cheater/blob/master/images/infra.png" alt="infra" />
 </div>
 
 - DB Instance 와 Application Instance 는 동일 VPC의 내부망 통신을 수행함
