@@ -73,29 +73,30 @@
 </div>
 
 - **Frontend**
-  - Library : React.js
-  - Framework : Next.js
-  - Styling : styled-components, material-ui, react-icons, styled-reset
-  - Communication Module : Axios
-  - Global State Managing : Redux, Redux-Thunk
+  - Library : `React.js`
+  - Framework : `Next.js`
+  - Styling : `styled-components`, `material-ui`, `react-icons`, `styled-reset`
+  - Communication Module : `Axios`
+  - Global State Managing : `Redux`, `Redux-Thunk`
 - **Backend**
-  - Framework : Spring Boot
-  - Data : Spring Data JPA
-  - Mail : Spring Boot Starter Mail
-  - Querying : Querydsl
-  - Auth : Spring Security + JWT.io
-  - Testing : JUnit5, BDDMockito, Mockito
-  - Build : gradle
-  - Serialization Format : JSON
+  - Framework : `Spring Boot`
+  - Data : `Spring Data JPA`
+  - Mail : `Spring Boot Starter Mail`
+  - Querying : `Querydsl`
+  - Auth : `Spring Security` + `JWT`
+  - Testing : `JUnit5`, `BDDMockito`, `Mockito`
+  - Build : `gradle`
+  - Database : `mysql`
+  - Serialization Format : `JSON`
 - **Infrastructure**
-  - Container Runtime : Docker
-  - Computing Engine : AWS ECS
-  - Database Engine : AWS RDS
-  - Static File Storage Server : AWS S3
-  - Reverse Proxy : Nginx
+  - Container Runtime : `Docker`
+  - Computing Engine : `NHN Cloud Instance`
+  - Static File Storage Server : `AWS S3`
+  - Reverse Proxy : `Nginx-Proxy`
 - **Etc..**
-  - Git Branch Strategy : Gitflow
-  - Issue Tracking : Github Issue
+  - Git Branch Strategy : `Gitflow`
+  - Issue Tracking : `Github Issue`
+  - ERD : `vuerd`
 
 ## 📌 배포 구조
 
