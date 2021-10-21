@@ -96,7 +96,7 @@
 
 ### 📌 배포 구조
 
-![infra](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/skill.png)
+![infra](https://github.com/dhslrl321/Maple-Cheater/blob/master/images/infra.png)
 
 - DB Instance 와 Application Instance 는 동일 VPC의 내부망 통신을 수행함
 - File Upload 를 위해 S3 에 Object Upload를 수행할 때 `MultipartFile` -> `File` 변환 과정으로 인한 공격 벡터가 있으므로 DB Instance와 물리적 망분리
