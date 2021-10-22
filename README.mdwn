@@ -13,9 +13,9 @@
 ![Generic badge](https://img.shields.io/badge/QueryDsl-4.4.0-lightgrey.svg)
 
 <div align="center"> 
-<img style="margin: 10px" src="https://img.shields.io/badge/react.js-17.0.2-yellogreen.svg" alt="badge-react" height="150px"/>
-<img style="margin: 10px" src="https://img.shields.io/badge/Next.js-11.1.2-green.svg" alt="badge-react" height="150px"/>
-<img style="margin: 10px" src="https://img.shields.io/badge/react.js-17.0.2-yellogreen.svg" alt="badge-react" height="150px"/>
+<img style="margin: 10px" src="https://img.shields.io/badge/react.js-17.0.2-yellogreen.svg" alt="badge-react" />
+<img style="margin: 10px" src="https://img.shields.io/badge/Next.js-11.1.2-green.svg" alt="badge-react"/>
+<img style="margin: 10px" src="https://img.shields.io/badge/react.js-17.0.2-yellogreen.svg" alt="badge-react" />
 </div>
 
 # 📝 목차
