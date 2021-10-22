@@ -36,7 +36,7 @@ const index = ({
             styleType="Simple"
             label="이메일을 입력하세요" />
           <Button
-            width="158"
+            width="174"
             height="55"
             label="인증 번호 전송"
             disabled={emailLock}
@@ -104,7 +104,7 @@ const index = ({
       </S.InputWrapper>
 
       <S.ButtonWrapper>
-        <Button disabled={isRegisterOpen} width="100" height="40" label="회원가입" handleOnClick={handleRegisterClick} />
+        <Button disabled={isRegisterOpen} width="100" height="55" label="회원가입" handleOnClick={handleRegisterClick} />
       </S.ButtonWrapper>
     </S.Container >
   )

@@ -29,7 +29,6 @@ public class AuthenticationService {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-
     /**
      * email 과 password 의 dto 를 받아서 로그인 인증을 수행한다.
      *

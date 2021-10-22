@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import withAuthentication from "../higher-order-component/with-authentication";
 
-import { whitespaceValidator, searchValidator, emptyTextValidator } from "../utils/validator";
+import { searchValidator, emptyTextValidator } from "../utils/validator";
 import { getCheater } from "../reducers/cheater";
 import { enableAlert } from "../reducers/application";
 import * as Storage from "../utils/storage";

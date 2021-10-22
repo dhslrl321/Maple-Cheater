@@ -111,7 +111,7 @@ const ReportTemplate = ({
         </S.InputColumn>
         <S.InputColumn>
           <S.Label>문제 상황</S.Label>
-          <S.HelpText><FaRegQuestionCircle /><span>문제의 상황에 대해서 10자 ~ 300자 이내로 적어주세요</span></S.HelpText>
+          <S.HelpText><FaRegQuestionCircle /><span>문제의 상황에 대해서 10자 ~ 300자 이내로 적어주세요, 더치트 신고 이력이 있다면 신고 관련 링크나 신고 번호를 함께 추가해주세요</span></S.HelpText>
           <S.SituationWrapper>
             <InputBox
               styleType="Multiline"
