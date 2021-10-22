@@ -12,6 +12,12 @@
 ![Generic badge](https://img.shields.io/badge/SpringBoot-2.5.4-orange.svg)
 ![Generic badge](https://img.shields.io/badge/QueryDsl-4.4.0-lightgrey.svg)
 
+<div align="center"> 
+<img style="margin: 10px" src="https://img.shields.io/badge/react.js-17.0.2-yellogreen.svg" alt="badge-react" height="150px"/>
+<img style="margin: 10px" src="https://img.shields.io/badge/Next.js-11.1.2-green.svg" alt="badge-react" height="150px"/>
+<img style="margin: 10px" src="https://img.shields.io/badge/react.js-17.0.2-yellogreen.svg" alt="badge-react" height="150px"/>
+</div>
+
 # 📝 목차
 
 1. ### [기획 배경 및 필요셩](#-기획-배경-및-필요성)
