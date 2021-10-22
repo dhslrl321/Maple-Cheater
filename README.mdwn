@@ -12,7 +12,7 @@
 <img style="margin: 10px" src="https://img.shields.io/badge/Redux-4.1.1-yello.svg" alt="badge-react" />
 <img style="margin: 10px" src="https://img.shields.io/badge/SpringBoot-2.5.4-orange.svg" alt="badge-react" />
 <img style="margin: 10px" src="https://img.shields.io/badge/QueryDsl-4.4.0-lightgrey.svg" alt="badge-react"/>
-<img style="margin: 10px" src="https://img.shields.io/badge/NHNCloud-Instance-lightblue.svg" alt="badge-react"/>
+<img style="margin: 10px" src="https://img.shields.io/badge/NHNCloud-Instance-blue.svg" alt="badge-react"/>
   <img style="margin: 10px" src="https://img.shields.io/badge/AWS-S3-orange.svg" alt="badge-react"/>
 </div>
 
