@@ -1,6 +1,6 @@
 import API from "../utils/api";
 
-export const fetchCheater = async (accessToken, nickname) => {
+export const fetchCheater = async (nickname) => {
   try {
     const { data, status } = await API.get(
       `/cheaters/${nickname}`);
