@@ -112,14 +112,3 @@
 - DB Instance 와 Application Instance 는 동일 VPC의 내부망 통신을 수행함
 - File Upload 를 위해 S3 에 Object Upload를 수행할 때 `MultipartFile` -> `File` 변환 과정으로 인한 공격 벡터가 있으므로 DB Instance와 물리적 망분리
 
-# 👨‍👩‍👧‍👦 Contributors
-
-해당 서비스가 잘 유지되기 위해서는 여러 사람들이 도움을 주었습니다.
-
-## 📌 Contributors
-
-| 이름, 닉네임 |                 Github                  |
-| :----------: | :-------------------------------------: |
-|    허혜진    | [hhjin015](https://github.com/hhjin015) |
-|    최재웅    | [CJW-MAPU](https://github.com/CJW-MAPU) |
-|    임창현    |   [SHACKK](https://github.com/SHACKK)   |
